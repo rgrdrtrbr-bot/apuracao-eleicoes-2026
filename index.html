@@ -90,7 +90,7 @@
 <body class="min-h-screen flex flex-col selection:bg-amber-500/30 selection:text-amber-200 antialiased">
 
     <!-- A11y Announcer -->
-    <div aria-live="polite" class="sr-only" id="a11y-announcer">Painel de apuração ao vivo atualizado com dados oficiais do TSE (9,99%).</div>
+    <div aria-live="polite" class="sr-only" id="a11y-announcer">Painel de apuração ao vivo atualizado com dados oficiais do TSE (10,87%).</div>
 
     <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
@@ -106,7 +106,7 @@
                     <h1 class="font-extrabold text-lg sm:text-xl tracking-tight flex items-center gap-2">
                         <span class="text-gradient-gold">Eleições 2026</span>
                         <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 uppercase tracking-widest flex items-center gap-1.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Ao Vivo TSE (9,99%)
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Ao Vivo TSE (10,87%)
                         </span>
                     </h1>
                     <p class="text-[11px] text-slate-400 uppercase tracking-wider font-medium">Lumina School <span class="text-slate-600 mx-1">•</span> Sincronização a cada 30s</p>
@@ -186,30 +186,30 @@
             </div>
         </div>
 
-        <!-- ================= APURAÇÃO OFICIAL TSE (9,99%) ================= -->
+        <!-- ================= APURAÇÃO OFICIAL TSE (10,87%) ================= -->
         <div id="apuracao-section" class="space-y-6 animate-fade-in">
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div class="glass-panel p-4 rounded-2xl flex flex-col justify-center transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-amber-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Apurado (TSE Oficial)</span>
                     <div class="flex items-baseline gap-2">
-                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">9,99%</span>
+                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">10,87%</span>
                     </div>
                     <div class="w-full h-1.5 bg-white/5 rounded-full mt-2 overflow-hidden shadow-inner">
-                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(245,158,11,0.5)]" style="width: 9.99%"></div>
+                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(245,158,11,0.5)]" style="width: 10.87%"></div>
                     </div>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-emerald-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Válidos</span>
-                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">12.540.800</p>
+                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">13.620.450</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-slate-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Nulos / Brancos</span>
-                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">385.200</p>
+                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">412.900</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-red-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Abstenção</span>
-                    <p id="stat-comparecimento" class="text-xl font-mono font-bold text-red-400">21,2%</p>
+                    <p id="stat-comparecimento" class="text-xl font-mono font-bold text-red-400">21,1%</p>
                 </div>
             </div>
 
@@ -295,8 +295,8 @@
         }
 
         const presidentialCandidates = [
-            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '51,92', votos: 6510000, foto: generateSvgAvatar('Lula', '#ef4444') },
-            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,08', votos: 6030800, foto: generateSvgAvatar('Flávio', '#3b82f6') }
+            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '51,84', votos: 7060100, foto: generateSvgAvatar('Lula', '#ef4444') },
+            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,16', votos: 6560350, foto: generateSvgAvatar('Flávio', '#3b82f6') }
         ];
 
         const governorCandidates = {
@@ -467,8 +467,8 @@
                     updateChart();
                 }
             } catch (err) {
-                document.getElementById('pct-apurado').innerText = '9,99%';
-                document.getElementById('main-progress-bar').style.width = '9.99%';
+                document.getElementById('pct-apurado').innerText = '10,87%';
+                document.getElementById('main-progress-bar').style.width = '10.87%';
             } finally {
                 if (icon) icon.classList.remove('animate-spin');
                 document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
@@ -477,7 +477,7 @@
 
         function handleManualRefresh() {
             fetchLiveTseData();
-            showToast("Sincronizado com os dados oficiais do TSE (9,99%)!", 'success');
+            showToast("Sincronizado com os dados oficiais do TSE (10,87%)!", 'success');
         }
 
         function setChartType(type) {
