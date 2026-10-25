@@ -435,7 +435,7 @@
             }
         ];
 
-        // Base de Dados Oficial de Votos no Exterior por País (Boletins TSE 2026)
+        // Base de Dados Oficial de Votos no Exterior por País (Boletins TSE 2026) com Abstenção calculada
         const exteriorDatabase = [
             { pais: 'Japão', bandeira: '🇯🇵', lulaVotos: 7098, lulaPct: 19.92, flavioVotos: 28538, flavioPct: 80.08, lider: 'Flávio Bolsonaro (PL)', comparecimento: 37616, aptos: 88299 },
             { pais: 'Austrália', bandeira: '🇦🇺', lulaVotos: 6017, lulaPct: 63.46, flavioVotos: 3465, flavioPct: 36.54, lider: 'Lula (PT)', comparecimento: 9795, aptos: 20280 },
@@ -512,7 +512,7 @@
             if (winnersDatabase[uf]) return winnersDatabase[uf];
             return {
                 gov: [{ nome: `Governador (${uf})`, partido: 'MDB - 15', votos: 850000, pct: '53.4%', situacao: 'Eleito', foto: generateSvgAvatar(uf, 'GOV', '#3b82f6') }],
-                sen: [{ nome: `Senador 1 (${uf})`, partido: 'PL - 22', votos: 780000, pct: '35.1%', situacao: 'Eleito', foto: generateSvgAvatar(uf, 'S1', '#8b5cf6') }, { nome: `Senador 2 (${uf})`, partido: 'UNIÃO - 44', votos: 710000, pct: '31.5%', situacao: 'Eleito', foto: generateSvgAvatar(uf, 'S2', '#3b82f6') }],
+                sen: [{ nome: `Senador 1 (${uf})`, partido: 'PL - 22', votos: 780000, pct: '35.1%', situacao: 'Eleito', foto: generateSvgAvatar(uf, 'S1', '#8b5cf6') }, { nome: `Senador 2 (${uf})`, partido: 'UNIÃO - 44', votos: 710000, pct: '31.5%', situacao: 'Eleito', foto: generateSvgAvatar(uf, 'S2', '#8b5cf6') }],
                 dep_fed: [{ nome: `Deputado Federal (${uf})`, partido: 'PL - 22', votos: 145000, pct: '8.2%', situacao: 'Eleito' }],
                 dep_est: [{ nome: `Deputado Estadual (${uf})`, partido: 'PT - 13', votos: 92000, pct: '5.1%', situacao: 'Eleito' }]
             };
@@ -528,6 +528,9 @@
 
             filtered.forEach(e => {
                 const isLulaWin = e.lulaPct > e.flavioPct;
+                const abstencao = e.aptos - e.comparecimento;
+                const abstencaoPct = ((abstencao / e.aptos) * 100).toFixed(2).replace('.', ',');
+
                 const card = `
                     <div class="bg-slate-900 border border-amber-500/30 rounded-2xl p-5 shadow-xl space-y-4 flex flex-col justify-between">
                         <div class="space-y-3">
@@ -552,9 +555,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pt-2 border-t border-slate-800 flex justify-between text-[11px] text-slate-400 font-mono">
-                            <span>Comparecimento: ${e.comparecimento.toLocaleString('pt-BR')}</span>
-                            <span>Aptos: ${e.aptos.toLocaleString('pt-BR')}</span>
+                        <div class="pt-3 border-t border-slate-800 grid grid-cols-3 gap-1 text-[11px] text-slate-400 font-mono text-center">
+                            <div class="bg-slate-950/60 p-1.5 rounded-lg border border-slate-800">
+                                <span class="block text-[9px] text-slate-500 uppercase font-semibold">Comparecimento</span>
+                                <span class="text-emerald-400 font-bold">${e.comparecimento.toLocaleString('pt-BR')}</span>
+                            </div>
+                            <div class="bg-slate-950/60 p-1.5 rounded-lg border border-slate-800">
+                                <span class="block text-[9px] text-slate-500 uppercase font-semibold">Abstenção</span>
+                                <span class="text-amber-400 font-bold">${abstencao.toLocaleString('pt-BR')} (${abstencaoPct}%)</span>
+                            </div>
+                            <div class="bg-slate-950/60 p-1.5 rounded-lg border border-slate-800">
+                                <span class="block text-[9px] text-slate-500 uppercase font-semibold">Aptos</span>
+                                <span class="text-slate-200 font-bold">${e.aptos.toLocaleString('pt-BR')}</span>
+                            </div>
                         </div>
                     </div>
                 `;
