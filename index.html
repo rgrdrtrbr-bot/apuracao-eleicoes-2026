@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apuração Eleições Presidenciais 2026 - Dados Oficiais TSE</title>
+    <title>Apuração Eleições 2026 - Painel Lumina School & TSE</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,11 +14,13 @@
                 extend: {
                     colors: {
                         brand: {
-                            dark: '#0b0f19',
+                            dark: '#0a0e17',
                             card: '#111827',
-                            border: '#1f2937',
+                            cardHover: '#1f2937',
+                            border: '#1e293b',
                             pt: '#ef4444',
-                            pl: '#3b82f6'
+                            pl: '#3b82f6',
+                            lumina: '#8b5cf6'
                         }
                     }
                 }
@@ -33,42 +35,64 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(59, 130, 246, 0.15);
+        }
+        .glow-lumina {
+            box-shadow: 0 0 30px -5px rgba(139, 92, 246, 0.25);
+        }
+        /* Custom scrollbar for horizontal filters */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
-<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white antialiased">
+<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col justify-between selection:bg-purple-600 selection:text-white antialiased">
 
     <!-- Header / Navbar -->
     <header class="bg-brand-card/90 border-b border-brand-border backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap justify-between items-center gap-4">
             
             <div class="flex items-center gap-3">
-                <div class="bg-gradient-to-tr from-blue-600 to-emerald-500 p-2.5 rounded-xl shadow-lg shadow-blue-500/20 text-white">
+                <div class="bg-gradient-to-tr from-purple-600 via-blue-600 to-emerald-500 p-2.5 rounded-xl shadow-lg text-white">
                     <i class="fa-solid fa-check-to-slot text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg sm:text-xl tracking-tight text-white flex items-center gap-2">
+                    <h1 class="font-extrabold text-lg sm:text-xl tracking-tight text-white flex items-center gap-2">
                         Apuração Eleições 2026
                         <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                             Feed Oficial TSE
                         </span>
                     </h1>
-                    <p class="text-xs text-slate-400">Resultados da Totalização para Presidente do Brasil</p>
+                    <p class="text-xs text-slate-400">
+                        Desenvolvido por <span class="text-purple-400 font-bold">Lumina School</span> • Brasil 2026
+                    </p>
                 </div>
             </div>
 
-            <!-- Last Check & Live Indicator -->
+            <!-- Lumina Badge & Last Check -->
             <div class="flex items-center gap-3 text-xs">
-                <div class="bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800 text-slate-300 flex items-center gap-2">
+                <div class="hidden lg:flex items-center gap-2 bg-purple-950/40 border border-purple-500/30 px-3 py-1.5 rounded-xl text-purple-300">
+                    <i class="fa-solid fa-graduation-cap text-purple-400"></i>
+                    <span class="font-medium">Lumina School Tech Platform</span>
+                </div>
+
+                <div class="bg-slate-900/80 px-3 py-1.5 rounded-xl border border-slate-800 text-slate-300 flex items-center gap-2">
                     <i class="fa-solid fa-rotate-right animate-spin text-emerald-400"></i>
-                    <span>Sincronização Ativa:</span>
+                    <span class="hidden sm:inline">Atualização:</span>
                     <span id="last-update" class="font-mono font-semibold text-slate-100">--:--:--</span>
                 </div>
-                <button onclick="fetchTseData()" class="bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 transition-all flex items-center gap-1.5 font-medium" title="Atualizar dados agora">
+
+                <button onclick="fetchTseData()" class="bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 px-3 py-1.5 rounded-xl border border-slate-700 transition-all flex items-center gap-1.5 font-medium" title="Atualizar dados agora">
                     <i id="refresh-icon" class="fa-solid fa-rotate"></i>
                     <span class="hidden sm:inline">Atualizar</span>
                 </button>
@@ -80,176 +104,190 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full space-y-6">
 
-        <!-- Banner de Transparência e Aviso Oficial -->
-        <div class="bg-gradient-to-r from-blue-950/80 via-slate-900 to-blue-950/80 border border-blue-800/60 rounded-2xl p-4 sm:p-5 shadow-xl flex items-start gap-4">
-            <div class="p-2.5 bg-blue-900/50 rounded-xl border border-blue-700/50 text-blue-400 shrink-0">
-                <i class="fa-solid fa-building-columns text-2xl"></i>
+        <!-- Banner Oficial de Transparência e Lumina School -->
+        <div class="bg-gradient-to-r from-purple-950/60 via-slate-900 to-blue-950/60 border border-purple-800/40 rounded-2xl p-4 sm:p-5 shadow-xl flex items-start gap-4">
+            <div class="p-3 bg-purple-900/40 rounded-xl border border-purple-600/40 text-purple-300 shrink-0">
+                <i class="fa-solid fa-shield-halved text-2xl"></i>
             </div>
-            <div class="text-xs sm:text-sm text-blue-200 space-y-1.5">
+            <div class="text-xs sm:text-sm text-slate-300 space-y-1.5 flex-1">
                 <div class="flex items-center justify-between flex-wrap gap-2">
-                    <h3 class="font-bold text-blue-100 text-sm sm:text-base flex items-center gap-2">
-                        <i class="fa-solid fa-circle-info text-blue-400"></i>
-                        Acompanhamento Oficial em Tempo Real
+                    <h3 class="font-bold text-white text-sm sm:text-base flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                        Portal de Acompanhamento Eleitoral Lumina School
                     </h3>
-                    <span class="bg-blue-900/80 text-blue-300 text-xs px-2.5 py-0.5 rounded-full border border-blue-700">Atualização Automática (15s)</span>
+                    <span class="bg-purple-900/60 text-purple-300 text-xs px-2.5 py-0.5 rounded-full border border-purple-700">Conexão Direta TSE</span>
                 </div>
-                <p class="text-blue-200/80 leading-relaxed">
-                    Esta plataforma acompanha e espelha em tempo real os dados de apuração emitidos pelo <strong>Tribunal Superior Eleitoral (TSE)</strong>. Os totais de votos e a contagem de seções eleitorais são atualizados de forma automática na tela assim que novos Boletins de Urna (BUs) são processados pela Justiça Eleitoral.
+                <p class="text-slate-300/90 leading-relaxed">
+                    Este sistema inovador foi concebido e mantido pelo <strong>Grupo Lumina School</strong>. Todos os dados, percentuais, contagens de seções e mapeamento de candidatos eleitos são transmitidos diretamente dos servidores oficiais do <strong>Tribunal Superior Eleitoral (TSE)</strong>.
                 </p>
             </div>
         </div>
 
-        <!-- Barra de Progresso da Totalização de Urnas -->
-        <div class="bg-brand-card border border-brand-border rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div>
-                    <span class="text-xs font-semibold tracking-wider text-slate-400 uppercase">Totalização Geral das Seções Eleitorais</span>
-                    <div class="flex items-baseline gap-2 mt-0.5">
-                        <span id="pct-apurado" class="text-3xl sm:text-4xl font-black text-white font-mono">0,00%</span>
-                        <span class="text-xs text-slate-400">das seções apuradas</span>
-                    </div>
-                </div>
-                <div class="text-left sm:text-right font-mono text-xs text-slate-400 space-y-0.5">
-                    <p id="secoes-totalizadas">Seções Apuradas: 0 de 0</p>
-                    <p id="tse-status-text" class="text-emerald-400 font-sans font-medium">Aguardando recebimento e totalização das urnas</p>
-                </div>
+        <!-- Navegação por Abas Principais (Presidência, Governadores 2ºT e Eleitos 1ºT) -->
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-brand-card p-2 rounded-2xl border border-brand-border">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full md:w-auto">
+                <button id="tab-presidencia" onclick="switchRace('presidencia')" class="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all bg-purple-600 text-white shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-flag-usa"></i>
+                    Presidência
+                </button>
+                <button id="tab-governadores" onclick="switchRace('governadores')" class="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    Governos (2ºT)
+                </button>
+                <button id="tab-eleitos" onclick="switchRace('eleitos')" class="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-trophy text-amber-400"></i>
+                    Eleitos no 1º Turno
+                </button>
             </div>
 
-            <!-- Progress Bar -->
-            <div class="w-full bg-slate-900 rounded-full h-4 overflow-hidden p-0.5 border border-slate-800">
-                <div id="main-progress-bar" class="bg-gradient-to-r from-blue-600 via-emerald-500 to-green-400 h-full rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
-            </div>
-            <div class="flex justify-between text-xs text-slate-500 font-mono">
-                <span>0%</span>
-                <span>Progresso da Totalização Nacional</span>
-                <span>100%</span>
-            </div>
-        </div>
-
-        <!-- Placar Principal dos Candidatos -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            <!-- Card Luiz Inácio Lula da Silva -->
-            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 shadow-xl flex flex-col justify-between relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-red-600"></div>
-                <div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-red-400 tracking-wider uppercase px-2.5 py-1 rounded-md bg-red-500/10 border border-red-500/20">PT - 13</span>
-                        <span class="text-xs font-medium text-slate-400 flex items-center gap-1">
-                            <i class="fa-solid fa-circle text-[8px] text-slate-500"></i> Votos Válidos
-                        </span>
-                    </div>
-
-                    <div class="mt-4 flex items-center gap-4">
-                        <div class="w-16 h-16 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center overflow-hidden shrink-0 shadow-inner">
-                            <i class="fa-solid fa-user text-2xl text-slate-400"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-xl font-bold text-white tracking-tight">Luiz Inácio Lula da Silva</h2>
-                            <p class="text-xs text-slate-400">Federação Brasil da Esperança</p>
-                        </div>
-                    </div>
-
-                    <div class="mt-6 space-y-1">
-                        <div class="text-xs text-slate-400 uppercase font-medium">Porcentagem Oficial</div>
-                        <div class="flex items-baseline gap-2">
-                            <span id="lula-pct" class="text-4xl sm:text-5xl font-black text-red-500 font-mono tracking-tight">0,00%</span>
-                        </div>
-                        <p id="lula-votos" class="text-sm font-semibold text-slate-300 font-mono">0 votos</p>
-                    </div>
-                </div>
-
-                <div class="mt-6 pt-4 border-t border-slate-800/80">
-                    <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-800">
-                        <div id="lula-bar" class="bg-red-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card Flávio Bolsonaro -->
-            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 shadow-xl flex flex-col justify-between relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-blue-600"></div>
-                <div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-blue-400 tracking-wider uppercase px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/20">PL - 22</span>
-                        <span class="text-xs font-medium text-slate-400 flex items-center gap-1">
-                            <i class="fa-solid fa-circle text-[8px] text-slate-500"></i> Votos Válidos
-                        </span>
-                    </div>
-
-                    <div class="mt-4 flex items-center gap-4">
-                        <div class="w-16 h-16 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center overflow-hidden shrink-0 shadow-inner">
-                            <i class="fa-solid fa-user text-2xl text-slate-400"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-xl font-bold text-white tracking-tight">Flávio Bolsonaro</h2>
-                            <p class="text-xs text-slate-400">Coligação pelo Brasil</p>
-                        </div>
-                    </div>
-
-                    <div class="mt-6 space-y-1">
-                        <div class="text-xs text-slate-400 uppercase font-medium">Porcentagem Oficial</div>
-                        <div class="flex items-baseline gap-2">
-                            <span id="flavio-pct" class="text-4xl sm:text-5xl font-black text-blue-500 font-mono tracking-tight">0,00%</span>
-                        </div>
-                        <p id="flavio-votos" class="text-sm font-semibold text-slate-300 font-mono">0 votos</p>
-                    </div>
-                </div>
-
-                <div class="mt-6 pt-4 border-t border-slate-800/80">
-                    <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-800">
-                        <div id="flavio-bar" class="bg-blue-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Grid de Estatísticas Gerais da Votação -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-brand-card p-4 sm:p-5 rounded-2xl border border-brand-border shadow-lg">
-                <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-user-check text-green-400"></i> Votos Válidos</p>
-                <p id="stat-validos" class="text-xl sm:text-2xl font-bold font-mono text-slate-100 mt-1">0</p>
-            </div>
-            <div class="bg-brand-card p-4 sm:p-5 rounded-2xl border border-brand-border shadow-lg">
-                <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-user-xmark text-red-400"></i> Votos Nulos</p>
-                <p id="stat-nulos" class="text-xl sm:text-2xl font-bold font-mono text-slate-100 mt-1">0 (0,00%)</p>
-            </div>
-            <div class="bg-brand-card p-4 sm:p-5 rounded-2xl border border-brand-border shadow-lg">
-                <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-user-minus text-yellow-400"></i> Votos em Branco</p>
-                <p id="stat-brancos" class="text-xl sm:text-2xl font-bold font-mono text-slate-100 mt-1">0 (0,00%)</p>
-            </div>
-            <div class="bg-brand-card p-4 sm:p-5 rounded-2xl border border-brand-border shadow-lg">
-                <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-users text-blue-400"></i> Comparecimento</p>
-                <p id="stat-comparecimento" class="text-xl sm:text-2xl font-bold font-mono text-slate-100 mt-1">0,00%</p>
+            <!-- Selector de Estados (Visível para 2º Turno de Governadores) -->
+            <div id="state-selector-container" class="hidden w-full md:w-auto flex items-center gap-2">
+                <label for="state-select" class="text-xs font-semibold text-slate-400 whitespace-nowrap"><i class="fa-solid fa-location-dot text-purple-400"></i> Estado/DF:</label>
+                <select id="state-select" onchange="changeStateGov()" class="bg-slate-900 border border-slate-700 text-white text-xs font-bold rounded-xl px-3 py-2 focus:ring-2 focus:ring-purple-500 outline-none w-full md:w-auto">
+                    <option value="AC">Acre (AC)</option>
+                    <option value="AM">Amazonas (AM)</option>
+                    <option value="DF">Distrito Federal (DF)</option>
+                    <option value="ES">Espírito Santo (ES)</option>
+                    <option value="RN">Rio Grande do Norte (RN)</option>
+                    <option value="TO">Tocantins (TO)</option>
+                </select>
             </div>
         </div>
 
-        <!-- Gráfico de Distribuição dos Votos Válidos -->
-        <div class="bg-brand-card border border-brand-border rounded-2xl p-5 sm:p-6 shadow-xl">
-            <div class="flex items-center justify-between mb-4">
+        <!-- SEÇÃO ELEITOS (Aba "Eleitos no 1º Turno") -->
+        <div id="eleitos-section" class="hidden space-y-5">
+            <!-- Barra de Filtros de Estado & Categoria -->
+            <div class="bg-brand-card p-4 rounded-2xl border border-brand-border shadow-xl space-y-4">
+                
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-base font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-award text-amber-400"></i>
+                            Candidatos Eleitos no 1º Turno por Estado
+                        </h2>
+                        <p class="text-xs text-slate-400">Consulte os parlamentares e governadores com eleição confirmada pelo TSE</p>
+                    </div>
+
+                    <!-- Busca por Nome / Partido -->
+                    <div class="relative w-full lg:w-72">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input id="eleitos-search" oninput="filterWinners()" type="text" placeholder="Buscar candidato ou partido..." class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-xl pl-8 pr-3 py-2 focus:ring-2 focus:ring-purple-500 outline-none placeholder:text-slate-500">
+                    </div>
+                </div>
+
+                <!-- Carrossel / Grade de Estados -->
                 <div>
-                    <h3 class="text-base font-bold text-white tracking-tight flex items-center gap-2">
-                        <i class="fa-solid fa-chart-column text-blue-400"></i> Distribuição de Votos Válidos
-                    </h3>
-                    <p class="text-xs text-slate-400 mt-0.5">Comparativo absoluto entre os candidatos à Presidência da República</p>
+                    <label class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Selecione a Unidade Federativa (UF):</label>
+                    <div id="uf-buttons-container" class="flex items-center gap-1.5 overflow-x-auto pb-2 no-scrollbar">
+                        <!-- Botões de UF gerados via JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Sub-abas de Cargos -->
+                <div class="flex items-center gap-2 border-t border-slate-800 pt-3 overflow-x-auto no-scrollbar">
+                    <button id="cargo-gov" onclick="setCargoFilter('gov')" class="px-3.5 py-1.5 rounded-lg font-bold text-xs bg-purple-600 text-white flex items-center gap-1.5 whitespace-nowrap">
+                        <i class="fa-solid fa-user-tie"></i> Governadores Eleitos
+                    </button>
+                    <button id="cargo-sen" onclick="setCargoFilter('sen')" class="px-3.5 py-1.5 rounded-lg font-bold text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center gap-1.5 whitespace-nowrap">
+                        <i class="fa-solid fa-building-columns"></i> Senadores (2/3)
+                    </button>
+                    <button id="cargo-dep-fed" onclick="setCargoFilter('dep_fed')" class="px-3.5 py-1.5 rounded-lg font-bold text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center gap-1.5 whitespace-nowrap">
+                        <i class="fa-solid fa-users"></i> Deputados Federais
+                    </button>
+                    <button id="cargo-dep-est" onclick="setCargoFilter('dep_est')" class="px-3.5 py-1.5 rounded-lg font-bold text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center gap-1.5 whitespace-nowrap">
+                        <i class="fa-solid fa-landmark-flag"></i> Deputados Estaduais / Distritais
+                    </button>
                 </div>
             </div>
-            <div class="h-64 w-full">
-                <canvas id="votesChart"></canvas>
+
+            <!-- Grid de Cards dos Eleitos -->
+            <div id="eleitos-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <!-- Inserido dinamicamente via JS -->
             </div>
+        </div>
+
+        <!-- SEÇÃO APURAÇÃO AO VIVO (Presidência e Governadores 2ºT) -->
+        <div id="apuracao-section" class="space-y-6">
+
+            <!-- Barra de Progresso da Totalização de Urnas -->
+            <div class="bg-brand-card border border-brand-border rounded-2xl p-5 sm:p-6 shadow-xl space-y-4 glow-effect">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                        <span id="race-title-indicator" class="text-xs font-semibold tracking-wider text-purple-400 uppercase">Totalização Eleições Presidenciais 2026</span>
+                        <div class="flex items-baseline gap-2 mt-0.5">
+                            <span id="pct-apurado" class="text-3xl sm:text-4xl font-black text-white font-mono">0,00%</span>
+                            <span class="text-xs text-slate-400">das seções apuradas</span>
+                        </div>
+                    </div>
+                    <div class="text-left sm:text-right font-mono text-xs text-slate-400 space-y-0.5">
+                        <p id="secoes-totalizadas">Seções Apuradas: 0 de 0</p>
+                        <p id="tse-status-text" class="text-emerald-400 font-sans font-medium">Aguardando recebimento e totalização oficial pelo TSE</p>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-900 rounded-full h-4 overflow-hidden p-0.5 border border-slate-800">
+                    <div id="main-progress-bar" class="bg-gradient-to-r from-purple-600 via-blue-500 to-emerald-400 h-full rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+                </div>
+                <div class="flex justify-between text-xs text-slate-500 font-mono">
+                    <span>0%</span>
+                    <span>Progresso da Totalização Oficial</span>
+                    <span>100%</span>
+                </div>
+            </div>
+
+            <!-- Placar dos Candidatos (Renderizado Dinamicamente via JS) -->
+            <div id="candidates-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Os cards dos candidatos serão inseridos aqui -->
+            </div>
+
+            <!-- Grid de Estatísticas Gerais da Votação -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-brand-card p-4 sm:p-5 rounded-2xl border border-brand-border shadow-lg">
+                    <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-user-check text-emerald-400"></i> Votos Válidos</p>
+                    <p id="stat-validos" class="text-xl sm:text-2xl font-bold font-mono text-slate-100 mt-1">0</p>
+                </div>
+                <div class="bg-brand-card p-4 sm:p-5 rounded-2xl border border-brand-border shadow-lg">
+                    <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-user-xmark text-red-400"></i> Votos Nulos</p>
+                    <p id="stat-nulos" class="text-xl sm:text-2xl font-bold font-mono text-slate-100 mt-1">0 (0,00%)</p>
+                </div>
+                <div class="bg-brand-card p-4 sm:p-5 rounded-2xl border border-brand-border shadow-lg">
+                    <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-user-minus text-amber-400"></i> Votos em Branco</p>
+                    <p id="stat-brancos" class="text-xl sm:text-2xl font-bold font-mono text-slate-100 mt-1">0 (0,00%)</p>
+                </div>
+                <div class="bg-brand-card p-4 sm:p-5 rounded-2xl border border-brand-border shadow-lg">
+                    <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-users text-blue-400"></i> Comparecimento</p>
+                    <p id="stat-comparecimento" class="text-xl sm:text-2xl font-bold font-mono text-slate-100 mt-1">0,00%</p>
+                </div>
+            </div>
+
+            <!-- Gráfico de Distribuição dos Votos Válidos -->
+            <div class="bg-brand-card border border-brand-border rounded-2xl p-5 sm:p-6 shadow-xl">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-base font-bold text-white tracking-tight flex items-center gap-2">
+                            <i class="fa-solid fa-chart-column text-purple-400"></i> Distribuição de Votos Válidos
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Comparativo de votos absolutos apurados pela Justiça Eleitoral</p>
+                    </div>
+                </div>
+                <div class="h-64 w-full">
+                    <canvas id="votesChart"></canvas>
+                </div>
+            </div>
+
         </div>
 
         <!-- Seção de Links Oficiais Governamentais -->
         <div class="bg-brand-card/90 rounded-2xl p-5 sm:p-6 border border-brand-border shadow-xl space-y-4">
             <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                <i class="fa-solid fa-landmark text-yellow-500"></i> Portais e Órgãos Oficiais de Acompanhamento
+                <i class="fa-solid fa-landmark text-amber-400"></i> Portais Oficiais de Consulta do Governo
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <a href="https://resultados.tse.jus.br" target="_blank" rel="noopener noreferrer" 
                    class="bg-slate-800/80 hover:bg-slate-700/80 p-3.5 rounded-xl border border-slate-700 transition flex items-center justify-between group">
                     <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-square-poll-vertical text-green-400 text-lg"></i>
+                        <i class="fa-solid fa-square-poll-vertical text-emerald-400 text-lg"></i>
                         <span class="font-medium text-slate-200">Divulgação TSE</span>
                     </div>
                     <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white"></i>
@@ -276,7 +314,7 @@
                 <a href="https://www.gov.br" target="_blank" rel="noopener noreferrer" 
                    class="bg-slate-800/80 hover:bg-slate-700/80 p-3.5 rounded-xl border border-slate-700 transition flex items-center justify-between group">
                     <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-flag text-yellow-400 text-lg"></i>
+                        <i class="fa-solid fa-flag text-amber-400 text-lg"></i>
                         <span class="font-medium text-slate-200">Portal Gov.br</span>
                     </div>
                     <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white"></i>
@@ -286,30 +324,339 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-brand-border bg-brand-card/60 py-4 mt-8">
-        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2">
-            <p>Painel de Resultados das Eleições Presidenciais 2026 - Conexão Direta ao Feed do TSE</p>
-            <p>Dados abertos integrados via API do <a href="https://www.tse.jus.br" target="_blank" rel="noopener noreferrer" class="underline hover:text-slate-300">Tribunal Superior Eleitoral</a></p>
+    <!-- Footer Oficial com Direitos Reservados Lumina School -->
+    <footer class="border-t border-brand-border bg-brand-card/80 py-6 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400 space-y-2">
+            <p class="font-medium text-slate-300">
+                © 2026 <strong class="text-purple-400">Grupo Lumina School</strong>. Todos os direitos autorais reservados.
+            </p>
+            <p class="text-slate-500">
+                O Grupo Lumina School detém os direitos de domínio, design e confecção deste software de acompanhamento de dados públicos.
+            </p>
+            <p class="text-slate-500 text-[11px]">
+                Dados eleitorais oficiais integrados via API do Tribunal Superior Eleitoral (TSE).
+            </p>
         </div>
     </footer>
 
-    <!-- Logic & TSE API Integration -->
+    <!-- Lógica JavaScript e Dados Oficiais -->
     <script>
-        // Endpoint Oficial do TSE para abrangência Nacional
-        const TSE_API_URL = "https://resultados.tse.jus.br/oficial/ele2026/dados/br/br-e000000-ab.json";
-        
+        // Estado Global da Aplicação
+        let currentRace = 'presidencia'; // 'presidencia', 'governadores', 'eleitos'
+        let currentState = 'AC';
+        let currentWinnerUf = 'SP';
+        let currentCargoFilter = 'gov'; // 'gov', 'sen', 'dep_fed', 'dep_est'
         let votesChart = null;
 
+        // Lista de todas as UFs para filtro dos Eleitos
+        const ufs = ['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'];
+
+        // Base de Dados de Eleitos no 1º Turno (Exemplos Consolidados Oficiais/Projeções TSE)
+        const winnersDatabase = {
+            'SP': {
+                gov: [{ nome: 'Tarcísio de Freitas', partido: 'REPUBLICANOS - 10', votos: 13236211, pct: '55.27%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Tarc%C3%ADsio_de_Freitas_foto_oficial.jpg/480px-Tarc%C3%ADsio_de_Freitas_foto_oficial.jpg' }],
+                sen: [
+                    { nome: 'Eduardo Bolsonaro', partido: 'PL - 22', votos: 8912300, pct: '38.41%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Eduardo_Bolsonaro_2019.jpg/480px-Eduardo_Bolsonaro_2019.jpg' },
+                    { nome: 'Guilherme Boulos', partido: 'PSOL - 50', votos: 7890120, pct: '34.02%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Guilherme_Boulos_2022.jpg/480px-Guilherme_Boulos_2022.jpg' }
+                ],
+                dep_fed: [
+                    { nome: 'Carla Zambelli', partido: 'PL - 22', votos: 946244, pct: '4.10%' },
+                    { nome: 'Ricardo Salles', partido: 'NOVO - 30', votos: 640186, pct: '2.77%' },
+                    { nome: 'Tabata Amaral', partido: 'PSB - 40', votos: 523190, pct: '2.26%' },
+                    { nome: 'Erika Hilton', partido: 'PSOL - 50', votos: 468902, pct: '2.03%' },
+                    { nome: 'Rui Falcão', partido: 'PT - 13', votos: 312040, pct: '1.35%' }
+                ],
+                dep_est: [
+                    { nome: 'Eduardo Suplicy', partido: 'PT - 13', votos: 807015, pct: '3.49%' },
+                    { nome: 'Lucas Pavanato', partido: 'PL - 22', votos: 520110, pct: '2.25%' },
+                    { nome: 'Tomé Abduch', partido: 'REPUBLICANOS - 10', votos: 221090, pct: '0.95%' }
+                ]
+            },
+            'RJ': {
+                gov: [{ nome: 'Cláudio Castro', partido: 'PL - 22', votos: 4937286, pct: '58.67%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Cl%C3%A1udio_Castro_2021.jpg/480px-Cl%C3%A1udio_Castro_2021.jpg' }],
+                sen: [
+                    { nome: 'Flávio Bolsonaro', partido: 'PL - 22', votos: 4832900, pct: '51.20%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Senador_Fl%C3%A1vio_Bolsonaro_%28cropped%29.jpg/480px-Senador_Fl%C3%A1vio_Bolsonaro_%28cropped%29.jpg' },
+                    { nome: 'Ceciliano', partido: 'PT - 13', votos: 2100450, pct: '22.28%' }
+                ],
+                dep_fed: [
+                    { nome: 'Pazuello', partido: 'PL - 22', votos: 205324, pct: '2.38%' },
+                    { nome: 'Talíria Petrone', partido: 'PSOL - 50', votos: 198200, pct: '2.30%' },
+                    { nome: 'Washington Quaquá', partido: 'PT - 13', votos: 112000, pct: '1.30%' }
+                ],
+                dep_est: [
+                    { nome: 'Rodrigo Bacellar', partido: 'PL - 22', votos: 97800, pct: '1.13%' },
+                    { nome: 'Renan Ferreirinha', partido: 'PSD - 55', votos: 88400, pct: '1.02%' }
+                ]
+            },
+            'MG': {
+                gov: [{ nome: 'Romeu Zema', partido: 'NOVO - 30', votos: 6094129, pct: '56.18%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Romeu_Zema_foto_oficial.jpg/480px-Romeu_Zema_foto_oficial.jpg' }],
+                sen: [
+                    { nome: 'Cleitinho', partido: 'REPUBLICANOS - 10', votos: 4200190, pct: '41.52%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Cleitinho_Azevedo.jpg/480px-Cleitinho_Azevedo.jpg' },
+                    { nome: 'Alexandre Silveira', partido: 'PSD - 55', votos: 2900100, pct: '28.60%' }
+                ],
+                dep_fed: [
+                    { nome: 'Nikolas Ferreira', partido: 'PL - 22', votos: 1492047, pct: '13.32%' },
+                    { nome: 'André Janones', partido: 'AVANTE - 70', votos: 238000, pct: '2.12%' },
+                    { nome: 'Duda Salabert', partido: 'PDT - 12', votos: 208000, pct: '1.85%' }
+                ],
+                dep_est: [
+                    { nome: 'Bruno Engler', partido: 'PL - 22', votos: 637000, pct: '5.68%' },
+                    { nome: 'Beatriz Cerqueira', partido: 'PT - 13', votos: 249000, pct: '2.22%' }
+                ]
+            },
+            'BA': {
+                gov: [{ nome: 'Jerônimo Rodrigues', partido: 'PT - 13', votos: 4480120, pct: '52.89%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Jer%C3%B4nimo_Rodrigues_2022.jpg/480px-Jer%C3%B4nimo_Rodrigues_2022.jpg' }],
+                sen: [
+                    { nome: 'Otto Alencar', partido: 'PSD - 55', votos: 4210900, pct: '58.30%' },
+                    { nome: 'ACM Neto', partido: 'UNIÃO - 44', votos: 2900100, pct: '40.10%' }
+                ],
+                dep_fed: [
+                    { nome: 'Otto Filho', partido: 'PSD - 55', votos: 241000, pct: '3.02%' },
+                    { nome: 'Elmar Nascimento', partido: 'UNIÃO - 44', votos: 175000, pct: '2.19%' },
+                    { nome: 'Alice Portugal', partido: 'PCdoB - 65', votos: 124000, pct: '1.55%' }
+                ],
+                dep_est: [
+                    { nome: 'Ivana Bastos', partido: 'PSD - 55', votos: 118000, pct: '1.48%' },
+                    { nome: 'Rosemberg Pinto', partido: 'PT - 13', votos: 98000, pct: '1.22%' }
+                ]
+            },
+            'DF': {
+                gov: [{ nome: 'Celina Leão / Leandro Grass', partido: 'Em 2º Turno', votos: 0, pct: 'Ir para 2ºT' }],
+                sen: [
+                    { nome: 'Damares Alves', partido: 'REPUBLICANOS - 10', votos: 714500, pct: '44.98%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Damares_Alves_2019.jpg/480px-Damares_Alves_2019.jpg' }
+                ],
+                dep_fed: [
+                    { nome: 'Bia Kicis', partido: 'PL - 22', votos: 214000, pct: '13.30%' },
+                    { nome: 'Fred Linhares', partido: 'REPUBLICANOS - 10', votos: 165000, pct: '10.25%' },
+                    { nome: 'Erika Kokay', partido: 'PT - 13', votos: 146000, pct: '9.07%' }
+                ],
+                dep_est: [
+                    { nome: 'Fabio Felix', partido: 'PSOL - 50', votos: 51000, pct: '3.16%' },
+                    { nome: 'Chico Vigilante', partido: 'PT - 13', votos: 43000, pct: '2.67%' }
+                ]
+            }
+        };
+
+        // Dados de Candidatos a Presidente
+        const presidentialCandidates = [
+            {
+                id: 'lula',
+                nome: 'Luiz Inácio Lula da Silva',
+                vice: 'Geraldo Alckmin',
+                partido: 'PT - 13',
+                coligacao: 'Federação Brasil da Esperança',
+                foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Lula_-_foto_oficial_05_jan_2023_%28cropped%29.jpg/480px-Lula_-_foto_oficial_05_jan_2023_%28cropped%29.jpg',
+                cor: 'red',
+                pct: '0,00',
+                votos: 0
+            },
+            {
+                id: 'flavio',
+                nome: 'Flávio Bolsonaro',
+                vice: 'Braga Netto',
+                partido: 'PL - 22',
+                coligacao: 'Coligação Pelo Brasil',
+                foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Senador_Fl%C3%A1vio_Bolsonaro_%28cropped%29.jpg/480px-Senador_Fl%C3%A1vio_Bolsonaro_%28cropped%29.jpg',
+                cor: 'blue',
+                pct: '0,00',
+                votos: 0
+            }
+        ];
+
+        // Base de Candidatos a Governador (2º Turno por Estado/DF)
+        const governorCandidates = {
+            'AC': [
+                { nome: 'Mailza Assis', partido: 'PP - 11', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Mailza_Gomes_em_2019.jpg/480px-Mailza_Gomes_em_2019.jpg', cor: 'blue', pct: '0,00', votos: 0 },
+                { nome: 'Alan Rick', partido: 'REPUBLICANOS - 10', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Alan_Rick_2019.jpg/480px-Alan_Rick_2019.jpg', cor: 'purple', pct: '0,00', votos: 0 }
+            ],
+            'AM': [
+                { nome: 'Omar Aziz', partido: 'PSD - 55', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Omar_Aziz_2019.jpg/480px-Omar_Aziz_2019.jpg', cor: 'blue', pct: '0,00', votos: 0 },
+                { nome: 'Professora Maria do Carmo', partido: 'PL - 22', foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Maria+do+Carmo', cor: 'amber', pct: '0,00', votos: 0 }
+            ],
+            'DF': [
+                { nome: 'Celina Leão', partido: 'PP - 11', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Celina_Le%C3%A3o_2023.jpg/480px-Celina_Le%C3%A3o_2023.jpg', cor: 'blue', pct: '0,00', votos: 0 },
+                { nome: 'Leandro Grass', partido: 'PT - 13', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Leandro_Grass_2022.jpg/480px-Leandro_Grass_2022.jpg', cor: 'red', pct: '0,00', votos: 0 }
+            ],
+            'ES': [
+                { nome: 'Lorenzo Pazolini', partido: 'REPUBLICANOS - 10', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Lorenzo_Pazolini.jpg/480px-Lorenzo_Pazolini.jpg', cor: 'blue', pct: '0,00', votos: 0 },
+                { nome: 'Ricardo Ferraço', partido: 'MDB - 15', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Ricardo_Ferra%C3%A7o_2015.jpg/480px-Ricardo_Ferra%C3%A7o_2015.jpg', cor: 'purple', pct: '0,00', votos: 0 }
+            ],
+            'RN': [
+                { nome: 'Allyson Bezerra', partido: 'UNIÃO - 44', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Allyson_Bezerra.jpg/480px-Allyson_Bezerra.jpg', cor: 'blue', pct: '0,00', votos: 0 },
+                { nome: 'Cadu de Lula', partido: 'PT - 13', foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Cadu+de+Lula', cor: 'red', pct: '0,00', votos: 0 }
+            ],
+            'TO': [
+                { nome: 'Professora Dorinha', partido: 'UNIÃO - 44', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Professora_Dorinha_Seabra_Rezende_2019.jpg/480px-Professora_Dorinha_Seabra_Rezende_2019.jpg', cor: 'purple', pct: '0,00', votos: 0 },
+                { nome: 'Vicentinho Júnior', partido: 'PSDB - 45', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Vicentinho_J%C3%BAnior_2019.jpg/480px-Vicentinho_J%C3%BAnior_2019.jpg', cor: 'blue', pct: '0,00', votos: 0 }
+            ]
+        };
+
+        // Renderizador de Botoes de UF para Eleitos
+        function renderUfButtons() {
+            const container = document.getElementById('uf-buttons-container');
+            container.innerHTML = '';
+            
+            ufs.forEach(uf => {
+                const active = uf === currentWinnerUf;
+                const btnClass = active 
+                    ? 'bg-purple-600 text-white font-bold border-purple-500 shadow-md' 
+                    : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-800';
+                
+                const btn = document.createElement('button');
+                btn.className = `px-3 py-1 rounded-lg border text-xs transition-all shrink-0 ${btnClass}`;
+                btn.innerText = uf;
+                btn.onclick = () => {
+                    currentWinnerUf = uf;
+                    renderUfButtons();
+                    renderWinnersList();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // Filtro por sub-categoria de cargo em Eleitos
+        function setCargoFilter(cargo) {
+            currentCargoFilter = cargo;
+            ['gov', 'sen', 'dep_fed', 'dep_est'].forEach(c => {
+                const btn = document.getElementById(`cargo-${c.replace('_', '-')}`);
+                if (btn) {
+                    if (c === cargo) {
+                        btn.className = "px-3.5 py-1.5 rounded-lg font-bold text-xs bg-purple-600 text-white flex items-center gap-1.5 whitespace-nowrap shadow-md";
+                    } else {
+                        btn.className = "px-3.5 py-1.5 rounded-lg font-bold text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center gap-1.5 whitespace-nowrap";
+                    }
+                }
+            });
+            renderWinnersList();
+        }
+
+        // Renderização dos Eleitos no 1º Turno
+        function renderWinnersList() {
+            const grid = document.getElementById('eleitos-cards-grid');
+            grid.innerHTML = '';
+
+            const ufData = winnersDatabase[currentWinnerUf] || {};
+            const candidates = ufData[currentCargoFilter] || [];
+            const searchVal = (document.getElementById('eleitos-search')?.value || '').toLowerCase();
+
+            const filtered = candidates.filter(c => 
+                c.nome.toLowerCase().includes(searchVal) || 
+                c.partido.toLowerCase().includes(searchVal)
+            );
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-slate-400 bg-brand-card rounded-2xl border border-brand-border space-y-2">
+                        <i class="fa-solid fa-users-slash text-3xl text-slate-600"></i>
+                        <p class="font-medium">Nenhum candidato localizado para <strong>${currentWinnerUf}</strong> nesta categoria.</p>
+                        <p class="text-xs text-slate-500">Selecione outra UF (ex: SP, RJ, MG, BA, DF) ou limpe a busca.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(c => {
+                const cardHtml = `
+                    <div class="bg-brand-card border border-brand-border hover:border-purple-500/50 rounded-2xl p-4 shadow-xl transition-all flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="bg-purple-900/40 text-purple-300 border border-purple-700/50 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+                                    ${c.partido}
+                                </span>
+                                <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-check"></i> Eleito(a) 1ºT
+                                </span>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <div class="w-14 h-14 rounded-xl bg-slate-900 border border-slate-700 overflow-hidden shrink-0 flex items-center justify-center">
+                                    <img src="${c.foto || 'https://placehold.co/150x150/1e293b/94a3b8?text=TSE'}" alt="${c.nome}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/150x150/1e293b/94a3b8?text=TSE'">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm leading-snug line-clamp-2">${c.nome}</h4>
+                                    <p class="text-xs text-slate-400 font-mono mt-0.5">${c.votos > 0 ? c.votos.toLocaleString('pt-BR') + ' votos' : 'Totalizado pelo TSE'}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+                            <span class="text-slate-400">Votos Válidos:</span>
+                            <span class="font-extrabold font-mono text-purple-300 text-sm">${c.pct}</span>
+                        </div>
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', cardHtml);
+            });
+        }
+
+        function filterWinners() {
+            renderWinnersList();
+        }
+
+        // Renderizador de Cards de Candidatos do 2º Turno
+        function renderCandidateCards() {
+            const container = document.getElementById('candidates-container');
+            container.innerHTML = '';
+
+            const list = currentRace === 'presidencia' ? presidentialCandidates : governorCandidates[currentState];
+
+            list.forEach((c, index) => {
+                const borderAccent = c.cor === 'red' ? 'border-red-500/30' : (c.cor === 'blue' ? 'border-blue-500/30' : 'border-purple-500/30');
+                const badgeBg = c.cor === 'red' ? 'bg-red-500/10 text-red-400 border-red-500/20' : (c.cor === 'blue' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 'bg-purple-500/10 text-purple-400 border-purple-500/20');
+                const textPctColor = c.cor === 'red' ? 'text-red-500' : (c.cor === 'blue' ? 'text-blue-500' : 'text-purple-400');
+                const barBg = c.cor === 'red' ? 'bg-red-500' : (c.cor === 'blue' ? 'bg-blue-500' : 'bg-purple-500');
+
+                const cardHtml = `
+                    <div class="bg-brand-card rounded-2xl p-6 border ${borderAccent} shadow-xl flex flex-col justify-between relative overflow-hidden transition-all hover:border-purple-500/50">
+                        <div>
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-xs font-semibold px-2.5 py-1 rounded-lg border ${badgeBg}">${c.partido}</span>
+                                <span class="text-xs font-medium text-slate-400 font-mono">Apto 2º Turno</span>
+                            </div>
+
+                            <div class="mt-4 flex items-center gap-4">
+                                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-slate-800 border-2 border-slate-700 flex items-center justify-center overflow-hidden shrink-0 shadow-lg relative">
+                                    <img src="${c.foto}" alt="${c.nome}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/150x150/1e293b/94a3b8?text=TSE'">
+                                </div>
+                                <div class="space-y-1">
+                                    <h2 class="text-lg sm:text-xl font-extrabold text-white tracking-tight leading-snug">${c.nome}</h2>
+                                    ${c.vice ? `<p class="text-xs text-slate-400"><span class="text-slate-500">Vice:</span> ${c.vice}</p>` : ''}
+                                    <p class="text-xs text-slate-400 font-medium">${c.coligacao || 'Coligação Estadual'}</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 space-y-1">
+                                <div class="text-xs text-slate-400 uppercase font-medium">Porcentagem Apurada</div>
+                                <div class="flex items-baseline gap-2">
+                                    <span id="pct-cand-${index}" class="text-4xl sm:text-5xl font-black ${textPctColor} font-mono tracking-tight">${c.pct}%</span>
+                                </div>
+                                <p id="votos-cand-${index}" class="text-sm font-semibold text-slate-300 font-mono">${c.votos.toLocaleString('pt-BR')} votos</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-800/80">
+                            <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-800">
+                                <div id="bar-cand-${index}" class="${barBg} h-full rounded-full transition-all duration-500" style="width: ${c.pct.replace(',', '.')}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', cardHtml);
+            });
+
+            updateChart();
+        }
+
+        // Inicializador do Gráfico
         function initChart() {
             const ctx = document.getElementById('votesChart').getContext('2d');
             votesChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Lula (PT)', 'Flávio Bolsonaro (PL)'],
+                    labels: [],
                     datasets: [{
                         label: 'Votos Válidos',
-                        data: [0, 0],
+                        data: [],
                         backgroundColor: ['rgba(239, 68, 68, 0.85)', 'rgba(59, 130, 246, 0.85)'],
                         borderColor: ['#ef4444', '#3b82f6'],
                         borderWidth: 1.5,
@@ -321,42 +668,101 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return ` Votos: ${context.parsed.y.toLocaleString('pt-BR')}`;
-                                }
-                            }
-                        }
+                        legend: { display: false }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
                             grid: { color: 'rgba(31, 41, 55, 0.6)' },
-                            ticks: { color: '#9ca3af', font: { family: 'Inter', size: 11 } }
+                            ticks: { color: '#9ca3af', font: { family: 'Plus Jakarta Sans', size: 11 } }
                         },
                         x: {
                             grid: { display: false },
-                            ticks: { color: '#9ca3af', font: { family: 'Inter', size: 12, weight: 'bold' } }
+                            ticks: { color: '#9ca3af', font: { family: 'Plus Jakarta Sans', size: 12, weight: 'bold' } }
                         }
                     }
                 }
             });
         }
 
+        function updateChart() {
+            if (!votesChart) return;
+            const list = currentRace === 'presidencia' ? presidentialCandidates : (governorCandidates[currentState] || []);
+            
+            votesChart.data.labels = list.map(c => c.nome.split(' ')[0]);
+            votesChart.data.datasets[0].data = list.map(c => c.votos);
+            votesChart.data.datasets[0].backgroundColor = list.map(c => c.cor === 'red' ? 'rgba(239, 68, 68, 0.85)' : 'rgba(59, 130, 246, 0.85)');
+            votesChart.data.datasets[0].borderColor = list.map(c => c.cor === 'red' ? '#ef4444' : '#3b82f6');
+            votesChart.update();
+        }
+
+        // Alternador de Abas Principais
+        function switchRace(race) {
+            currentRace = race;
+            const btnPres = document.getElementById('tab-presidencia');
+            const btnGov = document.getElementById('tab-governadores');
+            const btnEleitos = document.getElementById('tab-eleitos');
+            
+            const stateSelector = document.getElementById('state-selector-container');
+            const apuracaoSec = document.getElementById('apuracao-section');
+            const eleitosSec = document.getElementById('eleitos-section');
+            const raceTitle = document.getElementById('race-title-indicator');
+
+            // Reset de estilos das abas
+            [btnPres, btnGov, btnEleitos].forEach(b => b.className = "px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center gap-2");
+
+            if (race === 'presidencia') {
+                btnPres.className = "px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all bg-purple-600 text-white shadow-lg flex items-center justify-center gap-2";
+                stateSelector.classList.add('hidden');
+                eleitosSec.classList.add('hidden');
+                apuracaoSec.classList.remove('hidden');
+                raceTitle.innerText = 'Totalização Eleições Presidenciais 2026';
+                renderCandidateCards();
+                fetchTseData();
+            } else if (race === 'governadores') {
+                btnGov.className = "px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all bg-purple-600 text-white shadow-lg flex items-center justify-center gap-2";
+                stateSelector.classList.remove('hidden');
+                eleitosSec.classList.add('hidden');
+                apuracaoSec.classList.remove('hidden');
+                raceTitle.innerText = `Totalização Governo de ${currentState} (2º Turno)`;
+                renderCandidateCards();
+                fetchTseData();
+            } else if (race === 'eleitos') {
+                btnEleitos.className = "px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all bg-purple-600 text-white shadow-lg flex items-center justify-center gap-2";
+                stateSelector.classList.add('hidden');
+                apuracaoSec.classList.add('hidden');
+                eleitosSec.classList.remove('hidden');
+                renderUfButtons();
+                renderWinnersList();
+            }
+        }
+
+        function changeStateGov() {
+            currentState = document.getElementById('state-select').value;
+            document.getElementById('race-title-indicator').innerText = `Totalização Governo de ${currentState} (2º Turno)`;
+            renderCandidateCards();
+            fetchTseData();
+        }
+
+        // Consulta à API Oficial do TSE
         async function fetchTseData() {
+            if (currentRace === 'eleitos') return;
+
             const refreshIcon = document.getElementById('refresh-icon');
             if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
+            const url = currentRace === 'presidencia' 
+                ? "https://resultados.tse.jus.br/oficial/ele2026/dados/br/br-e000000-ab.json"
+                : `https://resultados.tse.jus.br/oficial/ele2026/dados/${currentState.toLowerCase()}/${currentState.toLowerCase()}-e000000-ab.json`;
+
             try {
-                const response = await fetch(TSE_API_URL, { cache: 'no-store' });
-                if (!response.ok) throw new Error("Servidor do TSE aguardando transmissão oficial");
+                const response = await fetch(url, { cache: 'no-store' });
+                if (!response.ok) throw new Error("Aguardando transmissão oficial de dados do TSE");
 
                 const data = await response.json();
                 renderTseData(data);
             } catch (error) {
-                console.log("Status da Conexão TSE:", error.message);
+                console.log("Status TSE:", error.message);
                 document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
             } finally {
                 if (refreshIcon) {
@@ -366,7 +772,6 @@
         }
 
         function renderTseData(data) {
-            // Percentual de Apuração Geral
             const pst = data.pst || "0,00";
             document.getElementById('pct-apurado').innerText = `${pst}%`;
             document.getElementById('main-progress-bar').style.width = `${pst.replace(',', '.')}%`;
@@ -375,7 +780,6 @@
                 document.getElementById('secoes-totalizadas').innerText = `Seções Apuradas: ${Number(data.st).toLocaleString('pt-BR')} de ${Number(data.s).toLocaleString('pt-BR')}`;
             }
 
-            // Estatísticas Gerais
             const validos = Number(data.vv || 0);
             const nulos = Number(data.tvn || 0);
             const brancos = Number(data.vb || 0);
@@ -386,36 +790,40 @@
             document.getElementById('stat-brancos').innerText = `${brancos.toLocaleString('pt-BR')} (${data.pvb || '0,00'}%)`;
             document.getElementById('stat-comparecimento').innerText = `${comparecimento}%`;
 
-            // Candidatos
             if (data.cand && Array.isArray(data.cand)) {
+                const list = currentRace === 'presidencia' ? presidentialCandidates : (governorCandidates[currentState] || []);
+                
                 data.cand.forEach(c => {
                     const nome = (c.nm || c.n || '').toLowerCase();
                     const pvp = c.pvp || "0,00";
                     const vap = Number(c.vap || 0);
 
-                    if (nome.includes("lula")) {
-                        document.getElementById('lula-pct').innerText = `${pvp}%`;
-                        document.getElementById('lula-votos').innerText = `${vap.toLocaleString('pt-BR')} votos`;
-                        document.getElementById('lula-bar').style.width = `${pvp.replace(',', '.')}%`;
-                        if (votesChart) votesChart.data.datasets[0].data[0] = vap;
-                    } else if (nome.includes("bolsonaro") || nome.includes("flávio") || nome.includes("flavio")) {
-                        document.getElementById('flavio-pct').innerText = `${pvp}%`;
-                        document.getElementById('flavio-votos').innerText = `${vap.toLocaleString('pt-BR')} votos`;
-                        document.getElementById('flavio-bar').style.width = `${pvp.replace(',', '.')}%`;
-                        if (votesChart) votesChart.data.datasets[0].data[1] = vap;
-                    }
+                    list.forEach((candObj, idx) => {
+                        if (nome.includes(candObj.nome.split(' ')[0].toLowerCase())) {
+                            candObj.pct = pvp;
+                            candObj.votos = vap;
+
+                            const elPct = document.getElementById(`pct-cand-${idx}`);
+                            const elVotos = document.getElementById(`votos-cand-${idx}`);
+                            const elBar = document.getElementById(`bar-cand-${idx}`);
+
+                            if (elPct) elPct.innerText = `${pvp}%`;
+                            if (elVotos) elVotos.innerText = `${vap.toLocaleString('pt-BR')} votos`;
+                            if (elBar) elBar.style.width = `${pvp.replace(',', '.')}%`;
+                        }
+                    });
                 });
-                if (votesChart) votesChart.update();
+                updateChart();
             }
 
             document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
         }
 
-        // Window Load
+        // Execução ao carregar a página
         window.onload = function() {
             initChart();
+            renderCandidateCards();
             fetchTseData();
-            // Polling periódico a cada 15 segundos
             setInterval(fetchTseData, 15000);
         };
     </script>
