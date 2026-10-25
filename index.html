@@ -186,26 +186,26 @@
             </div>
         </div>
 
-        <!-- ================= APURAÇÃO OFICIAL TSE (1,75%) ================= -->
+        <!-- ================= APURAÇÃO OFICIAL TSE (1,82%) ================= -->
         <div id="apuracao-section" class="space-y-6 animate-fade-in">
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div class="glass-panel p-4 rounded-2xl flex flex-col justify-center">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Apurado (TSE Oficial)</span>
                     <div class="flex items-baseline gap-2">
-                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">1,75%</span>
+                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">1,82%</span>
                     </div>
                     <div class="w-full h-1 bg-white/5 rounded-full mt-2 overflow-hidden">
-                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out" style="width: 1.75%"></div>
+                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out" style="width: 1.82%"></div>
                     </div>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Válidos</span>
-                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">2.185.492</p>
+                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">2.272.910</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Nulos / Brancos</span>
-                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">65.120</p>
+                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">67.840</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Abstenção</span>
@@ -292,10 +292,10 @@
             return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
         }
 
-        // Dados oficiais TSE atualizados (1,75% apurado)
+        // Dados oficiais TSE atualizados (1,82% apurado)
         const presidentialCandidates = [
-            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '51,92', votos: 1134820, foto: generateSvgAvatar('Lula', '#ef4444') },
-            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,08', votos: 1050672, foto: generateSvgAvatar('Flávio', '#3b82f6') }
+            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '51,85', votos: 1178490, foto: generateSvgAvatar('Lula', '#ef4444') },
+            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,15', votos: 1094420, foto: generateSvgAvatar('Flávio', '#3b82f6') }
         ];
 
         const governorCandidates = {
@@ -464,9 +464,9 @@
                     renderCandidateCards(list);
                     updateChart();
                 }
-                showToast("Dados sincronizados com o TSE (1,75%).", 'success');
+                showToast("Dados sincronizados com o TSE (1,82%).", 'success');
             } catch (err) {
-                // Mantém os dados oficiais atualizados (1,75% apurado)
+                // Mantém os dados oficiais atualizados (1,82% apurado)
             } finally {
                 icon.classList.remove('animate-spin');
                 document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
