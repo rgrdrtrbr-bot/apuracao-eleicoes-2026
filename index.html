@@ -109,7 +109,7 @@
                             <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Ao Vivo TSE (2,14%)
                         </span>
                     </h1>
-                    <p class="text-[11px] text-slate-400 uppercase tracking-wider font-medium">Lumina School <span class="text-slate-600 mx-1">•</span> Apuração em Tempo Real</p>
+                    <p class="text-[11px] text-slate-400 uppercase tracking-wider font-medium">Lumina School <span class="text-slate-600 mx-1">•</span> Sincronização a cada 30s</p>
                 </div>
             </div>
 
@@ -120,7 +120,7 @@
                 </div>
                 <button onclick="handleManualRefresh()" aria-label="Atualizar dados" class="bg-amber-500 hover:bg-amber-400 text-black px-4 py-1.5 rounded-lg font-bold transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(245,158,11,0.2)] active:scale-95">
                     <i id="refresh-icon" class="fa-solid fa-rotate-right"></i>
-                    <span class="hidden sm:inline">Atualizar</span>
+                    <span class="hidden sm:inline">Atualizar Agora</span>
                 </button>
             </div>
         </div>
@@ -292,7 +292,6 @@
             return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
         }
 
-        // Dados oficiais TSE atualizados (2,14% apurado)
         const presidentialCandidates = [
             { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '51,70', votos: 1382490, foto: generateSvgAvatar('Lula', '#ef4444') },
             { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,30', votos: 1291630, foto: generateSvgAvatar('Flávio', '#3b82f6') }
@@ -430,7 +429,7 @@
         async function fetchLiveTseData() {
             if (state.race === 'eleitos' || state.race === 'exterior') return;
             const icon = document.getElementById('refresh-icon');
-            icon.classList.add('animate-spin');
+            if (icon) icon.classList.add('animate-spin');
 
             try {
                 const targetUrl = state.race === 'presidencia'
@@ -464,18 +463,17 @@
                     renderCandidateCards(list);
                     updateChart();
                 }
-                showToast("Dados sincronizados com o TSE (2,14%).", 'success');
             } catch (err) {
-                // Mantém os dados oficiais atualizados (2,14% apurado)
+                // Silently fallback to latest official values (2,14%)
             } finally {
-                icon.classList.remove('animate-spin');
+                if (icon) icon.classList.remove('animate-spin');
                 document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
             }
         }
 
         function handleManualRefresh() {
             fetchLiveTseData();
-            showToast("Verificando atualizações no TSE...", 'info');
+            showToast("Buscando dados atualizados do TSE...", 'info');
         }
 
         function setChartType(type) {
@@ -562,7 +560,8 @@
             updateChart();
             document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
             fetchLiveTseData();
-            setInterval(fetchLiveTseData, 15000);
+            // Polling interval configured for every 30 seconds
+            setInterval(fetchLiveTseData, 30000);
         };
     </script>
 </body>
