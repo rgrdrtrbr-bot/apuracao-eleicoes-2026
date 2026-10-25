@@ -42,9 +42,6 @@
         .glow-effect {
             box-shadow: 0 0 25px -5px rgba(59, 130, 246, 0.15);
         }
-        .glow-lumina {
-            box-shadow: 0 0 30px -5px rgba(139, 92, 246, 0.25);
-        }
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -340,7 +337,7 @@
 
     <!-- Lógica JavaScript e Dados Oficiais -->
     <script>
-        // Dados dos Candidatos da Presidência (2º Turno)
+        // Dados dos Candidatos da Presidência (2º Turno Oficial TSE 2026)
         const presidentialCandidates = [
             {
                 nome: 'Luiz Inácio Lula da Silva',
@@ -356,7 +353,7 @@
                 nome: 'Flávio Bolsonaro',
                 partido: 'PL - 22',
                 coligacao: 'Pelo Bem do Brasil',
-                vice: 'Hamilton Mourão',
+                vice: 'Alfredo Gaspar',
                 cor: 'blue',
                 pct: '0,00',
                 votos: 0,
@@ -367,28 +364,28 @@
         // Dados dos Governadores no 2º Turno (AC, AM, DF, ES, RN, TO)
         const governorCandidates = {
             'AC': [
-                { nome: 'Mailza Assis', partido: 'PP - 11', coligacao: 'Acre para Todos', vice: 'Tião Bocalom', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Mailza+Assis' },
-                { nome: 'Alan Rick', partido: 'REPUBLICANOS - 10', coligacao: 'União pelo Acre', vice: 'Ney Amorim', cor: 'purple', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Alan+Rick' }
+                { nome: 'Mailza Assis', partido: 'PP - 11', coligacao: 'Acre para Todos', vice: 'Tião Bocalom', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Mailza_Gomes_em_2019.jpg/480px-Mailza_Gomes_em_2019.jpg' },
+                { nome: 'Alan Rick', partido: 'REPUBLICANOS - 10', coligacao: 'União pelo Acre', vice: 'Ney Amorim', cor: 'purple', pct: '0,00', votos: 0, foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Alan_Rick_2019.jpg/480px-Alan_Rick_2019.jpg' }
             ],
             'AM': [
-                { nome: 'Omar Aziz', partido: 'PSD - 55', coligacao: 'Avança Amazonas', vice: 'Marcelo Ramos', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Omar+Aziz' },
+                { nome: 'Omar Aziz', partido: 'PSD - 55', coligacao: 'Avança Amazonas', vice: 'Marcelo Ramos', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Omar_Aziz_2019.jpg/480px-Omar_Aziz_2019.jpg' },
                 { nome: 'Professora Maria do Carmo', partido: 'PL - 22', coligacao: 'Direita Unida AM', vice: 'Alberto Neto', cor: 'red', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Maria+do+Carmo' }
             ],
             'DF': [
-                { nome: 'Celina Leão', partido: 'PP - 11', coligacao: 'DF no Rumo Certo', vice: 'Ibaneis Rocha', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Celina+Le%C3%A3o' },
-                { nome: 'Leandro Grass', partido: 'PT - 13', coligacao: 'Federação Brasil da Esperança', vice: 'Olgamir Amado', cor: 'red', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Leandro+Grass' }
+                { nome: 'Celina Leão', partido: 'PP - 11', coligacao: 'DF no Rumo Certo', vice: 'Ibaneis Rocha', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Celina_Le%C3%A3o_2019.jpg/480px-Celina_Le%C3%A3o_2019.jpg' },
+                { nome: 'Leandro Grass', partido: 'PT - 13', coligacao: 'Federação Brasil da Esperança', vice: 'Olgamir Amado', cor: 'red', pct: '0,00', votos: 0, foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Leandro_Grass.jpg/480px-Leandro_Grass.jpg' }
             ],
             'ES': [
-                { nome: 'Lorenzo Pazolini', partido: 'REPUBLICANOS - 10', coligacao: 'Vitória do Espírito Santo', vice: 'Cris Samorini', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Lorenzo+Pazolini' },
-                { nome: 'Ricardo Ferraço', partido: 'MDB - 15', coligacao: 'União pelo ES', vice: 'Arnaldinho Borgo', cor: 'purple', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Ricardo+Ferra%C3%A7o' }
+                { nome: 'Lorenzo Pazolini', partido: 'REPUBLICANOS - 10', coligacao: 'Vitória do Espírito Santo', vice: 'Cris Samorini', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Lorenzo_Pazolini.jpg/480px-Lorenzo_Pazolini.jpg' },
+                { nome: 'Ricardo Ferraço', partido: 'MDB - 15', coligacao: 'União pelo ES', vice: 'Arnaldinho Borgo', cor: 'purple', pct: '0,00', votos: 0, foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Ricardo_Ferra%C3%A7o_2015.jpg/480px-Ricardo_Ferra%C3%A7o_2015.jpg' }
             ],
             'RN': [
-                { nome: 'Allyson Bezerra', partido: 'UNIÃO - 44', coligacao: 'Mudar RN', vice: 'Marcos Medeiros', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Allyson+Bezerra' },
+                { nome: 'Allyson Bezerra', partido: 'UNIÃO - 44', coligacao: 'Mudar RN', vice: 'Marcos Medeiros', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Allyson_Bezerra.jpg/480px-Allyson_Bezerra.jpg' },
                 { nome: 'Cadu de Lula', partido: 'PT - 13', coligacao: 'RN da Esperança', vice: 'Samanda Alves', cor: 'red', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Cadu+de+Lula' }
             ],
             'TO': [
-                { nome: 'Professora Dorinha', partido: 'UNIÃO - 44', coligacao: 'União pelo Tocantins', vice: 'Vicentinho Alves', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Prof+Dorinha' },
-                { nome: 'Vicentinho Júnior', partido: 'PSDB - 45', coligacao: 'Renova Tocantins', vice: 'Léo Barbosa', cor: 'purple', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Vicentinho+Jr' }
+                { nome: 'Professora Dorinha', partido: 'UNIÃO - 44', coligacao: 'União pelo Tocantins', vice: 'Vicentinho Alves', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Professora_Dorinha_Seabra_Rezende_2019.jpg/480px-Professora_Dorinha_Seabra_Rezende_2019.jpg' },
+                { nome: 'Vicentinho Júnior', partido: 'PSDB - 45', coligacao: 'Renova Tocantins', vice: 'Léo Barbosa', cor: 'purple', pct: '0,00', votos: 0, foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Vicentinho_J%C3%BAnior_2019.jpg/480px-Vicentinho_J%C3%BAnior_2019.jpg' }
             ]
         };
 
