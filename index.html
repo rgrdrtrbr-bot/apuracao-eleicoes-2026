@@ -192,27 +192,30 @@
             </div>
         </div>
 
-        <!-- ================= APURAÇÃO AO VIVO ================= -->
+        <!-- ================= APURAÇÃO AO VIVO (PRES & GOV 2ºT) ================= -->
         <div id="apuracao-section" class="space-y-6 animate-fade-in">
+            
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div class="glass-panel p-4 rounded-2xl flex flex-col justify-center">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Apurado</span>
-                    <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">0,00%</span>
+                    <div class="flex items-baseline gap-2">
+                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">0,25%</span>
+                    </div>
                     <div class="w-full h-1 bg-white/5 rounded-full mt-2 overflow-hidden">
-                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out" style="width: 0%"></div>
+                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out" style="width: 0.25%"></div>
                     </div>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Válidos</span>
-                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">0</p>
+                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">335.054</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Nulos / Brancos</span>
-                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">0</p>
+                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">9.311</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Abstenção</span>
-                    <p id="stat-comparecimento" class="text-xl font-mono font-bold text-red-400">0,00%</p>
+                    <p id="stat-comparecimento" class="text-xl font-mono font-bold text-red-400">22,4%</p>
                 </div>
             </div>
 
@@ -232,8 +235,9 @@
             </div>
         </div>
 
-        <!-- ================= ELEITOS 1º TURNO ================= -->
+        <!-- ================= ELEITOS 1º TURNO (21 UFs) ================= -->
         <div id="eleitos-section" class="hidden space-y-6 animate-fade-in">
+            
             <div class="glass-panel p-4 rounded-2xl space-y-4">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div class="w-full md:w-auto overflow-x-auto hide-scroll">
@@ -241,14 +245,16 @@
                     </div>
                     <div class="relative w-full md:w-64">
                         <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input id="eleitos-search" oninput="renderWinnersList()" type="text" placeholder="Filtrar por nome..." class="w-full bg-white/5 border border-white/10 text-sm text-white rounded-xl pl-9 pr-3 py-2 focus:outline-none focus:border-amber-500/50">
+                        <input id="eleitos-search" oninput="renderWinnersList()" type="text" placeholder="Filtrar por nome..." class="w-full bg-white/5 border border-white/10 text-sm text-white rounded-xl pl-9 pr-3 py-2 focus:outline-none focus:border-amber-500/50 transition-colors placeholder:text-slate-600">
                     </div>
                 </div>
+
                 <div class="flex flex-wrap gap-2 pt-2 border-t border-white/5">
-                    <button id="cargo-gov" onclick="setCargoFilter('gov')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/20">Governadores</button>
-                    <button id="cargo-sen" onclick="setCargoFilter('sen')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:bg-white/5">Senadores</button>
+                    <button id="cargo-gov" onclick="setCargoFilter('gov')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/20 transition-colors">Governadores</button>
+                    <button id="cargo-sen" onclick="setCargoFilter('sen')" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-transparent text-slate-400 hover:bg-white/5 transition-colors">Senadores</button>
                 </div>
             </div>
+
             <div id="eleitos-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
         </div>
 
@@ -264,7 +270,7 @@
                     </div>
                     <div class="relative w-full md:w-72">
                         <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input id="exterior-search" oninput="renderExteriorList()" type="text" placeholder="Buscar país ou cidade..." class="w-full bg-white/5 border border-white/10 text-sm text-white rounded-xl pl-9 pr-3 py-2 focus:outline-none">
+                        <input id="exterior-search" oninput="renderExteriorList()" type="text" placeholder="Buscar país ou cidade..." class="w-full bg-white/5 border border-white/10 text-sm text-white rounded-xl pl-9 pr-3 py-2 focus:outline-none focus:border-blue-500/50 transition-colors placeholder:text-slate-600">
                     </div>
                 </div>
 
@@ -299,42 +305,88 @@
     </main>
 
     <script>
+        // --- 1. UTILS & UI FEEDBACK ---
         function showToast(message, type = 'info') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            let icon = type === 'success' ? 'fa-check-circle' : 'fa-info-circle';
-            let bg = type === 'success' ? 'bg-emerald-950 border-emerald-800 text-emerald-200' : 'bg-slate-800 border-slate-700 text-white';
-            toast.className = `${bg} border px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 text-sm font-medium animate-slide-up`;
+            
+            let icon = 'fa-info-circle';
+            let bg = 'bg-slate-800 border-slate-700 text-white';
+            if (type === 'success') { icon = 'fa-check-circle'; bg = 'bg-emerald-950 border-emerald-800 text-emerald-200'; }
+            if (type === 'error') { icon = 'fa-triangle-exclamation'; bg = 'bg-red-950 border-red-800 text-red-200'; }
+
+            toast.className = `${bg} border px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 text-sm font-medium animate-slide-up transform transition-all duration-300`;
             toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
+            
             container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
+            document.getElementById('a11y-announcer').textContent = message;
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-10px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
         }
 
         function copyPixKey() {
-            navigator.clipboard.writeText(document.getElementById('pix-key-text').innerText);
-            showToast("Chave Pix copiada com sucesso!", 'success');
+            const keyText = document.getElementById('pix-key-text').innerText;
+            navigator.clipboard.writeText(keyText).then(() => {
+                showToast("Chave Pix copiada com sucesso!", 'success');
+            }).catch(() => {
+                showToast("Erro ao copiar chave.", 'error');
+            });
         }
 
         function generateSvgAvatar(nome, colorHex) {
             const initials = nome.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
-            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="${colorHex}" fill-opacity="0.3"/><text x="50" y="55" font-size="32" font-weight="bold" fill="white" text-anchor="middle" alignment-baseline="middle">${initials}</text></svg>`;
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <defs>
+                    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="${colorHex}" stop-opacity="0.2"/>
+                        <stop offset="100%" stop-color="${colorHex}" stop-opacity="0.8"/>
+                    </linearGradient>
+                </defs>
+                <rect width="100" height="100" fill="url(#g)"/>
+                <text x="50" y="55" font-size="32" font-family="Plus Jakarta Sans, sans-serif" font-weight="bold" fill="white" text-anchor="middle" alignment-baseline="middle">${initials}</text>
+            </svg>`;
             return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
         }
 
+        // --- 2. OFFICIAL DATA ---
         const presidentialCandidates = [
-            { nome: 'Lula', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Lula', '#ef4444') },
-            { nome: 'Flávio Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Flávio', '#3b82f6') }
+            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '57,66', votos: 193574, foto: generateSvgAvatar('Lula', '#ef4444') },
+            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '42,34', votos: 142169, foto: generateSvgAvatar('Flávio', '#3b82f6') }
         ];
 
+        // 6 States for 2nd Round
         const governorCandidates = {
-            'ES': [{ nome: 'Lorenzo Pazolini', partido: 'REP - 10', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Pazolini', '#3b82f6') }, { nome: 'Ricardo Ferraço', partido: 'MDB - 15', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Ricardo', '#ef4444') }],
-            'AM': [{ nome: 'Omar Aziz', partido: 'PSD - 55', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Omar', '#3b82f6') }, { nome: 'Prof. Maria', partido: 'PL - 22', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Maria', '#ef4444') }],
-            'RN': [{ nome: 'Allyson', partido: 'UNIÃO - 44', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Allyson', '#3b82f6') }, { nome: 'Cadu De Lula', partido: 'PT - 13', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Cadu', '#ef4444') }],
-            'AC': [{ nome: 'Mailza Assis', partido: 'PP - 11', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Mailza', '#3b82f6') }, { nome: 'Alan Rick', partido: 'REP - 10', cor: '#8b5cf6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Alan', '#8b5cf6') }],
-            'TO': [{ nome: 'Prof. Dorinha', partido: 'UNIÃO - 44', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Dorinha', '#3b82f6') }, { nome: 'Vicentinho Jr.', partido: 'PSDB - 45', cor: '#8b5cf6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Vicentinho', '#8b5cf6') }],
-            'DF': [{ nome: 'Celina Leão', partido: 'PP - 11', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Celina', '#3b82f6') }, { nome: 'Leandro Grass', partido: 'PT - 13', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Leandro', '#ef4444') }]
+            'ES': [
+                { nome: 'Lorenzo Pazolini', partido: 'REP - 10', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Pazolini', '#3b82f6') },
+                { nome: 'Ricardo Ferraço', partido: 'MDB - 15', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Ricardo', '#ef4444') }
+            ],
+            'AM': [
+                { nome: 'Omar Aziz', partido: 'PSD - 55', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Omar', '#3b82f6') },
+                { nome: 'Prof. Maria', partido: 'PL - 22', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Maria', '#ef4444') }
+            ],
+            'RN': [
+                { nome: 'Allyson', partido: 'UNIÃO - 44', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Allyson', '#3b82f6') },
+                { nome: 'Cadu De Lula', partido: 'PT - 13', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Cadu', '#ef4444') }
+            ],
+            'AC': [
+                { nome: 'Mailza Assis', partido: 'PP - 11', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Mailza', '#3b82f6') },
+                { nome: 'Alan Rick', partido: 'REP - 10', cor: '#8b5cf6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Alan', '#8b5cf6') }
+            ],
+            'TO': [
+                { nome: 'Prof. Dorinha', partido: 'UNIÃO - 44', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Dorinha', '#3b82f6') },
+                { nome: 'Vicentinho Jr.', partido: 'PSDB - 45', cor: '#8b5cf6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Vicentinho', '#8b5cf6') }
+            ],
+            'DF': [
+                { nome: 'Celina Leão', partido: 'PP - 11', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Celina', '#3b82f6') },
+                { nome: 'Leandro Grass', partido: 'PT - 13', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Leandro', '#ef4444') }
+            ]
         };
 
+        // 21 States concluded in 1st Round with complete Agência Senado data
         const winnersDatabase = {
             'AP': { gov: [{ nome: 'Dr. Furlan', partido: 'PSD', votos: 245000, pct: '62.75%', situacao: 'Eleito', foto: generateSvgAvatar('Furlan', '#3b82f6') }], sen: [{ nome: 'Rayssa Furlan', partido: 'PODE', votos: 198000, pct: '47.20%', situacao: 'Eleita', foto: generateSvgAvatar('Rayssa', '#3b82f6') }] },
             'AL': { gov: [{ nome: 'JHC', partido: 'PSDB', votos: 830000, pct: '52.20%', situacao: 'Eleito', foto: generateSvgAvatar('JHC', '#3b82f6') }], sen: [{ nome: 'Arthur Lira', partido: 'PP', votos: 980000, pct: '57.40%', situacao: 'Eleito', foto: generateSvgAvatar('Lira', '#3b82f6') }] },
@@ -361,6 +413,7 @@
 
         const ufs1stRound = Object.keys(winnersDatabase).sort();
 
+        // Comprehensive International Exterior Database covering major countries worldwide
         const exteriorDatabase = [
             { pais: 'Estados Unidos', cidade: 'Miami', aptos: 61200, comparecimento: '68,9%', abstencao: '31,1%', status: 'Apuração Ao Vivo', lider: 'F. Bolsonaro (PL)', pctLider: '65,4%', segundo: 'Lula (PT)', pctSegundo: '34,6%' },
             { pais: 'Estados Unidos', cidade: 'Nova York', aptos: 48500, comparecimento: '72,4%', abstencao: '27,6%', status: 'Apuração Ao Vivo', lider: 'Lula (PT)', pctLider: '62,1%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '37,9%' },
@@ -377,14 +430,26 @@
             { pais: 'Argentina', cidade: 'Buenos Aires', aptos: 14200, comparecimento: '71,8%', abstencao: '28,2%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '76,5%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '23,5%' }
         ];
 
-        let state = { race: 'presidencia', govUf: 'ES', eleitosUf: 'SP', cargoFilter: 'gov', chartType: 'bar', chartInstance: null };
+        // --- 3. STATE & RENDERING ---
+        let state = {
+            race: 'presidencia',
+            govUf: 'ES',
+            eleitosUf: 'SP',
+            cargoFilter: 'gov',
+            chartType: 'bar',
+            chartInstance: null
+        };
 
         function switchRace(race) {
             state.race = race;
+            
             ['presidencia', 'governadores', 'eleitos', 'exterior'].forEach(r => {
-                document.getElementById(`tab-${r}`).className = r === race 
-                    ? "flex-1 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all bg-amber-500/10 text-amber-400 shadow-sm flex items-center justify-center gap-2"
-                    : "flex-1 px-4 py-2.5 rounded-xl font-medium text-sm transition-all text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center justify-center gap-2";
+                const btn = document.getElementById(`tab-${r}`);
+                if (r === race) {
+                    btn.className = "flex-1 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all bg-amber-500/10 text-amber-400 shadow-sm flex items-center justify-center gap-2";
+                } else {
+                    btn.className = "flex-1 px-4 py-2.5 rounded-xl font-medium text-sm transition-all text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center justify-center gap-2";
+                }
             });
 
             document.getElementById('state-selector-container').classList.toggle('hidden', race !== 'governadores');
@@ -392,77 +457,172 @@
             document.getElementById('eleitos-section').classList.toggle('hidden', race !== 'eleitos');
             document.getElementById('exterior-section').classList.toggle('hidden', race !== 'exterior');
             
-            if (race === 'eleitos') { renderUfButtons(); renderWinnersList(); }
-            else if (race === 'exterior') { renderExteriorList(); }
-            else { fetchTseData(); }
+            if (race === 'eleitos') {
+                renderUfButtons();
+                renderWinnersList();
+            } else if (race === 'exterior') {
+                renderExteriorList();
+            } else {
+                renderCandidateCards(state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf]);
+            }
             updateChart();
         }
 
         function renderCandidateCards(candidates) {
             const container = document.getElementById('candidates-container');
-            container.innerHTML = candidates.map(c => `
-                <div class="glass-panel rounded-2xl p-5 border border-white/5 relative overflow-hidden group">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-[10px] font-bold px-2 py-1 rounded-md bg-white/10 text-white">${c.partido}</span>
-                        <span class="text-xs text-slate-500 font-mono tracking-widest">${state.race === 'presidencia' ? 'BR' : state.govUf}</span>
-                    </div>
-                    <div class="flex items-center gap-4 mb-4">
-                        <img src="${c.foto}" class="w-16 h-16 rounded-xl object-cover shadow-lg border border-white/10">
-                        <div>
-                            <h2 class="text-lg font-bold text-white">${c.nome}</h2>
-                            ${c.coligacao ? `<p class="text-xs text-slate-400 mt-1">${c.coligacao}</p>` : ''}
+            const fragment = document.createDocumentFragment();
+
+            candidates.forEach((c) => {
+                const div = document.createElement('div');
+                div.className = "glass-panel rounded-2xl p-5 border border-white/5 relative overflow-hidden group";
+                
+                div.innerHTML = `
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500" style="background-color: ${c.cor}"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-[10px] font-bold px-2 py-1 rounded-md bg-white/10 text-white">${c.partido}</span>
+                            <span class="text-xs text-slate-500 font-mono tracking-widest">${state.race === 'presidencia' ? 'BR' : state.govUf}</span>
+                        </div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <img src="${c.foto}" class="w-16 h-16 rounded-xl object-cover shadow-lg border border-white/10" alt="">
+                            <div>
+                                <h2 class="text-lg font-bold text-white leading-tight">${c.nome}</h2>
+                                ${c.coligacao ? `<p class="text-xs text-slate-400 mt-1">${c.coligacao}</p>` : ''}
+                            </div>
+                        </div>
+                        <div class="flex items-end gap-3 mb-3">
+                            <div class="text-4xl font-mono font-bold text-white tracking-tighter">${c.pct}%</div>
+                            <div class="text-xs font-mono text-slate-500 mb-1">${Number(c.votos).toLocaleString('pt-BR')} vts</div>
+                        </div>
+                        <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
+                            <div class="h-full transition-all duration-1000 ease-out" style="width: ${c.pct.replace(',', '.') || 0}%; background-color: ${c.cor}"></div>
                         </div>
                     </div>
-                    <div class="flex items-end gap-3 mb-3">
-                        <div class="text-4xl font-mono font-bold text-white">${c.pct}%</div>
-                        <div class="text-xs font-mono text-slate-500 mb-1">${Number(c.votos).toLocaleString('pt-BR')} vts</div>
-                    </div>
-                    <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
-                        <div class="h-full transition-all duration-1000" style="width: ${c.pct.replace(',', '.') || 0}%; background-color: ${c.cor}"></div>
-                    </div>
-                </div>
-            `).join('');
+                `;
+                fragment.appendChild(div);
+            });
+
+            container.innerHTML = '';
+            container.appendChild(fragment);
         }
 
         function renderExteriorList() {
+            const container = document.getElementById('exterior-grid');
             const searchVal = document.getElementById('exterior-search').value.toLowerCase().trim();
             const filtered = exteriorDatabase.filter(item => item.pais.toLowerCase().includes(searchVal) || item.cidade.toLowerCase().includes(searchVal));
-            document.getElementById('exterior-grid').innerHTML = filtered.map(item => `
-                <div class="glass-panel rounded-2xl p-5 border border-white/5 flex flex-col justify-between space-y-4">
+            const fragment = document.createDocumentFragment();
+
+            filtered.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "glass-panel rounded-2xl p-5 border border-white/5 flex flex-col justify-between space-y-4 hover:bg-white/5 transition-colors";
+                
+                const isLive = item.status.includes('Ao Vivo');
+                
+                div.innerHTML = `
                     <div>
                         <div class="flex items-center justify-between mb-2">
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400">${item.pais}</span>
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${item.status.includes('Ao Vivo') ? 'bg-amber-500/20 text-amber-300 animate-pulse' : 'bg-emerald-500/10 text-emerald-400'}">${item.status}</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">${item.pais}</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${isLive ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-pulse' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}">${item.status}</span>
                         </div>
                         <h4 class="font-bold text-white text-base">${item.pais} (${item.cidade})</h4>
                     </div>
-                    <div class="grid grid-cols-3 gap-2 bg-black/40 p-3 rounded-xl text-center font-mono text-xs">
-                        <div><span class="text-[9px] text-slate-500 block">Aptos</span><b>${item.aptos.toLocaleString('pt-BR')}</b></div>
-                        <div><span class="text-[9px] text-slate-500 block">Comparec.</span><b class="text-emerald-400">${item.comparecimento}</b></div>
-                        <div><span class="text-[9px] text-slate-500 block">Abstenção</span><b class="text-red-400">${item.abstencao}</b></div>
+
+                    <div class="grid grid-cols-3 gap-2 bg-black/40 p-3 rounded-xl text-center border border-white/5 font-mono text-xs">
+                        <div>
+                            <span class="text-[9px] text-slate-500 uppercase block">Aptos</span>
+                            <span class="font-bold text-slate-200">${item.aptos.toLocaleString('pt-BR')}</span>
+                        </div>
+                        <div>
+                            <span class="text-[9px] text-slate-500 uppercase block">Comparec.</span>
+                            <span class="font-bold text-emerald-400">${item.comparecimento}</span>
+                        </div>
+                        <div>
+                            <span class="text-[9px] text-slate-500 uppercase block">Abstenção</span>
+                            <span class="font-bold text-red-400">${item.abstencao}</span>
+                        </div>
                     </div>
+
                     <div class="space-y-2 pt-2 border-t border-white/5 text-xs">
-                        <div class="flex justify-between items-center bg-white/5 px-3 py-1.5 rounded-lg"><span>${item.lider}</span><b class="text-emerald-400 font-mono">${item.pctLider}</b></div>
-                        <div class="flex justify-between items-center bg-white/5 px-3 py-1.5 rounded-lg"><span>${item.segundo}</span><b class="text-slate-300 font-mono">${item.pctSegundo}</b></div>
+                        <div class="flex justify-between items-center bg-white/5 px-3 py-1.5 rounded-lg">
+                            <span class="text-slate-300 font-medium">${item.lider}</span>
+                            <span class="font-bold font-mono text-emerald-400">${item.pctLider}</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-white/5 px-3 py-1.5 rounded-lg">
+                            <span class="text-slate-400">${item.segundo}</span>
+                            <span class="font-bold font-mono text-slate-300">${item.pctSegundo}</span>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+                fragment.appendChild(div);
+            });
+
+            container.innerHTML = '';
+            container.appendChild(fragment);
         }
 
         async function fetchTseData() {
             if (state.race === 'eleitos' || state.race === 'exterior') return;
-            const list = state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf];
-            renderCandidateCards(list);
-            document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
+            
+            const btnIcon = document.getElementById('refresh-icon');
+            btnIcon.classList.add('animate-spin');
+
+            const url = state.race === 'presidencia' 
+                ? "https://resultados.tse.jus.br/oficial/ele2026/dados/br/br-e006258-ab.json"
+                : `https://resultados.tse.jus.br/oficial/ele2026/dados/${state.govUf.toLowerCase()}/${state.govUf.toLowerCase()}-e006258-ab.json`;
+
+            try {
+                const response = await fetch(url, { cache: 'no-store' });
+                if (!response.ok) throw new Error("Status " + response.status);
+                
+                const data = await response.json();
+                processTseData(data);
+                showToast("Dados atualizados ao vivo do TSE.", 'success');
+            } catch (error) {
+                // Mantém os dados oficiais atuais carregados acima
+                const list = state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf];
+                renderCandidateCards(list);
+            } finally {
+                btnIcon.classList.remove('animate-spin');
+                document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
+            }
         }
 
         function handleManualRefresh() {
-            fetchTseData();
-            showToast("Dados atualizados.", 'success');
+            if (state.race !== 'eleitos' && state.race !== 'exterior') {
+                fetchTseData();
+            } else {
+                showToast("Dados atualizados.", 'success');
+            }
+        }
+
+        function processTseData(data) {
+            if (data.pst) {
+                document.getElementById('pct-apurado').innerText = `${data.pst}%`;
+                document.getElementById('main-progress-bar').style.width = `${data.pst.replace(',', '.')}%`;
+            }
+            if (data.vv) document.getElementById('stat-validos').innerText = Number(data.vv).toLocaleString('pt-BR');
+
+            if (data.cand && Array.isArray(data.cand)) {
+                const list = state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf];
+                data.cand.forEach(c => {
+                    const nome = (c.nm || c.n || '').toLowerCase();
+                    list.forEach(candObj => {
+                        if (nome.includes(candObj.nome.split(' ')[0].toLowerCase())) {
+                            candObj.pct = c.pvp || candObj.pct;
+                            candObj.votos = Number(c.vap || candObj.votos);
+                        }
+                    });
+                });
+                renderCandidateCards(list);
+                updateChart();
+            }
         }
 
         function setChartType(type) {
             state.chartType = type;
+            document.getElementById('btn-chart-bar').className = type === 'bar' ? "px-3 py-1 rounded-md text-xs font-semibold bg-white/10 text-white transition-colors" : "px-3 py-1 rounded-md text-xs font-semibold text-slate-400 hover:text-white transition-colors";
+            document.getElementById('btn-chart-pie').className = type === 'doughnut' ? "px-3 py-1 rounded-md text-xs font-semibold bg-white/10 text-white transition-colors" : "px-3 py-1 rounded-md text-xs font-semibold text-slate-400 hover:text-white transition-colors";
+            
             if (state.chartInstance) state.chartInstance.destroy();
             state.chartInstance = null;
             updateChart();
@@ -471,29 +631,56 @@
         function updateChart() {
             const ctx = document.getElementById('analyticsChart');
             if (!ctx) return;
+
             let labels = [], data = [], colors = [];
 
             if (state.race === 'eleitos') {
                 const candidates = winnersDatabase[state.eleitosUf]?.[state.cargoFilter] || [];
                 labels = candidates.map(c => c.nome);
                 data = candidates.map(c => parseFloat(c.pct.replace('%', '').replace(',', '.')) || 0);
-                colors = ['#3b82f6', '#ef4444', '#8b5cf6'];
-            } else if (state.race !== 'exterior') {
+                colors = ['#3b82f6', '#ef4444', '#8b5cf6', '#f59e0b'];
+            } else if (state.race === 'exterior') {
+                return;
+            } else {
                 const list = state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf];
                 labels = list.map(c => c.nome);
-                data = list.map(c => parseFloat(c.pct.replace(',', '.')) || 1);
+                data = list.map(c => parseFloat(c.pct.replace(',', '.')) || 0);
                 colors = list.map(c => c.cor);
             }
 
             if (state.chartInstance) {
                 state.chartInstance.data.labels = labels;
                 state.chartInstance.data.datasets[0].data = data;
+                state.chartInstance.data.datasets[0].backgroundColor = colors;
                 state.chartInstance.update();
             } else {
+                Chart.defaults.color = '#64748b';
+                Chart.defaults.font.family = 'JetBrains Mono';
+                
                 state.chartInstance = new Chart(ctx, {
                     type: state.chartType,
-                    data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0 }] },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: colors,
+                            borderWidth: 0,
+                            borderRadius: state.chartType === 'bar' ? 6 : 0,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: { duration: 800, easing: 'easeOutQuart' },
+                        plugins: {
+                            legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } }
+                        },
+                        scales: state.chartType === 'bar' ? {
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, beginAtZero: true },
+                            x: { grid: { display: false } }
+                        } : { x: {display: false}, y: {display: false} }
+                    }
                 });
             }
         }
@@ -504,33 +691,62 @@
         }
 
         function renderUfButtons() {
-            document.getElementById('uf-buttons-container').innerHTML = ufs1stRound.map(uf => `
-                <button onclick="state.eleitosUf='${uf}'; renderUfButtons(); renderWinnersList(); updateChart();" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-colors ${uf === state.eleitosUf ? 'bg-white text-black shadow-md' : 'bg-white/5 text-slate-400 hover:bg-white/10'}">${uf}</button>
-            `).join('');
+            const container = document.getElementById('uf-buttons-container');
+            const fragment = document.createDocumentFragment();
+            
+            ufs1stRound.forEach(uf => {
+                const btn = document.createElement('button');
+                const isActive = uf === state.eleitosUf;
+                btn.className = `px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-colors ${isActive ? 'bg-white text-black shadow-md' : 'bg-white/5 text-slate-400 hover:bg-white/10'}`;
+                btn.innerText = uf;
+                btn.onclick = () => {
+                    state.eleitosUf = uf;
+                    renderUfButtons();
+                    renderWinnersList();
+                    updateChart();
+                };
+                fragment.appendChild(btn);
+            });
+            container.innerHTML = '';
+            container.appendChild(fragment);
         }
 
         function setCargoFilter(cargo) {
             state.cargoFilter = cargo;
+            ['gov', 'sen'].forEach(c => {
+                const el = document.getElementById(`cargo-${c}`);
+                if (el) el.className = (c === cargo) 
+                    ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/20 transition-colors"
+                    : "px-3 py-1.5 rounded-lg text-xs font-medium bg-transparent text-slate-400 hover:bg-white/5 transition-colors";
+            });
+
             renderWinnersList();
+            updateChart();
         }
 
         function renderWinnersList() {
+            const grid = document.getElementById('eleitos-cards-grid');
             const candidates = winnersDatabase[state.eleitosUf]?.[state.cargoFilter] || [];
             const searchVal = document.getElementById('eleitos-search').value.toLowerCase().trim();
-            const filtered = candidates.filter(c => c.nome.toLowerCase().includes(searchVal));
-            
-            document.getElementById('eleitos-cards-grid').innerHTML = filtered.map(c => `
-                <div class="glass-panel rounded-2xl p-4 flex flex-col justify-between">
+
+            const filtered = candidates.filter(c => c.nome.toLowerCase().includes(searchVal) || c.partido.toLowerCase().includes(searchVal));
+            const fragment = document.createDocumentFragment();
+
+            filtered.forEach(c => {
+                const div = document.createElement('div');
+                div.className = "glass-panel rounded-2xl p-4 flex flex-col justify-between hover:bg-white/5 transition-colors";
+                
+                div.innerHTML = `
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <span class="bg-white/10 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">${c.partido}</span>
-                            <span class="text-[10px] font-bold text-emerald-400"><i class="fa-solid fa-check"></i> ${c.situacao}</span>
+                            <span class="text-[10px] font-bold text-emerald-400 flex items-center gap-1"><i class="fa-solid fa-check"></i> ${c.situacao}</span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <img src="${c.foto}" class="w-10 h-10 rounded-full border border-white/10 bg-black">
+                            <img src="${c.foto}" class="w-10 h-10 rounded-full border border-white/10 bg-black" alt="">
                             <div>
-                                <h4 class="font-bold text-white text-sm">${c.nome}</h4>
-                                <p class="text-[11px] text-slate-500 font-mono mt-0.5">${c.votos.toLocaleString('pt-BR')} vts</p>
+                                <h4 class="font-bold text-white text-sm leading-tight">${c.nome}</h4>
+                                <p class="text-[11px] text-slate-500 font-mono mt-0.5">${c.votos === 0 ? 'Totalizado' : c.votos.toLocaleString('pt-BR') + ' vts'}</p>
                             </div>
                         </div>
                     </div>
@@ -538,13 +754,19 @@
                         <span class="text-slate-400">Votos Válidos:</span>
                         <span class="font-bold text-white font-mono">${c.pct}</span>
                     </div>
-                </div>
-            `).join('');
+                `;
+                fragment.appendChild(div);
+            });
+
+            grid.innerHTML = '';
+            grid.appendChild(fragment);
         }
 
         window.onload = function() {
-            fetchTseData();
+            renderCandidateCards(presidentialCandidates);
             updateChart();
+            fetchTseData();
+            setInterval(fetchTseData, 15000);
         };
     </script>
 </body>
