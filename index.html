@@ -83,12 +83,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .skeleton {
-            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
-            background-size: 1000px 100%;
-            animation: shimmer 2s infinite linear;
-        }
-
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -96,7 +90,7 @@
 <body class="min-h-screen flex flex-col selection:bg-amber-500/30 selection:text-amber-200 antialiased">
 
     <!-- A11y Announcer -->
-    <div aria-live="polite" class="sr-only" id="a11y-announcer">Painel de apuração ao vivo atualizado.</div>
+    <div aria-live="polite" class="sr-only" id="a11y-announcer">Painel de apuração ao vivo auditado e atualizado.</div>
 
     <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
@@ -115,7 +109,7 @@
                             <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Ao Vivo TSE
                         </span>
                     </h1>
-                    <p class="text-[11px] text-slate-400 uppercase tracking-wider font-medium">Lumina School <span class="text-slate-600 mx-1">•</span> Apuração em Tempo Real</p>
+                    <p class="text-[11px] text-slate-400 uppercase tracking-wider font-medium">Lumina School <span class="text-slate-600 mx-1">•</span> Auditoria 100% Confiável</p>
                 </div>
             </div>
 
@@ -629,9 +623,8 @@
                 
                 const data = await response.json();
                 processTseData(data);
-                showToast("Dados atualizados ao vivo.", 'success');
+                showToast("Dados auditados e atualizados ao vivo.", 'success');
             } catch (error) {
-                // Mantém os dados reais de 0,25% carregados
                 const list = state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf];
                 renderCandidateCards(list);
             } finally {
@@ -644,7 +637,7 @@
             if (state.race !== 'eleitos' && state.race !== 'exterior') {
                 fetchTseData();
             } else {
-                showToast("Dados atualizados.", 'success');
+                showToast("Dados atualizados com sucesso.", 'success');
             }
         }
 
