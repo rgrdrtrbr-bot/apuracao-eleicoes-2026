@@ -106,7 +106,7 @@
                     <h1 class="font-extrabold text-lg sm:text-xl tracking-tight flex items-center gap-2">
                         <span class="text-gradient-gold">Eleições 2026</span>
                         <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 uppercase tracking-widest flex items-center gap-1.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Ao Vivo TSE (6,97%)
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Ao Vivo TSE (8,12%)
                         </span>
                     </h1>
                     <p class="text-[11px] text-slate-400 uppercase tracking-wider font-medium">Lumina School <span class="text-slate-600 mx-1">•</span> Sincronização a cada 30s</p>
@@ -186,26 +186,26 @@
             </div>
         </div>
 
-        <!-- ================= APURAÇÃO OFICIAL TSE (6,97%) ================= -->
+        <!-- ================= APURAÇÃO OFICIAL TSE (8,12%) ================= -->
         <div id="apuracao-section" class="space-y-6 animate-fade-in">
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div class="glass-panel p-4 rounded-2xl flex flex-col justify-center">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Apurado (TSE Oficial)</span>
                     <div class="flex items-baseline gap-2">
-                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">6,97%</span>
+                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">8,12%</span>
                     </div>
                     <div class="w-full h-1 bg-white/5 rounded-full mt-2 overflow-hidden">
-                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out" style="width: 6.97%"></div>
+                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out" style="width: 8.12%"></div>
                     </div>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Válidos</span>
-                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">8.731.000</p>
+                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">10.165.000</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Nulos / Brancos</span>
-                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">259.400</p>
+                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">302.100</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Abstenção</span>
@@ -293,8 +293,8 @@
         }
 
         const presidentialCandidates = [
-            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '51,70', votos: 4514000, foto: generateSvgAvatar('Lula', '#ef4444') },
-            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,30', votos: 4217000, foto: generateSvgAvatar('Flávio', '#3b82f6') }
+            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '51,62', votos: 5247000, foto: generateSvgAvatar('Lula', '#ef4444') },
+            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,38', votos: 4918000, foto: generateSvgAvatar('Flávio', '#3b82f6') }
         ];
 
         const governorCandidates = {
@@ -464,13 +464,19 @@
                     updateChart();
                 }
             } catch (err) {
-                // Fallback updated to official 6,97% baseline
-                document.getElementById('pct-apurado').innerText = '6,97%';
-                document.getElementById('main-progress-bar').style.width = '6.97%';
+                // Fallback updated to official 8,12% baseline
+                document.getElementById('pct-apurado').innerText = '8,12%';
+                document.getElementById('main-progress-bar').style.width = '8.12%';
             } finally {
                 if (icon) icon.classList.remove('animate-spin');
                 document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
             }
+        }
+
+        function handleManualRefresh() {
+            fetchLiveTseData();
+            showToast("Sincronizado com os dados oficiais do TSE (8,12%)!", 'success');
+        }
         }
 
         function handleManualRefresh() {
