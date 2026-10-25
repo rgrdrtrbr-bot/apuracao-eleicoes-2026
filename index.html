@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Eleitoral 2026 - Apuração em Tempo Real</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue: '#1e3a8a',
+              green: '#15803d',
+              yellow: '#eab308',
+              gray: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(51, 65, 85, 0.8);
+      border-radius: 4px;
+    }
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .animate-pulse-slow {
+      animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center gap-4">
+      
+      <!-- Logo / Title -->
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-tr from-blue-600 to-emerald-500 p-2.5 rounded-xl shadow-lg shadow-blue-500/20 text-white">
+          <i class="fa-solid me-0 fa-check-to-slot text-xl"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg sm:text-xl tracking-tight text-white flex items-center gap-2">
+            Apuração Presidencial 2026
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">AO VIVO</span>
+          </h1>
+          <p class="text-xs text-slate-400">Dados do Tribunal Superior Eleitoral & Simulation Engine</p>
+        </div>
+      </div>
+
+      <!-- Live Status & Simulation Controls -->
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60 text-xs">
+          <span class="relative flex h-2.5 w-2.5">
+            <span id="live-dot-ping" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span id="live-dot" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+          </span>
+          <span id="status-text" class="font-medium text-slate-300">Simulador Ativo</span>
+        </div>
+
+        <button id="toggle-simulation-btn" onclick="toggleSimulation()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-all shadow-md flex items-center gap-1.5">
+          <i class="fa-solid fa-pause"></i> <span id="sim-btn-text">Pausar</span>
+        </button>
+
+        <button onclick="resetData()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-3 py-1.5 rounded-lg border border-slate-700 transition-all flex items-center gap-1.5" title="Reiniciar dados da apuração">
+          <i class="fa-solid fa-rotate-right"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Dashboard Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full space-y-6">
+
+    <!-- Progress Gauge & Regional Filters -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-semibold tracking-wider text-slate-400 uppercase">Totalização Geral das Urnas</span>
+          <div class="flex items-baseline gap-2 mt-0.5">
+            <span id="pct-apurado" class="text-3xl sm:text-4xl font-extrabold text-white">0,00%</span>
+            <span class="text-xs text-slate-400">das seções totalizadas</span>
+          </div>
+        </div>
+
+        <!-- Regional Selector Buttons -->
+        <div class="flex flex-wrap items-center gap-1.5 bg-slate-950 p-1.5 rounded-xl border border-slate-800/80" id="region-selector">
+          <button onclick="setRegion('BRASIL')" class="region-btn active text-xs font-medium px-3 py-1.5 rounded-lg transition-all bg-blue-600 text-white shadow-sm" data-region="BRASIL">Brasil (Total)</button>
+          <button onclick="setRegion('SUDESTE')" class="region-btn text-xs font-medium px-3 py-1.5 rounded-lg transition-all text-slate-400 hover:text-white" data-region="SUDESTE">Sudeste</button>
+          <button onclick="setRegion('NORDESTE')" class="region-btn text-xs font-medium px-3 py-1.5 rounded-lg transition-all text-slate-400 hover:text-white" data-region="NORDESTE">Nordeste</button>
+          <button onclick="setRegion('SUL')" class="region-btn text-xs font-medium px-3 py-1.5 rounded-lg transition-all text-slate-400 hover:text-white" data-region="SUL">Sul</button>
+          <button onclick="setRegion('NORTE')" class="region-btn text-xs font-medium px-3 py-1.5 rounded-lg transition-all text-slate-400 hover:text-white" data-region="NORTE">Norte</button>
+          <button onclick="setRegion('CENTRO-OESTE')" class="region-btn text-xs font-medium px-3 py-1.5 rounded-lg transition-all text-slate-400 hover:text-white" data-region="CENTRO-OESTE">Centro-Oeste</button>
+          <button onclick="setRegion('EXTERIOR')" class="region-btn text-xs font-medium px-3 py-1.5 rounded-lg transition-all text-slate-400 hover:text-white" data-region="EXTERIOR">Exterior</button>
+        </div>
+      </div>
+
+      <!-- Main Progress Bar -->
+      <div class="w-full bg-slate-950 rounded-full h-4 overflow-hidden p-0.5 border border-slate-800">
+        <div id="main-progress-bar" class="bg-gradient-to-r from-blue-600 via-emerald-500 to-green-400 h-full rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+      </div>
+
+      <!-- Key Stat Counters -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-slate-800/60 text-xs">
+        <div>
+          <p class="text-slate-400">Urnas Apuradas</p>
+          <p id="stat-urnas" class="font-bold text-slate-200 mt-0.5">0 / 472.000</p>
+        </div>
+        <div>
+          <p class="text-slate-400">Votos Válidos</p>
+          <p id="stat-validos" class="font-bold text-slate-200 mt-0.5">0</p>
+        </div>
+        <div>
+          <p class="text-slate-400">Nulos / Brancos</p>
+          <p id="stat-nulos-brancos" class="font-bold text-slate-200 mt-0.5">0 (0,00%)</p>
+        </div>
+        <div>
+          <p class="text-slate-400">Abstenção Estimada</p>
+          <p id="stat-abstencao" class="font-bold text-slate-200 mt-0.5">20,4%</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Grid: Candidates Score Cards & Chart Comparison -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- Candidate 1 Card (Flávio) -->
+      <div class="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col justify-between relative overflow-hidden group">
+        <div class="absolute top-0 left-0 w-2 h-full bg-blue-600"></div>
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-blue-400 tracking-wider uppercase px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/20">PL</span>
+            <span id="flavio-status" class="text-xs font-medium text-slate-400 flex items-center gap-1">
+              <i class="fa-solid fa-arrow-trend-up text-blue-400"></i> Na disputa
+            </span>
+          </div>
+
+          <div class="mt-4 flex items-center gap-4">
+            <div class="w-16 h-16 rounded-full bg-slate-800 border-2 border-blue-500/40 flex items-center justify-center overflow-hidden shrink-0 shadow-lg">
+              <i class="fa-solid fa-user text-2xl text-slate-400"></i>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-white tracking-tight">Flávio Bolsonaro</h2>
+              <p class="text-xs text-slate-400">Coligação pelo Brasil</p>
+            </div>
+          </div>
+
+          <div class="mt-6 space-y-1">
+            <div class="text-xs text-slate-400 uppercase font-medium">Porcentagem de Votos Válidos</div>
+            <div class="flex items-baseline gap-2">
+              <span id="flavio-pct" class="text-4xl sm:text-5xl font-black text-blue-400 tracking-tight">0,00%</span>
+            </div>
+            <p id="flavio-votos" class="text-sm font-semibold text-slate-300">0 votos</p>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-slate-800/80">
+          <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-slate-800">
+            <div id="flavio-bar" class="bg-blue-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Candidate 2 Card (Lula) -->
+      <div class="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col justify-between relative overflow-hidden group">
+        <div class="absolute top-0 left-0 w-2 h-full bg-red-600"></div>
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-red-400 tracking-wider uppercase px-2.5 py-1 rounded-md bg-red-500/10 border border-red-500/20">PT</span>
+            <span id="lula-status" class="text-xs font-medium text-slate-400 flex items-center gap-1">
+              <i class="fa-solid fa-arrow-trend-up text-red-400"></i> Na disputa
+            </span>
+          </div>
+
+          <div class="mt-4 flex items-center gap-4">
+            <div class="w-16 h-16 rounded-full bg-slate-800 border-2 border-red-500/40 flex items-center justify-center overflow-hidden shrink-0 shadow-lg">
+              <i class="fa-solid fa-user text-2xl text-slate-400"></i>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-white tracking-tight">Lula</h2>
+              <p class="text-xs text-slate-400">Brasil da Esperança</p>
+            </div>
+          </div>
+
+          <div class="mt-6 space-y-1">
+            <div class="text-xs text-slate-400 uppercase font-medium">Porcentagem de Votos Válidos</div>
+            <div class="flex items-baseline gap-2">
+              <span id="lula-pct" class="text-4xl sm:text-5xl font-black text-red-400 tracking-tight">0,00%</span>
+            </div>
+            <p id="lula-votos" class="text-sm font-semibold text-slate-300">0 votos</p>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-slate-800/80">
+          <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-slate-800">
+            <div id="lula-bar" class="bg-red-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-Time Comparison Chart -->
+      <div class="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
+        <div>
+          <h3 class="text-sm font-bold text-slate-200 tracking-tight flex items-center gap-2">
+            <i class="fa-solid fa-chart-line text-blue-400"></i> Curva de Evolução
+          </h3>
+          <p class="text-xs text-slate-400 mt-1">Comparativo de porcentagem ao longo do avanço da apuração</p>
+        </div>
+        <div class="mt-4 h-48 w-full">
+          <canvas id="votesChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- State Breakdown Table & Simulation Custom Inputs -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- State Breakdown Table -->
+      <div class="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-base font-bold text-white tracking-tight">Detalhamento por Unidade da Federação</h3>
+            <p class="text-xs text-slate-400">Acompanhamento do percentual apurado e liderança por Estado</p>
+          </div>
+          <span class="text-xs text-slate-400 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">27 UFs + Exterior</span>
+        </div>
+
+        <div class="overflow-x-auto max-h-80 custom-scrollbar pr-1">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead class="bg-slate-950 sticky top-0 border-b border-slate-800 text-slate-400 uppercase">
+              <tr>
+                <th class="py-2.5 px-3 font-semibold">Estado (UF)</th>
+                <th class="py-2.5 px-3 font-semibold">Região</th>
+                <th class="py-2.5 px-3 font-semibold text-center">Apurado</th>
+                <th class="py-2.5 px-3 font-semibold text-right">Flávio %</th>
+                <th class="py-2.5 px-3 font-semibold text-right">Lula %</th>
+                <th class="py-2.5 px-3 font-semibold text-center">Líder</th>
+              </tr>
+            </thead>
+            <tbody id="state-table-body" class="divide-y divide-slate-800/50 text-slate-300">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Controls & Simulation Config -->
+      <div class="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4 flex flex-col justify-between">
+        <div>
+          <h3 class="text-base font-bold text-white tracking-tight flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-emerald-400"></i> Painel do Simulador
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">Ajuste o ritmo e os valores manuais para testar diferentes cenários de apuração.</p>
+
+          <div class="mt-4 space-y-3 text-xs">
+            <div>
+              <label class="block text-slate-300 font-medium mb-1">Velocidade da Apuração (ms)</label>
+              <input type="range" id="sim-speed" min="200" max="2000" value="800" class="w-full accent-blue-500 bg-slate-950 rounded-lg cursor-pointer">
+              <div class="flex justify-between text-slate-500 mt-0.5 text-[10px]">
+                <span>Rápido (200ms)</span>
+                <span>Lento (2000ms)</span>
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-slate-800/80 space-y-2">
+              <p class="font-semibold text-slate-300">Ajuste Manual Rápido:</p>
+              
+              <div class="grid grid-cols-2 gap-2">
+                <button onclick="addPercent(5)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 py-1.5 px-2 rounded-lg border border-slate-700 font-medium transition-all">+5% Apuração</button>
+                <button onclick="addPercent(25)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 py-1.5 px-2 rounded-lg border border-slate-700 font-medium transition-all">+25% Apuração</button>
+              </div>
+
+              <button onclick="forceFinish()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-3 rounded-lg transition-all shadow-lg shadow-emerald-600/20">
+                Finalizar Apuração (100%)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-1">
+          <p class="font-semibold text-slate-300 flex items-center gap-1">
+            <i class="fa-solid fa-circle-info text-blue-400"></i> Nota de Transparência
+          </p>
+          <p>Este painel foi desenvolvido para servir como template completo e funcional. Pode ser alimentado por API JSON REST oficial do TSE via servidor backend.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 bg-slate-950 py-4 mt-8">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2">
+      <p>Painel de Resultados Eleitorais - Projeto de Código Aberto para Hospedagem no GitHub / Vercel</p>
+      <p>Dados simulados para testes de visualização & Dashboard UX</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript Logic & Simulation Engine -->
+  <script>
+    // Initial State Data for 27 States + Exterior
+    const initialStatesData = [
+      { uf: 'SP', region: 'SUDESTE', weight: 0.22, apurado: 0, flavioPct: 53.5, lulaPct: 46.5 },
+      { uf: 'MG', region: 'SUDESTE', weight: 0.10, apurado: 0, flavioPct: 50.8, lulaPct: 49.2 },
+      { uf: 'RJ', region: 'SUDESTE', weight: 0.08, apurado: 0, flavioPct: 56.2, lulaPct: 43.8 },
+      { uf: 'ES', region: 'SUDESTE', weight: 0.02, apurado: 0, flavioPct: 58.1, lulaPct: 41.9 },
+      { uf: 'BA', region: 'NORDESTE', weight: 0.07, apurado: 0, flavioPct: 28.5, lulaPct: 71.5 },
+      { uf: 'PE', region: 'NORDESTE', weight: 0.05, apurado: 0, flavioPct: 33.2, lulaPct: 66.8 },
+      { uf: 'CE', region: 'NORDESTE', weight: 0.04, apurado: 0, flavioPct: 31.0, lulaPct: 69.0 },
+      { uf: 'MA', region: 'NORDESTE', weight: 0.03, apurado: 0, flavioPct: 27.8, lulaPct: 72.2 },
+      { uf: 'PB', region: 'NORDESTE', weight: 0.02, apurado: 0, flavioPct: 34.5, lulaPct: 65.5 },
+      { uf: 'RN', region: 'NORDESTE', weight: 0.02, apurado: 0, flavioPct: 35.1, lulaPct: 64.9 },
+      { uf: 'AL', region: 'NORDESTE', weight: 0.015, apurado: 0, flavioPct: 41.2, lulaPct: 58.8 },
+      { uf: 'PI', region: 'NORDESTE', weight: 0.015, apurado: 0, flavioPct: 24.6, lulaPct: 75.4 },
+      { uf: 'SE', region: 'NORDESTE', weight: 0.01, apurado: 0, flavioPct: 32.4, lulaPct: 67.6 },
+      { uf: 'RS', region: 'SUL', weight: 0.06, apurado: 0, flavioPct: 56.4, lulaPct: 43.6 },
+      { uf: 'PR', region: 'SUL', weight: 0.06, apurado: 0, flavioPct: 62.1, lulaPct: 37.9 },
+      { uf: 'SC', region: 'SUL', weight: 0.04, apurado: 0, flavioPct: 69.2, lulaPct: 30.8 },
+      { uf: 'GO', region: 'CENTRO-OESTE', weight: 0.035, apurado: 0, flavioPct: 64.0, lulaPct: 36.0 },
+      { uf: 'MT', region: 'CENTRO-OESTE', weight: 0.02, apurado: 0, flavioPct: 65.5, lulaPct: 34.5 },
+      { uf: 'MS', region: 'CENTRO-OESTE', weight: 0.015, apurado: 0, flavioPct: 59.8, lulaPct: 40.2 },
+      { uf: 'DF', region: 'CENTRO-OESTE', weight: 0.015, apurado: 0, flavioPct: 58.3, lulaPct: 41.7 },
+      { uf: 'PA', region: 'NORTE', weight: 0.04, apurado: 0, flavioPct: 45.1, lulaPct: 54.9 },
+      { uf: 'AM', region: 'NORTE', weight: 0.02, apurado: 0, flavioPct: 51.2, lulaPct: 48.8 },
+      { uf: 'RO', region: 'NORTE', weight: 0.01, apurado: 0, flavioPct: 70.6, lulaPct: 29.4 },
+      { uf: 'TO', region: 'NORTE', weight: 0.008, apurado: 0, flavioPct: 43.0, lulaPct: 57.0 },
+      { uf: 'AC', region: 'NORTE', weight: 0.005, apurado: 0, flavioPct: 72.5, lulaPct: 27.5 },
+      { uf: 'AP', region: 'NORTE', weight: 0.005, apurado: 0, flavioPct: 47.8, lulaPct: 52.2 },
+      { uf: 'RR', region: 'NORTE', weight: 0.004, apurado: 0, flavioPct: 76.1, lulaPct: 23.9 },
+      { uf: 'ZZ', region: 'EXTERIOR', weight: 0.003, apurado: 100, flavioPct: 69.26, lulaPct: 30.74 }
+    ];
+
+    // Global App State
+    let states = JSON.parse(JSON.stringify(initialStatesData));
+    let selectedRegion = 'BRASIL';
+    let simulationActive = true;
+    let timerId = null;
+    let totalElectorateVotes = 120000000; // Estimated valid votes
+    let chartInstance = null;
+
+    // Chart initialization
+    function initChart() {
+      const ctx = document.getElementById('votesChart').getContext('2d');
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['0%', '20%', '40%', '60%', '80%', '100%'],
+          datasets: [
+            {
+              label: 'Flávio %',
+              data: [0],
+              borderColor: '#2563eb',
+              backgroundColor: 'rgba(37, 99, 235, 0.1)',
+              borderWidth: 2,
+              tension: 0.3,
+              fill: true
+            },
+            {
+              label: 'Lula %',
+              data: [0],
+              borderColor: '#dc2626',
+              backgroundColor: 'rgba(220, 38, 38, 0.1)',
+              borderWidth: 2,
+              tension: 0.3,
+              fill: true
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#94a3b8', font: { size: 10 } } }
+          },
+          scales: {
+            x: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(51, 65, 85, 0.2)' } },
+            y: { min: 40, max: 60, ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(51, 65, 85, 0.2)' } }
+          }
+        }
+      });
+    }
+
+    // Calculation Engine
+    function calculateMetrics() {
+      let filteredStates = selectedRegion === 'BRASIL' ? states : states.filter(s => s.region === selectedRegion);
+
+      let totalWeight = filteredStates.reduce((acc, s) => acc + s.weight, 0);
+      let weightedApurado = filteredStates.reduce((acc, s) => acc + (s.apurado * s.weight), 0) / totalWeight;
+
+      let totalFlavioVotes = 0;
+      let totalLulaVotes = 0;
+      let validVotesCalculated = 0;
+
+      filteredStates.forEach(s => {
+        let stateValidVotes = totalElectorateVotes * s.weight * (s.apurado / 100);
+        let flavioV = stateValidVotes * (s.flavioPct / 100);
+        let lulaV = stateValidVotes * (s.lulaPct / 100);
+
+        totalFlavioVotes += flavioV;
+        totalLulaVotes += lulaV;
+        validVotesCalculated += stateValidVotes;
+      });
+
+      let flavioPctTotal = validVotesCalculated > 0 ? (totalFlavioVotes / validVotesCalculated) * 100 : 0;
+      let lulaPctTotal = validVotesCalculated > 0 ? (totalLulaVotes / validVotesCalculated) * 100 : 0;
+
+      return {
+        pctApurado: weightedApurado,
+        validVotes: Math.round(validVotesCalculated),
+        flavioVotes: Math.round(totalFlavioVotes),
+        lulaVotes: Math.round(totalLulaVotes),
+        flavioPct: flavioPctTotal,
+        lulaPct: lulaPctTotal
+      };
+    }
+
+    // Render Function
+    function render() {
+      const metrics = calculateMetrics();
+
+      // Overall Progress
+      document.getElementById('pct-apurado').innerText = metrics.pctApurado.toFixed(2).replace('.', ',') + '%';
+      document.getElementById('main-progress-bar').style.width = `${metrics.pctApurado}%`;
+
+      // Stat Counters
+      const urnasApuradas = Math.round((metrics.pctApurado / 100) * 472000);
+      document.getElementById('stat-urnas').innerText = `${urnasApuradas.toLocaleString('pt-BR')} / 472.000`;
+      document.getElementById('stat-validos').innerText = metrics.validVotes.toLocaleString('pt-BR');
+      
+      const nulosBrancos = Math.round(metrics.validVotes * 0.052);
+      document.getElementById('stat-nulos-brancos').innerText = `${nulosBrancos.toLocaleString('pt-BR')} (5,20%)`;
+
+      // Flávio
+      document.getElementById('flavio-pct').innerText = metrics.flavioPct.toFixed(2).replace('.', ',') + '%';
+      document.getElementById('flavio-votos').innerText = `${metrics.flavioVotes.toLocaleString('pt-BR')} votos`;
+      document.getElementById('flavio-bar').style.width = `${metrics.flavioPct}%`;
+
+      // Lula
+      document.getElementById('lula-pct').innerText = metrics.lulaPct.toFixed(2).replace('.', ',') + '%';
+      document.getElementById('lula-votos').innerText = `${metrics.lulaVotes.toLocaleString('pt-BR')} votos`;
+      document.getElementById('lula-bar').style.width = `${metrics.lulaPct}%`;
+
+      // Update Chart Point
+      if (chartInstance) {
+        let labelIndex = Math.min(Math.floor(metrics.pctApurado / 20), 5);
+        chartInstance.data.datasets[0].data[labelIndex] = metrics.flavioPct.toFixed(2);
+        chartInstance.data.datasets[1].data[labelIndex] = metrics.lulaPct.toFixed(2);
+        chartInstance.update();
+      }
+
+      // Render State Table
+      renderTable();
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('state-table-body');
+      tbody.innerHTML = '';
+
+      let filteredStates = selectedRegion === 'BRASIL' ? states : states.filter(s => s.region === selectedRegion);
+
+      filteredStates.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-800/40 transition-colors';
+
+        const isFlavioLeading = s.flavioPct >= s.lulaPct;
+
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 font-bold text-white">${s.uf}</td>
+          <td class="py-2.5 px-3 text-slate-400">${s.region}</td>
+          <td class="py-2.5 px-3 text-center">
+            <span class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800 font-mono">${s.apurado.toFixed(1)}%</span>
+          </td>
+          <td class="py-2.5 px-3 text-right font-medium text-blue-400">${s.flavioPct.toFixed(1)}%</td>
+          <td class="py-2.5 px-3 text-right font-medium text-red-400">${s.lulaPct.toFixed(1)}%</td>
+          <td class="py-2.5 px-3 text-center">
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${isFlavioLeading ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}">
+              ${isFlavioLeading ? 'FLÁVIO' : 'LULA'}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Region Selector
+    function setRegion(region) {
+      selectedRegion = region;
+      document.querySelectorAll('.region-btn').forEach(btn => {
+        if (btn.dataset.region === region) {
+          btn.className = "region-btn active text-xs font-medium px-3 py-1.5 rounded-lg transition-all bg-blue-600 text-white shadow-sm";
+        } else {
+          btn.className = "region-btn text-xs font-medium px-3 py-1.5 rounded-lg transition-all text-slate-400 hover:text-white";
+        }
+      });
+      render();
+    }
+
+    // Simulation Tick
+    function simulationTick() {
+      if (!simulationActive) return;
+
+      let allDone = true;
+      states.forEach(s => {
+        if (s.uf === 'ZZ') return; // Exterior starts at 100%
+        if (s.apurado < 100) {
+          allDone = false;
+          // Increment apurado gradually with slight noise
+          let increment = Math.random() * 2.5 + 0.5;
+          s.apurado = Math.min(100, s.apurado + increment);
+        }
+      });
+
+      render();
+
+      if (allDone) {
+        toggleSimulation(false);
+      } else {
+        const speed = document.getElementById('sim-speed').value;
+        timerId = setTimeout(simulationTick, speed);
+      }
+    }
+
+    function toggleSimulation(forceState) {
+      simulationActive = forceState !== undefined ? forceState : !simulationActive;
+      const btnText = document.getElementById('sim-btn-text');
+      const liveDot = document.getElementById('live-dot');
+      const liveDotPing = document.getElementById('live-dot-ping');
+      const statusText = document.getElementById('status-text');
+
+      if (simulationActive) {
+        btnText.innerText = 'Pausar';
+        statusText.innerText = 'Simulador Ativo';
+        liveDot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500';
+        liveDotPing.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75';
+        simulationTick();
+      } else {
+        btnText.innerText = 'Iniciar';
+        statusText.innerText = 'Pausado';
+        liveDot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500';
+        liveDotPing.className = 'hidden';
+        clearTimeout(timerId);
+      }
+    }
+
+    function addPercent(pct) {
+      states.forEach(s => {
+        if (s.uf !== 'ZZ') {
+          s.apurado = Math.min(100, s.apurado + pct);
+        }
+      });
+      render();
+    }
+
+    function forceFinish() {
+      states.forEach(s => s.apurado = 100);
+      render();
+    }
+
+    function resetData() {
+      states = JSON.parse(JSON.stringify(initialStatesData));
+      if (chartInstance) {
+        chartInstance.data.datasets[0].data = [0];
+        chartInstance.data.datasets[1].data = [0];
+      }
+      render();
+      if (!simulationActive) toggleSimulation(true);
+    }
+
+    // Init on Window Load
+    window.onload = function() {
+      initChart();
+      render();
+      simulationTick();
+    };
+  </script>
+</body>
+</html>
