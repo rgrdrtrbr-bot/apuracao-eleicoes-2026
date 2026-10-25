@@ -366,7 +366,7 @@
             ],
             'AM': [
                 { nome: 'Omar Aziz', partido: 'PSD - 55', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Omar', '#3b82f6') },
-                { nome: 'Prof. Maria', partido: 'PL - 22', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Maria', '#3b82f6') }
+                { nome: 'Prof. Maria', partido: 'PL - 22', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Maria', '#ef4444') }
             ],
             'RN': [
                 { nome: 'Allyson', partido: 'UNIÃO - 44', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Allyson', '#3b82f6') },
@@ -413,7 +413,7 @@
 
         const ufs1stRound = Object.keys(winnersDatabase).sort();
 
-        // Comprehensive International Exterior Database covering major countries worldwide
+        // Comprehensive International Exterior Database
         const exteriorDatabase = [
             { pais: 'Estados Unidos', cidade: 'Miami', aptos: 61200, comparecimento: '68,9%', abstencao: '31,1%', status: 'Apuração Ao Vivo', lider: 'F. Bolsonaro (PL)', pctLider: '65,4%', segundo: 'Lula (PT)', pctSegundo: '34,6%' },
             { pais: 'Estados Unidos', cidade: 'Nova York', aptos: 48500, comparecimento: '72,4%', abstencao: '27,6%', status: 'Apuração Ao Vivo', lider: 'Lula (PT)', pctLider: '62,1%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '37,9%' },
@@ -589,7 +589,7 @@
             container.appendChild(fragment);
         }
 
-        // --- 4. DATA FETCHING ---
+        // --- 4. DATA FETCHING (Correct TSE 2026 2nd Round ID: 6258) ---
         async function fetchTseData() {
             if (state.race === 'eleitos' || state.race === 'exterior') return;
             
@@ -597,8 +597,8 @@
             btnIcon.classList.add('animate-spin');
 
             const url = state.race === 'presidencia' 
-                ? "https://resultados.tse.jus.br/oficial/ele2026/dados/br/br-e006258-ab.json"
-                : `https://resultados.tse.jus.br/oficial/ele2026/dados/${state.govUf.toLowerCase()}/${state.govUf.toLowerCase()}-e006258-ab.json`;
+                ? "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/br/br-e006258-ab.json"
+                : `https://resultados.tse.jus.br/oficial/ele2026/6258/dados/${state.govUf.toLowerCase()}/${state.govUf.toLowerCase()}-e006258-ab.json`;
 
             try {
                 const response = await fetch(url, { cache: 'no-store' });
@@ -608,7 +608,7 @@
                 processTseData(data);
                 showToast("Dados atualizados ao vivo.", 'success');
             } catch (error) {
-                showToast("Apuração em andamento. Conectado aos servidores do TSE.", 'info');
+                showToast("Aguardando consolidação dos lotes do TSE...", 'info');
                 
                 document.getElementById('pct-apurado').innerText = "0,00%";
                 document.getElementById('main-progress-bar').style.width = "0%";
