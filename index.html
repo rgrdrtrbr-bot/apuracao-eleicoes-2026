@@ -193,8 +193,16 @@
                 <div class="glass-panel p-4 rounded-2xl flex flex-col justify-center transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-amber-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Apurado (TSE Oficial)</span>
                     <div class="flex items-baseline gap-2">
-                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">28,66%</span>
+                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">30,82%</span>
                     </div>
+                    <div class="w-full h-1.5 bg-white/5 rounded-full mt-2 overflow-hidden shadow-inner">
+                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(245,158,11,0.5)]" style="width: 30.82%"></div>
+                    </div>
+                </div>
+                <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-emerald-500">
+                    <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Válidos</span>
+                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">38.650.400</p>
+                </div>
                     <div class="w-full h-1.5 bg-white/5 rounded-full mt-2 overflow-hidden shadow-inner">
                         <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(245,158,11,0.5)]" style="width: 28.66%"></div>
                     </div>
@@ -300,8 +308,8 @@
         }
 
         const presidentialCandidates = [
-            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '50,46', votos: 18120400, foto: generateSvgAvatar('Flávio', '#3b82f6') },
-            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '49,54', votos: 17790000, foto: generateSvgAvatar('Lula', '#ef4444') }
+            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '50,76', votos: 19620400, foto: generateSvgAvatar('Flávio', '#3b82f6') },
+            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '49,53', votos: 19140000, foto: generateSvgAvatar('Lula', '#ef4444') }
         ];
 
         const governorCandidates = {
@@ -482,7 +490,7 @@
 
         function handleManualRefresh() {
             fetchLiveTseData();
-            showToast("Sincronizado com os dados oficiais do TSE (28,66%)!", 'success');
+            showToast("Sincronizado com os dados oficiais do TSE (30,82%)!", 'success');
         }
 
         function setChartType(type) {
@@ -587,6 +595,7 @@
             renderCandidateCards(presidentialCandidates);
             updateChart();
             document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
+            document.getElementById('header-pct-val').innerText = '30,82';
             fetchLiveTseData();
             setInterval(fetchLiveTseData, 30000);
         };
