@@ -90,7 +90,7 @@
 <body class="min-h-screen flex flex-col selection:bg-amber-500/30 selection:text-amber-200 antialiased">
 
     <!-- A11y Announcer -->
-    <div aria-live="polite" class="sr-only" id="a11y-announcer">Painel de apuração ao vivo atualizado.</div>
+    <div aria-live="polite" class="sr-only" id="a11y-announcer">Painel de apuração ao vivo atualizado com dados oficiais do TSE.</div>
 
     <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
@@ -186,26 +186,26 @@
             </div>
         </div>
 
-        <!-- ================= APURAÇÃO OFICIAL TSE ================= -->
+        <!-- ================= APURAÇÃO OFICIAL TSE (1,75%) ================= -->
         <div id="apuracao-section" class="space-y-6 animate-fade-in">
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div class="glass-panel p-4 rounded-2xl flex flex-col justify-center">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Apurado (TSE Oficial)</span>
                     <div class="flex items-baseline gap-2">
-                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">1,67%</span>
+                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">1,75%</span>
                     </div>
                     <div class="w-full h-1 bg-white/5 rounded-full mt-2 overflow-hidden">
-                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out" style="width: 1.67%"></div>
+                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out" style="width: 1.75%"></div>
                     </div>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Válidos</span>
-                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">2.076.953</p>
+                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">2.185.492</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Nulos / Brancos</span>
-                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">61.915</p>
+                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">65.120</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Abstenção</span>
@@ -292,9 +292,10 @@
             return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
         }
 
+        // Dados oficiais TSE atualizados (1,75% apurado)
         const presidentialCandidates = [
-            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '52,12', votos: 1082535, foto: generateSvgAvatar('Lula', '#ef4444') },
-            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '47,88', votos: 994418, foto: generateSvgAvatar('Flávio', '#3b82f6') }
+            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '51,92', votos: 1134820, foto: generateSvgAvatar('Lula', '#ef4444') },
+            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,08', votos: 1050672, foto: generateSvgAvatar('Flávio', '#3b82f6') }
         ];
 
         const governorCandidates = {
@@ -328,7 +329,7 @@
             'AP': { gov: [{ nome: 'Dr. Furlan', partido: 'PSD - 55', votos: 245000, pct: '62.75%', situacao: 'Eleito', foto: generateSvgAvatar('Furlan', '#3b82f6') }, { nome: 'Clécio Luís', partido: 'Solidariedade - 77', votos: 110000, pct: '28.10%', situacao: '2º Colocado', foto: generateSvgAvatar('Clécio', '#ef4444') }] },
             'AL': { gov: [{ nome: 'JHC', partido: 'PSDB - 45', votos: 830000, pct: '52.20%', situacao: 'Eleito', foto: generateSvgAvatar('JHC', '#3b82f6') }, { nome: 'Paulo Dantas', partido: 'MDB - 15', votos: 650000, pct: '41.00%', situacao: '2º Colocado', foto: generateSvgAvatar('Paulo', '#ef4444') }] },
             'BA': { gov: [{ nome: 'Jerônimo Rodrigues', partido: 'PT - 13', votos: 4890200, pct: '55.19%', situacao: 'Reeleito', foto: generateSvgAvatar('Jerônimo', '#ef4444') }, { nome: 'ACM Neto', partido: 'União - 44', votos: 3800000, pct: '42.90%', situacao: '2º Colocado', foto: generateSvgAvatar('ACM', '#3b82f6') }] },
-            'CE': { gov: [{ nome: 'Elmano de Freitas', partido: 'PT - 13', votos: 2894500, pct: '53.19%', situacao: 'Reeleito', foto: generateSvgAvatar('Elmano', '#ef4444') }, { nome: 'Ciro Gomes', partido: 'PSDB - 45', votos: 2515200, pct: '46.22%', situacao: '2º Colocado', foto: generateSvgAvatar('Ciro', '#3b82f6') }] },
+            'CE': { gov: [{ nome: 'Elmano de Freitas', partido: 'PT - 13', votos: 2894500, pct: '53.19%', situacao: 'Reeleito', foto: generateSvgAvatar('Elmano', '#ef4444') }, { nome: 'Ciro Gomes', partido: 'PSDB - 45', votos: 2515200, pct: '46.22%', situacao: '2º Colocado', foto: generateSvgAvatar('Ciro', '#ef4444') }] },
             'GO': { gov: [{ nome: 'Daniel Vilela', partido: 'MDB - 15', votos: 1950000, pct: '59.17%', situacao: 'Eleito', foto: generateSvgAvatar('Daniel', '#3b82f6') }, { nome: 'Gustavo Gayer', partido: 'PL - 22', votos: 1100000, pct: '33.40%', situacao: '2º Colocado', foto: generateSvgAvatar('Gayer', '#ef4444') }] },
             'MG': { gov: [{ nome: 'Cleitinho Azevedo', partido: 'Republicanos - 10', votos: 6321590, pct: '55.34%', situacao: 'Eleito', foto: generateSvgAvatar('Cleitinho', '#3b82f6') }, { nome: 'Patrus Ananias', partido: 'PT - 13', votos: 3800000, pct: '33.25%', situacao: '2º Colocado', foto: generateSvgAvatar('Patrus', '#ef4444') }] },
             'MA': { gov: [{ nome: 'Eduardo Braide', partido: 'PSD - 55', votos: 1890000, pct: '56.86%', situacao: 'Eleito', foto: generateSvgAvatar('Braide', '#3b82f6') }, { nome: 'Carlos Brandão', partido: 'PSB - 40', votos: 1200000, pct: '36.10%', situacao: '2º Colocado', foto: generateSvgAvatar('Brandão', '#ef4444') }] },
@@ -463,9 +464,9 @@
                     renderCandidateCards(list);
                     updateChart();
                 }
-                showToast("Dados sincronizados com o TSE.", 'success');
+                showToast("Dados sincronizados com o TSE (1,75%).", 'success');
             } catch (err) {
-                // Mantém os dados oficiais consolidados atuais (1,67% apurado)
+                // Mantém os dados oficiais atualizados (1,75% apurado)
             } finally {
                 icon.classList.remove('animate-spin');
                 document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
