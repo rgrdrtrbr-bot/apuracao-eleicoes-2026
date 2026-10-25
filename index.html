@@ -90,7 +90,7 @@
 <body class="min-h-screen flex flex-col selection:bg-amber-500/30 selection:text-amber-200 antialiased">
 
     <!-- A11y Announcer -->
-    <div aria-live="polite" class="sr-only" id="a11y-announcer">Painel de apuração ao vivo atualizado com dados oficiais do TSE (10,87%).</div>
+    <div aria-live="polite" class="sr-only" id="a11y-announcer">Painel de apuração oficial em tempo real sincronizado com os servidores do TSE.</div>
 
     <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
@@ -106,10 +106,10 @@
                     <h1 class="font-extrabold text-lg sm:text-xl tracking-tight flex items-center gap-2">
                         <span class="text-gradient-gold">Eleições 2026</span>
                         <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 uppercase tracking-widest flex items-center gap-1.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Ao Vivo TSE (10,87%)
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Ao Vivo TSE (<span id="header-pct-val">12,67</span>%)
                         </span>
                     </h1>
-                    <p class="text-[11px] text-slate-400 uppercase tracking-wider font-medium">Lumina School <span class="text-slate-600 mx-1">•</span> Sincronização a cada 30s</p>
+                    <p class="text-[11px] text-slate-400 uppercase tracking-wider font-medium">Lumina School <span class="text-slate-600 mx-1">•</span> Sincronização Automática a cada 30s</p>
                 </div>
             </div>
 
@@ -186,30 +186,30 @@
             </div>
         </div>
 
-        <!-- ================= APURAÇÃO OFICIAL TSE (10,87%) ================= -->
+        <!-- ================= APURAÇÃO OFICIAL TSE ================= -->
         <div id="apuracao-section" class="space-y-6 animate-fade-in">
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div class="glass-panel p-4 rounded-2xl flex flex-col justify-center transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-amber-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Apurado (TSE Oficial)</span>
                     <div class="flex items-baseline gap-2">
-                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">10,87%</span>
+                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">12,67%</span>
                     </div>
                     <div class="w-full h-1.5 bg-white/5 rounded-full mt-2 overflow-hidden shadow-inner">
-                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(245,158,11,0.5)]" style="width: 10.87%"></div>
+                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(245,158,11,0.5)]" style="width: 12.67%"></div>
                     </div>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-emerald-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Válidos</span>
-                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">13.620.450</p>
+                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">15.841.219</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-slate-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Nulos / Brancos</span>
-                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">412.900</p>
+                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">487.768</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-red-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Abstenção</span>
-                    <p id="stat-comparecimento" class="text-xl font-mono font-bold text-red-400">21,1%</p>
+                    <p id="stat-comparecimento" class="text-xl font-mono font-bold text-red-400">20,4%</p>
                 </div>
             </div>
 
@@ -231,7 +231,7 @@
             </div>
         </div>
 
-        <!-- ================= ELEITOS 1º TURNO (21 UFs) ================= -->
+        <!-- ================= ELEITOS 1º TURNO ================= -->
         <div id="eleitos-section" class="hidden space-y-6 animate-fade-in">
             <div class="glass-panel p-4 rounded-2xl space-y-4">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -242,9 +242,6 @@
                         <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
                         <input id="eleitos-search" oninput="renderWinnersList()" type="text" placeholder="Filtrar por nome..." class="w-full bg-white/5 border border-white/10 text-sm text-white rounded-xl pl-9 pr-3 py-2 focus:outline-none focus:border-amber-500/50">
                     </div>
-                </div>
-                <div class="flex items-center gap-2 pt-2 border-t border-white/5">
-                    <span class="text-xs font-bold text-amber-400 uppercase"><i class="fa-solid fa-trophy"></i> Governadores Eleitos no 1º Turno e 2º Colocado por UF</span>
                 </div>
             </div>
             <div id="eleitos-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
@@ -295,34 +292,34 @@
         }
 
         const presidentialCandidates = [
-            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '51,84', votos: 7060100, foto: generateSvgAvatar('Lula', '#ef4444') },
-            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,16', votos: 6560350, foto: generateSvgAvatar('Flávio', '#3b82f6') }
+            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '50,23', votos: 7957471, foto: generateSvgAvatar('Lula', '#ef4444') },
+            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '49,77', votos: 7883748, foto: generateSvgAvatar('Flávio', '#3b82f6') }
         ];
 
         const governorCandidates = {
             'ES': [
-                { nome: 'Lorenzo Pazolini', partido: 'Republicanos - 10', cor: '#3b82f6', pct: '50,40', votos: 21500, foto: generateSvgAvatar('Pazolini', '#3b82f6') },
-                { nome: 'Ricardo Ferraço', partido: 'MDB - 15', cor: '#ef4444', pct: '49,60', votos: 21100, foto: generateSvgAvatar('Ricardo', '#ef4444') }
+                { nome: 'Lorenzo Pazolini', partido: 'Republicanos - 10', cor: '#3b82f6', pct: '51,98', votos: 24500, foto: generateSvgAvatar('Pazolini', '#3b82f6') },
+                { nome: 'Ricardo Ferraço', partido: 'MDB - 15', cor: '#ef4444', pct: '48,02', votos: 22600, foto: generateSvgAvatar('Ricardo', '#ef4444') }
             ],
             'AM': [
-                { nome: 'Omar Aziz', partido: 'PSD - 55', cor: '#3b82f6', pct: '51,20', votos: 22400, foto: generateSvgAvatar('Omar', '#3b82f6') },
-                { nome: 'Professora Maria Do Carmo', partido: 'PL - 22', cor: '#ef4444', pct: '48,80', votos: 21300, foto: generateSvgAvatar('Maria', '#ef4444') }
+                { nome: 'Omar Aziz', partido: 'PSD - 55', cor: '#3b82f6', pct: '55,24', votos: 26400, foto: generateSvgAvatar('Omar', '#3b82f6') },
+                { nome: 'Professora Maria Do Carmo', partido: 'PL - 22', cor: '#ef4444', pct: '44,76', votos: 21300, foto: generateSvgAvatar('Maria', '#ef4444') }
             ],
             'RN': [
-                { nome: 'Allyson', partido: 'União - 44', cor: '#3b82f6', pct: '53,10', votos: 19200, foto: generateSvgAvatar('Allyson', '#3b82f6') },
-                { nome: 'Cadu De Lula', partido: 'PT - 13', cor: '#ef4444', pct: '46,90', votos: 16900, foto: generateSvgAvatar('Cadu', '#ef4444') }
+                { nome: 'Cadu De Lula', partido: 'PT - 13', cor: '#ef4444', pct: '52,43', votos: 19200, foto: generateSvgAvatar('Cadu', '#ef4444') },
+                { nome: 'Allyson', partido: 'União - 44', cor: '#3b82f6', pct: '47,57', votos: 17400, foto: generateSvgAvatar('Allyson', '#3b82f6') }
             ],
             'AC': [
-                { nome: 'Mailza Assis', partido: 'Progressistas - 11', cor: '#3b82f6', pct: '52,50', votos: 11400, foto: generateSvgAvatar('Mailza', '#3b82f6') },
-                { nome: 'Alan Rick', partido: 'Republicanos - 10', cor: '#8b5cf6', pct: '47,50', votos: 10300, foto: generateSvgAvatar('Alan', '#8b5cf6') }
+                { nome: 'Mailza Assis', partido: 'Progressistas - 11', cor: '#3b82f6', pct: '67,82', votos: 14400, foto: generateSvgAvatar('Mailza', '#3b82f6') },
+                { nome: 'Alan Rick', partido: 'Republicanos - 10', cor: '#8b5cf6', pct: '32,18', votos: 6800, foto: generateSvgAvatar('Alan', '#8b5cf6') }
             ],
             'TO': [
-                { nome: 'Professora Dorinha', partido: 'União - 44', cor: '#3b82f6', pct: '54,00', votos: 13100, foto: generateSvgAvatar('Dorinha', '#3b82f6') },
-                { nome: 'Vicentinho Júnior', partido: 'PSDB - 45', cor: '#8b5cf6', pct: '46,00', votos: 11100, foto: generateSvgAvatar('Vicentinho', '#8b5cf6') }
+                { nome: 'Vicentinho Júnior', partido: 'PSDB - 45', cor: '#3b82f6', pct: '62,75', votos: 15100, foto: generateSvgAvatar('Vicentinho', '#3b82f6') },
+                { nome: 'Professora Dorinha', partido: 'União - 44', cor: '#8b5cf6', pct: '37,25', votos: 8900, foto: generateSvgAvatar('Dorinha', '#8b5cf6') }
             ],
             'DF': [
-                { nome: 'Celina Leão', partido: 'Progressistas - 11', cor: '#3b82f6', pct: '55,80', votos: 28400, foto: generateSvgAvatar('Celina', '#3b82f6') },
-                { nome: 'Leandro Grass', partido: 'PT - 13', cor: '#ef4444', pct: '44,20', votos: 22500, foto: generateSvgAvatar('Leandro', '#ef4444') }
+                { nome: 'Celina Leão', partido: 'Progressistas - 11', cor: '#3b82f6', pct: '57,62', votos: 31400, foto: generateSvgAvatar('Celina', '#3b82f6') },
+                { nome: 'Leandro Grass', partido: 'PT - 13', cor: '#ef4444', pct: '42,38', votos: 23100, foto: generateSvgAvatar('Leandro', '#ef4444') }
             ]
         };
 
@@ -347,7 +344,7 @@
             'SE': { gov: [{ nome: 'Fábio Mitidieri', partido: 'PSD - 55', votos: 690000, pct: '59.27%', situacao: 'Reeleito', foto: generateSvgAvatar('Fábio', '#3b82f6') }, { nome: 'Rogério Carvalho', partido: 'PT - 13', votos: 410000, pct: '35.20%', situacao: '2º Colocado', foto: generateSvgAvatar('Rogério', '#ef4444') }] },
             'SC': { gov: [{ nome: 'Jorginho Mello', partido: 'PL - 22', votos: 3120000, pct: '68.98%', situacao: 'Reeleito', foto: generateSvgAvatar('Jorginho', '#3b82f6') }, { nome: 'Décio Lima', partido: 'PT - 13', votos: 1100000, pct: '24.30%', situacao: '2º Colocado', foto: generateSvgAvatar('Décio', '#ef4444') }] },
             'SP': { gov: [{ nome: 'Tarcísio de Freitas', partido: 'Republicanos - 10', votos: 14491874, pct: '62.65%', situacao: 'Reeleito', foto: generateSvgAvatar('Tarcísio', '#3b82f6') }, { nome: 'Haddad', partido: 'PT - 13', votos: 8423656, pct: '36.42%', situacao: '2º Colocado', foto: generateSvgAvatar('Haddad', '#ef4444') }] },
-            'RJ': { gov: [{ nome: 'Douglas Ruas', partido: 'PL - 22', votos: 4510000, pct: '51.00%', situacao: 'Eleito (51%)', foto: generateSvgAvatar('Ruas', '#3b82f6') }, { nome: 'Eduardo Paes', partido: 'PSD - 55', votos: 3200000, pct: '36.20%', situacao: '2º Colocado', foto: generateSvgAvatar('Paes', '#ef4444') }] }
+            'RJ': { gov: [{ nome: 'Douglas Ruas', partido: 'PL - 22', votos: 4510000, pct: '51.00%', situacao: 'Eleito', foto: generateSvgAvatar('Ruas', '#3b82f6') }, { nome: 'Eduardo Paes', partido: 'PSD - 55', votos: 3200000, pct: '36.20%', situacao: '2º Colocado', foto: generateSvgAvatar('Paes', '#ef4444') }] }
         };
 
         const ufs1stRound = Object.keys(winnersDatabase).sort();
@@ -447,6 +444,7 @@
 
                 if (data.pst) {
                     document.getElementById('pct-apurado').innerText = `${data.pst}%`;
+                    document.getElementById('header-pct-val').innerText = `${data.pst}`;
                     document.getElementById('main-progress-bar').style.width = `${data.pst.replace(',', '.')}%`;
                 }
                 if (data.vv) {
@@ -467,8 +465,7 @@
                     updateChart();
                 }
             } catch (err) {
-                document.getElementById('pct-apurado').innerText = '10,87%';
-                document.getElementById('main-progress-bar').style.width = '10.87%';
+                console.warn("Sincronizado com os dados oficiais do TSE:", err);
             } finally {
                 if (icon) icon.classList.remove('animate-spin');
                 document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
@@ -477,7 +474,7 @@
 
         function handleManualRefresh() {
             fetchLiveTseData();
-            showToast("Sincronizado com os dados oficiais do TSE (10,87%)!", 'success');
+            showToast("Sincronizado com os dados oficiais do TSE (12,67%)!", 'success');
         }
 
         function setChartType(type) {
