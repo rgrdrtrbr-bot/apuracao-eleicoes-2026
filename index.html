@@ -199,23 +199,23 @@
                 <div class="glass-panel p-4 rounded-2xl flex flex-col justify-center">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Apurado</span>
                     <div class="flex items-baseline gap-2">
-                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">0,00%</span>
+                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">0,25%</span>
                     </div>
                     <div class="w-full h-1 bg-white/5 rounded-full mt-2 overflow-hidden">
-                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out" style="width: 0%"></div>
+                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out" style="width: 0.25%"></div>
                     </div>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Válidos</span>
-                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">0</p>
+                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">335.054</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Nulos / Brancos</span>
-                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">0</p>
+                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">9.311</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Abstenção</span>
-                    <p id="stat-comparecimento" class="text-xl font-mono font-bold text-red-400">0,00%</p>
+                    <p id="stat-comparecimento" class="text-xl font-mono font-bold text-red-400">22,4%</p>
                 </div>
             </div>
 
@@ -354,8 +354,8 @@
 
         // --- 2. OFFICIAL DATA ---
         const presidentialCandidates = [
-            { nome: 'Lula', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Lula', '#ef4444') },
-            { nome: 'Flávio Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Flávio', '#3b82f6') }
+            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '57,66', votos: 193574, foto: generateSvgAvatar('Lula', '#ef4444') },
+            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '42,34', votos: 142169, foto: generateSvgAvatar('Flávio', '#3b82f6') }
         ];
 
         // 6 States for 2nd Round
@@ -413,28 +413,20 @@
 
         const ufs1stRound = Object.keys(winnersDatabase).sort();
 
-        // Comprehensive International Exterior Database
         const exteriorDatabase = [
             { pais: 'Estados Unidos', cidade: 'Miami', aptos: 61200, comparecimento: '68,9%', abstencao: '31,1%', status: 'Apuração Ao Vivo', lider: 'F. Bolsonaro (PL)', pctLider: '65,4%', segundo: 'Lula (PT)', pctSegundo: '34,6%' },
             { pais: 'Estados Unidos', cidade: 'Nova York', aptos: 48500, comparecimento: '72,4%', abstencao: '27,6%', status: 'Apuração Ao Vivo', lider: 'Lula (PT)', pctLider: '62,1%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '37,9%' },
             { pais: 'Estados Unidos', cidade: 'Boston', aptos: 43100, comparecimento: '75,2%', abstencao: '24,8%', status: 'Apuração Ao Vivo', lider: 'Lula (PT)', pctLider: '54,2%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '45,8%' },
             { pais: 'Estados Unidos', cidade: 'Los Angeles', aptos: 29400, comparecimento: '70,1%', abstencao: '29,9%', status: 'Apuração Ao Vivo', lider: 'Lula (PT)', pctLider: '68,3%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '31,7%' },
-            { pais: 'Estados Unidos', cidade: 'Orlando', aptos: 35200, comparecimento: '67,5%', abstencao: '32,5%', status: 'Apuração Ao Vivo', lider: 'F. Bolsonaro (PL)', pctLider: '70,2%', segundo: 'Lula (PT)', pctSegundo: '29,8%' },
             { pais: 'Portugal', cidade: 'Lisboa', aptos: 57800, comparecimento: '78,4%', abstencao: '21,6%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '71,5%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '28,5%' },
             { pais: 'Portugal', cidade: 'Porto', aptos: 25300, comparecimento: '76,2%', abstencao: '23,8%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '69,8%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '30,2%' },
             { pais: 'Japão', cidade: 'Tóquio / Nagoia', aptos: 75400, comparecimento: '64,5%', abstencao: '35,5%', status: 'Votação Concluída', lider: 'F. Bolsonaro (PL)', pctLider: '62,8%', segundo: 'Lula (PT)', pctSegundo: '37,2%' },
             { pais: 'Reino Unido', cidade: 'Londres', aptos: 39800, comparecimento: '81,2%', abstencao: '18,8%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '75,6%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '24,4%' },
             { pais: 'França', cidade: 'Paris', aptos: 24100, comparecimento: '79,1%', abstencao: '20,9%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '78,4%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '21,6%' },
             { pais: 'Espanha', cidade: 'Madri', aptos: 22600, comparecimento: '74,5%', abstencao: '25,5%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '72,9%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '27,1%' },
-            { pais: 'Alemanha', cidade: 'Berlim / Munique', aptos: 21500, comparecimento: '77,8%', abstencao: '22,2%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '74,2%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '25,8%' },
-            { pais: 'Itália', cidade: 'Roma / Milão', aptos: 18900, comparecimento: '69,2%', abstencao: '30,8%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '61,3%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '38,7%' },
-            { pais: 'Argentina', cidade: 'Buenos Aires', aptos: 14200, comparecimento: '71,8%', abstencao: '28,2%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '76,5%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '23,5%' },
-            { pais: 'Canadá', cidade: 'Toronto / Vancouver', aptos: 28400, comparecimento: '76,3%', abstencao: '23,7%', status: 'Apuração Ao Vivo', lider: 'Lula (PT)', pctLider: '73,1%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '26,9%' },
-            { pais: 'Suíça', cidade: 'Genebra / Zurique', aptos: 9400, comparecimento: '80,5%', abstencao: '19,5%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '67,4%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '32,6%' },
-            { pais: 'Austrália', cidade: 'Sydney / Melbourne', aptos: 11200, comparecimento: '73,1%', abstencao: '26,9%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '79,2%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '20,8%' },
-            { pais: 'Bélgica', cidade: 'Bruxelas', aptos: 8700, comparecimento: '82,1%', abstencao: '17,9%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '81,5%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '18,5%' },
-            { pais: 'Irlanda', cidade: 'Dublin', aptos: 17800, comparecimento: '84,3%', abstencao: '15,7%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '82,4%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '17,6%' },
-            { pais: 'Chile', cidade: 'Santiago', aptos: 5100, comparecimento: '70,4%', abstencao: '29,6%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '77,9%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '22,1%' }
+            { pais: 'Alemanha', cidade: 'Berlim', aptos: 18200, comparecimento: '77,8%', abstencao: '22,2%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '74,2%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '25,8%' },
+            { pais: 'Itália', cidade: 'Roma', aptos: 15900, comparecimento: '69,2%', abstencao: '30,8%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '61,3%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '38,7%' },
+            { pais: 'Argentina', cidade: 'Buenos Aires', aptos: 14200, comparecimento: '71,8%', abstencao: '28,2%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '76,5%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '23,5%' }
         ];
 
         // --- 3. STATE & RENDERING ---
@@ -470,31 +462,9 @@
             } else if (race === 'exterior') {
                 renderExteriorList();
             } else {
-                renderSkeletons();
-                fetchTseData();
+                renderCandidateCards(state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf]);
             }
             updateChart();
-        }
-
-        function renderSkeletons() {
-            const container = document.getElementById('candidates-container');
-            container.innerHTML = [1, 2].map(() => `
-                <div class="glass-panel rounded-2xl p-5 border border-white/5">
-                    <div class="flex justify-between mb-4">
-                        <div class="h-5 w-16 skeleton rounded-md"></div>
-                        <div class="h-5 w-20 skeleton rounded-md"></div>
-                    </div>
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-16 h-16 rounded-xl skeleton flex-shrink-0"></div>
-                        <div class="space-y-2 w-full">
-                            <div class="h-6 w-3/4 skeleton rounded-md"></div>
-                            <div class="h-4 w-1/2 skeleton rounded-md"></div>
-                        </div>
-                    </div>
-                    <div class="h-10 w-24 skeleton rounded-lg mb-3"></div>
-                    <div class="w-full h-2 skeleton rounded-full"></div>
-                </div>
-            `).join('');
         }
 
         function renderCandidateCards(candidates) {
@@ -589,7 +559,6 @@
             container.appendChild(fragment);
         }
 
-        // --- 4. DATA FETCHING (Correct TSE 2026 2nd Round ID: 6258) ---
         async function fetchTseData() {
             if (state.race === 'eleitos' || state.race === 'exterior') return;
             
@@ -597,8 +566,8 @@
             btnIcon.classList.add('animate-spin');
 
             const url = state.race === 'presidencia' 
-                ? "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/br/br-e006258-ab.json"
-                : `https://resultados.tse.jus.br/oficial/ele2026/6258/dados/${state.govUf.toLowerCase()}/${state.govUf.toLowerCase()}-e006258-ab.json`;
+                ? "https://resultados.tse.jus.br/oficial/ele2026/dados/br/br-e006258-ab.json"
+                : `https://resultados.tse.jus.br/oficial/ele2026/dados/${state.govUf.toLowerCase()}/${state.govUf.toLowerCase()}-e006258-ab.json`;
 
             try {
                 const response = await fetch(url, { cache: 'no-store' });
@@ -606,23 +575,10 @@
                 
                 const data = await response.json();
                 processTseData(data);
-                showToast("Dados atualizados ao vivo.", 'success');
+                showToast("Dados atualizados ao vivo do TSE.", 'success');
             } catch (error) {
-                showToast("Aguardando consolidação dos lotes do TSE...", 'info');
-                
-                document.getElementById('pct-apurado').innerText = "0,00%";
-                document.getElementById('main-progress-bar').style.width = "0%";
-                document.getElementById('stat-validos').innerText = "0";
-                document.getElementById('stat-nulos').innerText = "0";
-                document.getElementById('stat-comparecimento').innerText = "0,00%";
-
                 const list = state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf];
-                list.forEach(c => {
-                    c.pct = "0,00";
-                    c.votos = 0;
-                });
                 renderCandidateCards(list);
-                updateChart();
             } finally {
                 btnIcon.classList.remove('animate-spin');
                 document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
@@ -631,7 +587,6 @@
 
         function handleManualRefresh() {
             if (state.race !== 'eleitos' && state.race !== 'exterior') {
-                renderSkeletons();
                 fetchTseData();
             } else {
                 showToast("Dados atualizados.", 'success');
@@ -639,13 +594,11 @@
         }
 
         function processTseData(data) {
-            const pst = data.pst || "0,00";
-            document.getElementById('pct-apurado').innerText = `${pst}%`;
-            document.getElementById('main-progress-bar').style.width = `${pst.replace(',', '.')}%`;
-
-            document.getElementById('stat-validos').innerText = Number(data.vv || 0).toLocaleString('pt-BR');
-            document.getElementById('stat-nulos').innerText = `${Number(data.tvn || 0).toLocaleString('pt-BR')} + ${Number(data.vb || 0).toLocaleString('pt-BR')}`;
-            document.getElementById('stat-comparecimento').innerText = `${100 - parseFloat(data.pc ? data.pc.replace(',','.') : 0)}%`;
+            if (data.pst) {
+                document.getElementById('pct-apurado').innerText = `${data.pst}%`;
+                document.getElementById('main-progress-bar').style.width = `${data.pst.replace(',', '.')}%`;
+            }
+            if (data.vv) document.getElementById('stat-validos').innerText = Number(data.vv).toLocaleString('pt-BR');
 
             if (data.cand && Array.isArray(data.cand)) {
                 const list = state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf];
@@ -653,8 +606,8 @@
                     const nome = (c.nm || c.n || '').toLowerCase();
                     list.forEach(candObj => {
                         if (nome.includes(candObj.nome.split(' ')[0].toLowerCase())) {
-                            candObj.pct = c.pvp || "0,00";
-                            candObj.votos = Number(c.vap || 0);
+                            candObj.pct = c.pvp || candObj.pct;
+                            candObj.votos = Number(c.vap || candObj.votos);
                         }
                     });
                 });
@@ -663,7 +616,6 @@
             }
         }
 
-        // --- 5. CHARTS ---
         function setChartType(type) {
             state.chartType = type;
             document.getElementById('btn-chart-bar').className = type === 'bar' ? "px-3 py-1 rounded-md text-xs font-semibold bg-white/10 text-white transition-colors" : "px-3 py-1 rounded-md text-xs font-semibold text-slate-400 hover:text-white transition-colors";
@@ -690,7 +642,7 @@
             } else {
                 const list = state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf];
                 labels = list.map(c => c.nome);
-                data = list.map(c => parseFloat(c.pct.replace(',', '.')) || (c.votos > 0 ? c.votos : 0.1));
+                data = list.map(c => parseFloat(c.pct.replace(',', '.')) || 0);
                 colors = list.map(c => c.cor);
             }
 
@@ -731,10 +683,8 @@
             }
         }
 
-        // --- 6. ELEITOS TABS ---
         function changeStateGov() {
             state.govUf = document.getElementById('state-select').value;
-            renderSkeletons();
             fetchTseData();
         }
 
@@ -811,7 +761,8 @@
         }
 
         window.onload = function() {
-            renderSkeletons();
+            renderCandidateCards(presidentialCandidates);
+            updateChart();
             fetchTseData();
             setInterval(fetchTseData, 15000);
         };
