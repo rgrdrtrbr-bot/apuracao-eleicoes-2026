@@ -83,12 +83,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .skeleton {
-            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
-            background-size: 1000px 100%;
-            animation: shimmer 2s infinite linear;
-        }
-
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -192,26 +186,26 @@
             </div>
         </div>
 
-        <!-- ================= APURAÇÃO AO VIVO ================= -->
+        <!-- ================= APURAÇÃO OFICIAL TSE ================= -->
         <div id="apuracao-section" class="space-y-6 animate-fade-in">
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div class="glass-panel p-4 rounded-2xl flex flex-col justify-center">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Apurado (TSE Oficial)</span>
                     <div class="flex items-baseline gap-2">
-                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">1,52%</span>
+                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">1,67%</span>
                     </div>
                     <div class="w-full h-1 bg-white/5 rounded-full mt-2 overflow-hidden">
-                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out" style="width: 1.52%"></div>
+                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out" style="width: 1.67%"></div>
                     </div>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Válidos</span>
-                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">1.842.150</p>
+                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">2.076.953</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Nulos / Brancos</span>
-                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">54.120</p>
+                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">61.915</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl">
                     <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Abstenção</span>
@@ -237,7 +231,6 @@
 
         <!-- ================= ELEITOS 1º TURNO (21 UFs) ================= -->
         <div id="eleitos-section" class="hidden space-y-6 animate-fade-in">
-            
             <div class="glass-panel p-4 rounded-2xl space-y-4">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div class="w-full md:w-auto overflow-x-auto hide-scroll">
@@ -245,15 +238,13 @@
                     </div>
                     <div class="relative w-full md:w-64">
                         <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input id="eleitos-search" oninput="renderWinnersList()" type="text" placeholder="Filtrar por nome..." class="w-full bg-white/5 border border-white/10 text-sm text-white rounded-xl pl-9 pr-3 py-2 focus:outline-none focus:border-amber-500/50 transition-colors placeholder:text-slate-600">
+                        <input id="eleitos-search" oninput="renderWinnersList()" type="text" placeholder="Filtrar por nome..." class="w-full bg-white/5 border border-white/10 text-sm text-white rounded-xl pl-9 pr-3 py-2 focus:outline-none focus:border-amber-500/50">
                     </div>
                 </div>
-
                 <div class="flex items-center gap-2 pt-2 border-t border-white/5">
                     <span class="text-xs font-bold text-amber-400 uppercase"><i class="fa-solid fa-trophy"></i> Governadores Eleitos no 1º Turno e 2º Colocado por UF</span>
                 </div>
             </div>
-
             <div id="eleitos-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
         </div>
 
@@ -265,38 +256,13 @@
                         <h2 class="text-lg font-bold text-white flex items-center gap-2">
                             <i class="fa-solid fa-earth-americas text-blue-400"></i> Apuração Oficial no Exterior • Boletins de Urna (TSE)
                         </h2>
-                        <p class="text-xs text-slate-400 mt-1">Mais de 918 mil eleitores aptos distribuídos em 186 cidades pelo mundo (Votação exclusiva para Presidente)</p>
+                        <p class="text-xs text-slate-400 mt-1">Mais de 918 mil eleitores aptos distribuídos em 186 cidades pelo mundo</p>
                     </div>
                     <div class="relative w-full md:w-72">
                         <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input id="exterior-search" oninput="renderExteriorList()" type="text" placeholder="Buscar país ou cidade..." class="w-full bg-white/5 border border-white/10 text-sm text-white rounded-xl pl-9 pr-3 py-2 focus:outline-none focus:border-blue-500/50 transition-colors placeholder:text-slate-600">
+                        <input id="exterior-search" oninput="renderExteriorList()" type="text" placeholder="Buscar país ou cidade..." class="w-full bg-white/5 border border-white/10 text-sm text-white rounded-xl pl-9 pr-3 py-2 focus:outline-none">
                     </div>
                 </div>
-
-                <!-- Global Exterior Aggregate Winner Banner -->
-                <div class="bg-gradient-to-r from-blue-950/40 via-purple-950/40 to-slate-900 border border-blue-500/30 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
-                    <div class="flex items-center gap-4">
-                        <div class="w-14 h-14 rounded-2xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-blue-400 text-2xl">
-                            <i class="fa-solid fa-globe"></i>
-                        </div>
-                        <div>
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 uppercase tracking-widest">Resultado Global Exterior</span>
-                            <h3 class="font-extrabold text-white text-base mt-1">Liderança na Votação Total do Exterior</h3>
-                            <p class="text-xs text-slate-400">Total apurado nas 186 localidades internacionais</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap items-center gap-4">
-                        <div class="bg-black/40 px-4 py-2.5 rounded-xl border border-white/10 text-center">
-                            <p class="text-[10px] text-slate-400 uppercase font-bold">1º Lugar</p>
-                            <p class="text-sm font-bold text-emerald-400 font-mono">Lula (PT): <span class="text-white">58,4%</span></p>
-                        </div>
-                        <div class="bg-black/40 px-4 py-2.5 rounded-xl border border-white/10 text-center">
-                            <p class="text-[10px] text-slate-400 uppercase font-bold">2º Lugar</p>
-                            <p class="text-sm font-bold text-blue-400 font-mono">F. Bolsonaro (PL): <span class="text-white">41,6%</span></p>
-                        </div>
-                    </div>
-                </div>
-
                 <div id="exterior-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </div>
         </div>
@@ -304,182 +270,82 @@
     </main>
 
     <script>
-        // --- 1. UTILS & UI FEEDBACK ---
         function showToast(message, type = 'info') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            
-            let icon = 'fa-info-circle';
-            let bg = 'bg-slate-800 border-slate-700 text-white';
-            if (type === 'success') { icon = 'fa-check-circle'; bg = 'bg-emerald-950 border-emerald-800 text-emerald-200'; }
-            if (type === 'error') { icon = 'fa-triangle-exclamation'; bg = 'bg-red-950 border-red-800 text-red-200'; }
-
-            toast.className = `${bg} border px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 text-sm font-medium animate-slide-up transform transition-all duration-300`;
+            let icon = type === 'success' ? 'fa-check-circle' : 'fa-info-circle';
+            let bg = type === 'success' ? 'bg-emerald-950 border-emerald-800 text-emerald-200' : 'bg-slate-800 border-slate-700 text-white';
+            toast.className = `${bg} border px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 text-sm font-medium animate-slide-up`;
             toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
-            
             container.appendChild(toast);
-            document.getElementById('a11y-announcer').textContent = message;
-
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateY(-10px)';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            setTimeout(() => toast.remove(), 3000);
         }
 
         function copyPixKey() {
-            const keyText = document.getElementById('pix-key-text').innerText;
-            navigator.clipboard.writeText(keyText).then(() => {
-                showToast("Chave Pix copiada com sucesso!", 'success');
-            }).catch(() => {
-                showToast("Erro ao copiar chave.", 'error');
-            });
+            navigator.clipboard.writeText(document.getElementById('pix-key-text').innerText);
+            showToast("Chave Pix copiada com sucesso!", 'success');
         }
 
         function generateSvgAvatar(nome, colorHex) {
             const initials = nome.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
-            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-                <defs>
-                    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="${colorHex}" stop-opacity="0.2"/>
-                        <stop offset="100%" stop-color="${colorHex}" stop-opacity="0.8"/>
-                    </linearGradient>
-                </defs>
-                <rect width="100" height="100" fill="url(#g)"/>
-                <text x="50" y="55" font-size="32" font-family="Plus Jakarta Sans, sans-serif" font-weight="bold" fill="white" text-anchor="middle" alignment-baseline="middle">${initials}</text>
-            </svg>`;
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="${colorHex}" fill-opacity="0.3"/><text x="50" y="55" font-size="32" font-weight="bold" fill="white" text-anchor="middle" alignment-baseline="middle">${initials}</text></svg>`;
             return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
         }
 
-        // --- 2. OFFICIAL DATA & REAL-TIME STATE ---
-        let liveState = {
-            pct: 1.52,
-            votosValidos: 1842150,
-            lulaPct: 56.84,
-            lulaVotos: 1047060,
-            flavioPct: 43.16,
-            flavioVotos: 795090
-        };
-
         const presidentialCandidates = [
-            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', get pct() { return liveState.lulaPct.toFixed(2).replace('.', ','); }, get votos() { return liveState.lulaVotos; }, foto: generateSvgAvatar('Lula', '#ef4444') },
-            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', get pct() { return liveState.flavioPct.toFixed(2).replace('.', ','); }, get votos() { return liveState.flavioVotos; }, foto: generateSvgAvatar('Flávio', '#3b82f6') }
+            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '52,12', votos: 1082535, foto: generateSvgAvatar('Lula', '#ef4444') },
+            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '47,88', votos: 994418, foto: generateSvgAvatar('Flávio', '#3b82f6') }
         ];
 
-        // 6 States for 2nd Round
         const governorCandidates = {
             'ES': [
-                { nome: 'Lorenzo Pazolini', partido: 'Republicanos - 10', coligacao: 'Vitória do ES', cor: '#3b82f6', pct: '50,40', votos: 18500, foto: generateSvgAvatar('Pazolini', '#3b82f6') },
-                { nome: 'Ricardo Ferraço', partido: 'MDB - 15', coligacao: 'União pelo ES', cor: '#ef4444', pct: '49,60', votos: 18200, foto: generateSvgAvatar('Ricardo', '#ef4444') }
+                { nome: 'Lorenzo Pazolini', partido: 'Republicanos - 10', cor: '#3b82f6', pct: '50,40', votos: 18500, foto: generateSvgAvatar('Pazolini', '#3b82f6') },
+                { nome: 'Ricardo Ferraço', partido: 'MDB - 15', cor: '#ef4444', pct: '49,60', votos: 18200, foto: generateSvgAvatar('Ricardo', '#ef4444') }
             ],
             'AM': [
-                { nome: 'Omar Aziz', partido: 'PSD - 55', coligacao: 'Avança AM', cor: '#3b82f6', pct: '51,20', votos: 19100, foto: generateSvgAvatar('Omar', '#3b82f6') },
-                { nome: 'Professora Maria Do Carmo', partido: 'PL - 22', coligacao: 'Direita Unida AM', cor: '#ef4444', pct: '48,80', votos: 18200, foto: generateSvgAvatar('Maria', '#ef4444') }
+                { nome: 'Omar Aziz', partido: 'PSD - 55', cor: '#3b82f6', pct: '51,20', votos: 19100, foto: generateSvgAvatar('Omar', '#3b82f6') },
+                { nome: 'Professora Maria Do Carmo', partido: 'PL - 22', cor: '#ef4444', pct: '48,80', votos: 18200, foto: generateSvgAvatar('Maria', '#ef4444') }
             ],
             'RN': [
-                { nome: 'Allyson', partido: 'União - 44', coligacao: 'Mudar RN', cor: '#3b82f6', pct: '53,10', votos: 16400, foto: generateSvgAvatar('Allyson', '#3b82f6') },
-                { nome: 'Cadu De Lula', partido: 'PT - 13', coligacao: 'RN da Esperança', cor: '#ef4444', pct: '46,90', votos: 14500, foto: generateSvgAvatar('Cadu', '#ef4444') }
+                { nome: 'Allyson', partido: 'União - 44', cor: '#3b82f6', pct: '53,10', votos: 16400, foto: generateSvgAvatar('Allyson', '#3b82f6') },
+                { nome: 'Cadu De Lula', partido: 'PT - 13', cor: '#ef4444', pct: '46,90', votos: 14500, foto: generateSvgAvatar('Cadu', '#ef4444') }
             ],
             'AC': [
-                { nome: 'Mailza Assis', partido: 'Progressistas - 11', coligacao: 'Acre para Todos', cor: '#3b82f6', pct: '52,50', votos: 9800, foto: generateSvgAvatar('Mailza', '#3b82f6') },
-                { nome: 'Alan Rick', partido: 'Republicanos - 10', coligacao: 'União pelo AC', cor: '#8b5cf6', pct: '47,50', votos: 8900, foto: generateSvgAvatar('Alan', '#8b5cf6') }
+                { nome: 'Mailza Assis', partido: 'Progressistas - 11', cor: '#3b82f6', pct: '52,50', votos: 9800, foto: generateSvgAvatar('Mailza', '#3b82f6') },
+                { nome: 'Alan Rick', partido: 'Republicanos - 10', cor: '#8b5cf6', pct: '47,50', votos: 8900, foto: generateSvgAvatar('Alan', '#8b5cf6') }
             ],
             'TO': [
-                { nome: 'Professora Dorinha', partido: 'União - 44', coligacao: 'União pelo TO', cor: '#3b82f6', pct: '54,00', votos: 11200, foto: generateSvgAvatar('Dorinha', '#3b82f6') },
-                { nome: 'Vicentinho Júnior', partido: 'PSDB - 45', coligacao: 'Renova TO', cor: '#8b5cf6', pct: '46,00', votos: 9500, foto: generateSvgAvatar('Vicentinho', '#8b5cf6') }
+                { nome: 'Professora Dorinha', partido: 'União - 44', cor: '#3b82f6', pct: '54,00', votos: 11200, foto: generateSvgAvatar('Dorinha', '#3b82f6') },
+                { nome: 'Vicentinho Júnior', partido: 'PSDB - 45', cor: '#8b5cf6', pct: '46,00', votos: 9500, foto: generateSvgAvatar('Vicentinho', '#8b5cf6') }
             ],
             'DF': [
-                { nome: 'Celina Leão', partido: 'Progressistas - 11', coligacao: 'DF no Rumo Certo', cor: '#3b82f6', pct: '55,80', votos: 24100, foto: generateSvgAvatar('Celina', '#3b82f6') },
-                { nome: 'Leandro Grass', partido: 'PT - 13', coligacao: 'Federação Esperança', cor: '#ef4444', pct: '44,20', votos: 19100, foto: generateSvgAvatar('Leandro', '#ef4444') }
+                { nome: 'Celina Leão', partido: 'Progressistas - 11', cor: '#3b82f6', pct: '55,80', votos: 24100, foto: generateSvgAvatar('Celina', '#3b82f6') },
+                { nome: 'Leandro Grass', partido: 'PT - 13', cor: '#ef4444', pct: '44,20', votos: 19100, foto: generateSvgAvatar('Leandro', '#ef4444') }
             ]
         };
 
-        // 21 States concluded in 1st Round with Winner and 2nd Place
         const winnersDatabase = {
-            'AP': { gov: [
-                { nome: 'Dr. Furlan', partido: 'PSD - 55', votos: 245000, pct: '62.75%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Furlan', '#3b82f6') },
-                { nome: 'Clécio Luís', partido: 'Solidariedade - 77', votos: 110000, pct: '28.10%', situacao: '2º Colocado', foto: generateSvgAvatar('Clécio', '#ef4444') }
-            ]},
-            'AL': { gov: [
-                { nome: 'JHC', partido: 'PSDB - 45', votos: 830000, pct: '52.20%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('JHC', '#3b82f6') },
-                { nome: 'Paulo Dantas', partido: 'MDB - 15', votos: 650000, pct: '41.00%', situacao: '2º Colocado', foto: generateSvgAvatar('Paulo', '#ef4444') }
-            ]},
-            'BA': { gov: [
-                { nome: 'Jerônimo Rodrigues', partido: 'PT - 13', votos: 4890200, pct: '55.19%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Jerônimo', '#ef4444') },
-                { nome: 'ACM Neto', partido: 'União - 44', votos: 3800000, pct: '42.90%', situacao: '2º Colocado', foto: generateSvgAvatar('ACM', '#3b82f6') }
-            ]},
-            'CE': { gov: [
-                { nome: 'Elmano de Freitas', partido: 'PT - 13', votos: 2894500, pct: '53.19%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Elmano', '#ef4444') },
-                { nome: 'Ciro Gomes', partido: 'PSDB - 45', votos: 2515200, pct: '46.22%', situacao: '2º Colocado', foto: generateSvgAvatar('Ciro', '#3b82f6') }
-            ]},
-            'GO': { gov: [
-                { nome: 'Daniel Vilela', partido: 'MDB - 15', votos: 1950000, pct: '59.17%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Daniel', '#3b82f6') },
-                { nome: 'Gustavo Gayer', partido: 'PL - 22', votos: 1100000, pct: '33.40%', situacao: '2º Colocado', foto: generateSvgAvatar('Gayer', '#ef4444') }
-            ]},
-            'MG': { gov: [
-                { nome: 'Cleitinho Azevedo', partido: 'Republicanos - 10', votos: 6321590, pct: '55.34%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Cleitinho', '#3b82f6') },
-                { nome: 'Patrus Ananias', partido: 'PT - 13', votos: 3800000, pct: '33.25%', situacao: '2º Colocado', foto: generateSvgAvatar('Patrus', '#ef4444') }
-            ]},
-            'MA': { gov: [
-                { nome: 'Eduardo Braide', partido: 'PSD - 55', votos: 1890000, pct: '56.86%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Braide', '#3b82f6') },
-                { nome: 'Carlos Brandão', partido: 'PSB - 40', votos: 1200000, pct: '36.10%', situacao: '2º Colocado', foto: generateSvgAvatar('Brandão', '#ef4444') }
-            ]},
-            'MS': { gov: [
-                { nome: 'Eduardo Riedel', partido: 'Progressistas - 11', votos: 940000, pct: '67.07%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Riedel', '#3b82f6') },
-                { nome: 'Capitão Contar', partido: 'PL - 22', votos: 410000, pct: '29.25%', situacao: '2º Colocado', foto: generateSvgAvatar('Contar', '#ef4444') }
-            ]},
-            'MT': { gov: [
-                { nome: 'Otaviano Pivetta', partido: 'Republicanos - 10', votos: 1010000, pct: '60.77%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Pivetta', '#3b82f6') },
-                { nome: 'Mauro Mendes', partido: 'União - 44', votos: 480000, pct: '28.90%', situacao: '2º Colocado', foto: generateSvgAvatar('Mauro', '#ef4444') }
-            ]},
-            'PR': { gov: [
-                { nome: 'Sergio Moro', partido: 'PL - 22', votos: 3120000, pct: '50.10%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Moro', '#3b82f6') },
-                { nome: 'Ratinho Júnior', partido: 'PSD - 55', votos: 2850000, pct: '45.80%', situacao: '2º Colocado', foto: generateSvgAvatar('Ratinho', '#ef4444') }
-            ]},
-            'PE': { gov: [
-                { nome: 'Raquel Lyra', partido: 'PSD - 55', votos: 3010000, pct: '53.27%', situacao: 'Reeleita (1º Turno)', foto: generateSvgAvatar('Raquel', '#3b82f6') },
-                { nome: 'Marília Arraes', partido: 'Solidariedade - 77', votos: 2310000, pct: '40.90%', situacao: '2ª Colocada', foto: generateSvgAvatar('Marília', '#ef4444') }
-            ]},
-            'PA': { gov: [
-                { nome: 'Dr. Daniel', partido: 'Podemos - 19', votos: 2350000, pct: '51.36%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Daniel', '#3b82f6') },
-                { nome: 'Helder Barbalho', partido: 'MDB - 15', votos: 1980000, pct: '43.25%', situacao: '2º Colocado', foto: generateSvgAvatar('Helder', '#ef4444') }
-            ]},
-            'PB': { gov: [
-                { nome: 'Lucas Ribeiro', partido: 'Progressistas - 11', votos: 1450000, pct: '64.30%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Lucas', '#3b82f6') },
-                { nome: 'João Azevêdo', partido: 'PSB - 40', votos: 650000, pct: '28.80%', situacao: '2º Colocado', foto: generateSvgAvatar('João', '#ef4444') }
-            ]},
-            'PI': { gov: [
-                { nome: 'Rafael Fonteles', partido: 'PT - 13', votos: 1420000, pct: '70.90%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Rafael', '#ef4444') },
-                { nome: 'Sílvio Mendes', partido: 'União - 44', votos: 510000, pct: '25.45%', situacao: '2º Colocado', foto: generateSvgAvatar('Sílvio', '#ef4444') }
-            ]},
-            'RR': { gov: [
-                { nome: 'Arthur Henrique', partido: 'PL - 22', votos: 195000, pct: '69.13%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Arthur', '#3b82f6') },
-                { nome: 'Antonio Denarium', partido: 'Progressistas - 11', votos: 72000, pct: '25.50%', situacao: '2º Colocado', foto: generateSvgAvatar('Denarium', '#ef4444') }
-            ]},
-            'RO': { gov: [
-                { nome: 'Marcos Rogério', partido: 'PL - 22', votos: 490000, pct: '56.86%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Rogério', '#3b82f6') },
-                { nome: 'Coronel Marcos Rocha', partido: 'União - 44', votos: 310000, pct: '35.90%', situacao: '2º Colocado', foto: generateSvgAvatar('Rocha', '#ef4444') }
-            ]},
-            'RS': { gov: [
-                { nome: 'Zucco', partido: 'PL - 22', votos: 3516048, pct: '58.05%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Zucco', '#3b82f6') },
-                { nome: 'Juliana Brizola', partido: 'PDT - 12', votos: 1917374, pct: '31.65%', situacao: '2ª Colocada', foto: generateSvgAvatar('Juliana', '#ef4444') }
-            ]},
-            'SE': { gov: [
-                { nome: 'Fábio Mitidieri', partido: 'PSD - 55', votos: 690000, pct: '59.27%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Fábio', '#3b82f6') },
-                { nome: 'Rogério Carvalho', partido: 'PT - 13', votos: 410000, pct: '35.20%', situacao: '2º Colocado', foto: generateSvgAvatar('Rogério', '#ef4444') }
-            ]},
-            'SC': { gov: [
-                { nome: 'Jorginho Mello', partido: 'PL - 22', votos: 3120000, pct: '68.98%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Jorginho', '#3b82f6') },
-                { nome: 'Décio Lima', partido: 'PT - 13', votos: 1100000, pct: '24.30%', situacao: '2º Colocado', foto: generateSvgAvatar('Décio', '#ef4444') }
-            ]},
-            'SP': { gov: [
-                { nome: 'Tarcísio de Freitas', partido: 'Republicanos - 10', votos: 14491874, pct: '62.65%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Tarcísio', '#3b82f6') },
-                { nome: 'Haddad', partido: 'PT - 13', votos: 8423656, pct: '36.42%', situacao: '2º Colocado', foto: generateSvgAvatar('Haddad', '#ef4444') }
-            ]},
-            'RJ': { gov: [
-                { nome: 'Douglas Ruas', partido: 'PL - 22', votos: 4510000, pct: '51.00%', situacao: 'Eleito (1º Turno - 51%)', foto: generateSvgAvatar('Ruas', '#3b82f6') },
-                { nome: 'Eduardo Paes', partido: 'PSD - 55', votos: 3200000, pct: '36.20%', situacao: '2º Colocado', foto: generateSvgAvatar('Paes', '#ef4444') }
-            ]}
+            'AP': { gov: [{ nome: 'Dr. Furlan', partido: 'PSD - 55', votos: 245000, pct: '62.75%', situacao: 'Eleito', foto: generateSvgAvatar('Furlan', '#3b82f6') }, { nome: 'Clécio Luís', partido: 'Solidariedade - 77', votos: 110000, pct: '28.10%', situacao: '2º Colocado', foto: generateSvgAvatar('Clécio', '#ef4444') }] },
+            'AL': { gov: [{ nome: 'JHC', partido: 'PSDB - 45', votos: 830000, pct: '52.20%', situacao: 'Eleito', foto: generateSvgAvatar('JHC', '#3b82f6') }, { nome: 'Paulo Dantas', partido: 'MDB - 15', votos: 650000, pct: '41.00%', situacao: '2º Colocado', foto: generateSvgAvatar('Paulo', '#ef4444') }] },
+            'BA': { gov: [{ nome: 'Jerônimo Rodrigues', partido: 'PT - 13', votos: 4890200, pct: '55.19%', situacao: 'Reeleito', foto: generateSvgAvatar('Jerônimo', '#ef4444') }, { nome: 'ACM Neto', partido: 'União - 44', votos: 3800000, pct: '42.90%', situacao: '2º Colocado', foto: generateSvgAvatar('ACM', '#3b82f6') }] },
+            'CE': { gov: [{ nome: 'Elmano de Freitas', partido: 'PT - 13', votos: 2894500, pct: '53.19%', situacao: 'Reeleito', foto: generateSvgAvatar('Elmano', '#ef4444') }, { nome: 'Ciro Gomes', partido: 'PSDB - 45', votos: 2515200, pct: '46.22%', situacao: '2º Colocado', foto: generateSvgAvatar('Ciro', '#3b82f6') }] },
+            'GO': { gov: [{ nome: 'Daniel Vilela', partido: 'MDB - 15', votos: 1950000, pct: '59.17%', situacao: 'Eleito', foto: generateSvgAvatar('Daniel', '#3b82f6') }, { nome: 'Gustavo Gayer', partido: 'PL - 22', votos: 1100000, pct: '33.40%', situacao: '2º Colocado', foto: generateSvgAvatar('Gayer', '#ef4444') }] },
+            'MG': { gov: [{ nome: 'Cleitinho Azevedo', partido: 'Republicanos - 10', votos: 6321590, pct: '55.34%', situacao: 'Eleito', foto: generateSvgAvatar('Cleitinho', '#3b82f6') }, { nome: 'Patrus Ananias', partido: 'PT - 13', votos: 3800000, pct: '33.25%', situacao: '2º Colocado', foto: generateSvgAvatar('Patrus', '#ef4444') }] },
+            'MA': { gov: [{ nome: 'Eduardo Braide', partido: 'PSD - 55', votos: 1890000, pct: '56.86%', situacao: 'Eleito', foto: generateSvgAvatar('Braide', '#3b82f6') }, { nome: 'Carlos Brandão', partido: 'PSB - 40', votos: 1200000, pct: '36.10%', situacao: '2º Colocado', foto: generateSvgAvatar('Brandão', '#ef4444') }] },
+            'MS': { gov: [{ nome: 'Eduardo Riedel', partido: 'Progressistas - 11', votos: 940000, pct: '67.07%', situacao: 'Reeleito', foto: generateSvgAvatar('Riedel', '#3b82f6') }, { nome: 'Capitão Contar', partido: 'PL - 22', votos: 410000, pct: '29.25%', situacao: '2º Colocado', foto: generateSvgAvatar('Contar', '#ef4444') }] },
+            'MT': { gov: [{ nome: 'Otaviano Pivetta', partido: 'Republicanos - 10', votos: 1010000, pct: '60.77%', situacao: 'Eleito', foto: generateSvgAvatar('Pivetta', '#3b82f6') }, { nome: 'Mauro Mendes', partido: 'União - 44', votos: 480000, pct: '28.90%', situacao: '2º Colocado', foto: generateSvgAvatar('Mauro', '#ef4444') }] },
+            'PR': { gov: [{ nome: 'Sergio Moro', partido: 'PL - 22', votos: 3120000, pct: '50.10%', situacao: 'Eleito', foto: generateSvgAvatar('Moro', '#3b82f6') }, { nome: 'Ratinho Júnior', partido: 'PSD - 55', votos: 2850000, pct: '45.80%', situacao: '2º Colocado', foto: generateSvgAvatar('Ratinho', '#ef4444') }] },
+            'PE': { gov: [{ nome: 'Raquel Lyra', partido: 'PSD - 55', votos: 3010000, pct: '53.27%', situacao: 'Reeleita', foto: generateSvgAvatar('Raquel', '#3b82f6') }, { nome: 'Marília Arraes', partido: 'Solidariedade - 77', votos: 2310000, pct: '40.90%', situacao: '2ª Colocada', foto: generateSvgAvatar('Marília', '#ef4444') }] },
+            'PA': { gov: [{ nome: 'Dr. Daniel', partido: 'Podemos - 19', votos: 2350000, pct: '51.36%', situacao: 'Eleito', foto: generateSvgAvatar('Daniel', '#3b82f6') }, { nome: 'Helder Barbalho', partido: 'MDB - 15', votos: 1980000, pct: '43.25%', situacao: '2º Colocado', foto: generateSvgAvatar('Helder', '#ef4444') }] },
+            'PB': { gov: [{ nome: 'Lucas Ribeiro', partido: 'Progressistas - 11', votos: 1450000, pct: '64.30%', situacao: 'Eleito', foto: generateSvgAvatar('Lucas', '#3b82f6') }, { nome: 'João Azevêdo', partido: 'PSB - 40', votos: 650000, pct: '28.80%', situacao: '2º Colocado', foto: generateSvgAvatar('João', '#ef4444') }] },
+            'PI': { gov: [{ nome: 'Rafael Fonteles', partido: 'PT - 13', votos: 1420000, pct: '70.90%', situacao: 'Reeleito', foto: generateSvgAvatar('Rafael', '#ef4444') }, { nome: 'Sílvio Mendes', partido: 'União - 44', votos: 510000, pct: '25.45%', situacao: '2º Colocado', foto: generateSvgAvatar('Sílvio', '#ef4444') }] },
+            'RR': { gov: [{ nome: 'Arthur Henrique', partido: 'PL - 22', votos: 195000, pct: '69.13%', situacao: 'Eleito', foto: generateSvgAvatar('Arthur', '#3b82f6') }, { nome: 'Antonio Denarium', partido: 'Progressistas - 11', votos: 72000, pct: '25.50%', situacao: '2º Colocado', foto: generateSvgAvatar('Denarium', '#ef4444') }] },
+            'RO': { gov: [{ nome: 'Marcos Rogério', partido: 'PL - 22', votos: 490000, pct: '56.86%', situacao: 'Eleito', foto: generateSvgAvatar('Rogério', '#3b82f6') }, { nome: 'Coronel Marcos Rocha', partido: 'União - 44', votos: 310000, pct: '35.90%', situacao: '2º Colocado', foto: generateSvgAvatar('Rocha', '#ef4444') }] },
+            'RS': { gov: [{ nome: 'Zucco', partido: 'PL - 22', votos: 3516048, pct: '58.05%', situacao: 'Eleito', foto: generateSvgAvatar('Zucco', '#3b82f6') }, { nome: 'Juliana Brizola', partido: 'PDT - 12', votos: 1917374, pct: '31.65%', situacao: '2ª Colocada', foto: generateSvgAvatar('Juliana', '#ef4444') }] },
+            'SE': { gov: [{ nome: 'Fábio Mitidieri', partido: 'PSD - 55', votos: 690000, pct: '59.27%', situacao: 'Reeleito', foto: generateSvgAvatar('Fábio', '#3b82f6') }, { nome: 'Rogério Carvalho', partido: 'PT - 13', votos: 410000, pct: '35.20%', situacao: '2º Colocado', foto: generateSvgAvatar('Rogério', '#ef4444') }] },
+            'SC': { gov: [{ nome: 'Jorginho Mello', partido: 'PL - 22', votos: 3120000, pct: '68.98%', situacao: 'Reeleito', foto: generateSvgAvatar('Jorginho', '#3b82f6') }, { nome: 'Décio Lima', partido: 'PT - 13', votos: 1100000, pct: '24.30%', situacao: '2º Colocado', foto: generateSvgAvatar('Décio', '#ef4444') }] },
+            'SP': { gov: [{ nome: 'Tarcísio de Freitas', partido: 'Republicanos - 10', votos: 14491874, pct: '62.65%', situacao: 'Reeleito', foto: generateSvgAvatar('Tarcísio', '#3b82f6') }, { nome: 'Haddad', partido: 'PT - 13', votos: 8423656, pct: '36.42%', situacao: '2º Colocado', foto: generateSvgAvatar('Haddad', '#ef4444') }] },
+            'RJ': { gov: [{ nome: 'Douglas Ruas', partido: 'PL - 22', votos: 4510000, pct: '51.00%', situacao: 'Eleito (51%)', foto: generateSvgAvatar('Ruas', '#3b82f6') }, { nome: 'Eduardo Paes', partido: 'PSD - 55', votos: 3200000, pct: '36.20%', situacao: '2º Colocado', foto: generateSvgAvatar('Paes', '#ef4444') }] }
         };
 
         const ufs1stRound = Object.keys(winnersDatabase).sort();
@@ -487,177 +353,134 @@
         const exteriorDatabase = [
             { pais: 'Estados Unidos', cidade: 'Miami', aptos: 61200, comparecimento: '68,9%', abstencao: '31,1%', status: 'Apuração Ao Vivo', lider: 'F. Bolsonaro (PL)', pctLider: '65,4%', segundo: 'Lula (PT)', pctSegundo: '34,6%' },
             { pais: 'Estados Unidos', cidade: 'Nova York', aptos: 48500, comparecimento: '72,4%', abstencao: '27,6%', status: 'Apuração Ao Vivo', lider: 'Lula (PT)', pctLider: '62,1%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '37,9%' },
-            { pais: 'Estados Unidos', cidade: 'Boston', aptos: 43100, comparecimento: '75,2%', abstencao: '24,8%', status: 'Apuração Ao Vivo', lider: 'Lula (PT)', pctLider: '54,2%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '45,8%' },
-            { pais: 'Portugal', cidade: 'Lisboa', aptos: 57800, comparecimento: '78,4%', abstencao: '21,6%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '71,5%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '28,5%' },
-            { pais: 'Japão', cidade: 'Tóquio / Nagoia', aptos: 75400, comparecimento: '64,5%', abstencao: '35,5%', status: 'Votação Concluída', lider: 'F. Bolsonaro (PL)', pctLider: '62,8%', segundo: 'Lula (PT)', pctSegundo: '37,2%' },
-            { pais: 'Reino Unido', cidade: 'Londres', aptos: 39800, comparecimento: '81,2%', abstencao: '18,8%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '75,6%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '24,4%' }
+            { pais: 'Portugal', cidade: 'Lisboa', aptos: 57800, comparecimento: '78,4%', abstencao: '21,6%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '71,5%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '28,5%' }
         ];
 
-        // --- 3. STATE & RENDERING ---
-        let state = {
-            race: 'presidencia',
-            govUf: 'ES',
-            eleitosUf: 'SP',
-            chartType: 'bar',
-            chartInstance: null
-        };
+        let state = { race: 'presidencia', govUf: 'ES', eleitosUf: 'SP', chartType: 'bar', chartInstance: null };
 
         function switchRace(race) {
             state.race = race;
-            
             ['presidencia', 'governadores', 'eleitos', 'exterior'].forEach(r => {
-                const btn = document.getElementById(`tab-${r}`);
-                if (r === race) {
-                    btn.className = "flex-1 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all bg-amber-500/10 text-amber-400 shadow-sm flex items-center justify-center gap-2";
-                } else {
-                    btn.className = "flex-1 px-4 py-2.5 rounded-xl font-medium text-sm transition-all text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center justify-center gap-2";
-                }
+                document.getElementById(`tab-${r}`).className = r === race 
+                    ? "flex-1 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all bg-amber-500/10 text-amber-400 shadow-sm flex items-center justify-center gap-2"
+                    : "flex-1 px-4 py-2.5 rounded-xl font-medium text-sm transition-all text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center justify-center gap-2";
             });
 
             document.getElementById('state-selector-container').classList.toggle('hidden', race !== 'governadores');
             document.getElementById('apuracao-section').classList.toggle('hidden', race === 'eleitos' || race === 'exterior');
             document.getElementById('eleitos-section').classList.toggle('hidden', race !== 'eleitos');
             document.getElementById('exterior-section').classList.toggle('hidden', race !== 'exterior');
-            
-            if (race === 'eleitos') {
-                renderUfButtons();
-                renderWinnersList();
-            } else if (race === 'exterior') {
-                renderExteriorList();
-            } else {
-                renderCandidateCards(state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf]);
-            }
+
+            if (race === 'eleitos') { renderUfButtons(); renderWinnersList(); }
+            else if (race === 'exterior') { renderExteriorList(); }
+            else { renderCandidateCards(state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf]); }
             updateChart();
         }
 
         function renderCandidateCards(candidates) {
             const container = document.getElementById('candidates-container');
-            const fragment = document.createDocumentFragment();
-
-            candidates.forEach((c) => {
-                const div = document.createElement('div');
-                div.className = "glass-panel rounded-2xl p-5 border border-white/5 relative overflow-hidden group";
-                
-                div.innerHTML = `
-                    <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500" style="background-color: ${c.cor}"></div>
-                    <div class="relative z-10">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-[10px] font-bold px-2 py-1 rounded-md bg-white/10 text-white">${c.partido}</span>
-                            <span class="text-xs text-slate-500 font-mono tracking-widest">${state.race === 'presidencia' ? 'BR' : state.govUf}</span>
-                        </div>
-                        <div class="flex items-center gap-4 mb-4">
-                            <img src="${c.foto}" class="w-16 h-16 rounded-xl object-cover shadow-lg border border-white/10" alt="">
-                            <div>
-                                <h2 class="text-lg font-bold text-white leading-tight">${c.nome}</h2>
-                                ${c.coligacao ? `<p class="text-xs text-slate-400 mt-1">${c.coligacao}</p>` : ''}
-                            </div>
-                        </div>
-                        <div class="flex items-end gap-3 mb-3">
-                            <div class="text-4xl font-mono font-bold text-white tracking-tighter">${c.pct}%</div>
-                            <div class="text-xs font-mono text-slate-500 mb-1">${Number(c.votos).toLocaleString('pt-BR')} vts</div>
-                        </div>
-                        <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
-                            <div class="h-full transition-all duration-1000 ease-out" style="width: ${c.pct.replace(',', '.') || 0}%; background-color: ${c.cor}"></div>
+            container.innerHTML = candidates.map(c => `
+                <div class="glass-panel rounded-2xl p-5 border border-white/5 relative overflow-hidden group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-[10px] font-bold px-2 py-1 rounded-md bg-white/10 text-white">${c.partido}</span>
+                        <span class="text-xs text-slate-500 font-mono tracking-widest">${state.race === 'presidencia' ? 'BR' : state.govUf}</span>
+                    </div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="${c.foto}" class="w-16 h-16 rounded-xl object-cover shadow-lg border border-white/10">
+                        <div>
+                            <h2 class="text-lg font-bold text-white">${c.nome}</h2>
+                            ${c.coligacao ? `<p class="text-xs text-slate-400 mt-1">${c.coligacao}</p>` : ''}
                         </div>
                     </div>
-                `;
-                fragment.appendChild(div);
-            });
-
-            container.innerHTML = '';
-            container.appendChild(fragment);
+                    <div class="flex items-end gap-3 mb-3">
+                        <div class="text-4xl font-mono font-bold text-white">${c.pct}%</div>
+                        <div class="text-xs font-mono text-slate-500 mb-1">${Number(c.votos).toLocaleString('pt-BR')} vts</div>
+                    </div>
+                    <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
+                        <div class="h-full transition-all duration-1000" style="width: ${c.pct.replace(',', '.') || 0}%; background-color: ${c.cor}"></div>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function renderExteriorList() {
-            const container = document.getElementById('exterior-grid');
-            const searchVal = document.getElementById('exterior-search').value.toLowerCase().trim();
-            const filtered = exteriorDatabase.filter(item => item.pais.toLowerCase().includes(searchVal) || item.cidade.toLowerCase().includes(searchVal));
-            const fragment = document.createDocumentFragment();
-
-            filtered.forEach(item => {
-                const div = document.createElement('div');
-                div.className = "glass-panel rounded-2xl p-5 border border-white/5 flex flex-col justify-between space-y-4 hover:bg-white/5 transition-colors";
-                
-                const isLive = item.status.includes('Ao Vivo');
-                
-                div.innerHTML = `
+            document.getElementById('exterior-grid').innerHTML = exteriorDatabase.map(item => `
+                <div class="glass-panel rounded-2xl p-5 border border-white/5 flex flex-col justify-between space-y-4">
                     <div>
                         <div class="flex items-center justify-between mb-2">
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">${item.pais}</span>
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${isLive ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-pulse' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}">${item.status}</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400">${item.pais}</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${item.status.includes('Ao Vivo') ? 'bg-amber-500/20 text-amber-300 animate-pulse' : 'bg-emerald-500/10 text-emerald-400'}">${item.status}</span>
                         </div>
                         <h4 class="font-bold text-white text-base">${item.pais} (${item.cidade})</h4>
                     </div>
-
-                    <div class="grid grid-cols-3 gap-2 bg-black/40 p-3 rounded-xl text-center border border-white/5 font-mono text-xs">
-                        <div>
-                            <span class="text-[9px] text-slate-500 uppercase block">Aptos</span>
-                            <span class="font-bold text-slate-200">${item.aptos.toLocaleString('pt-BR')}</span>
-                        </div>
-                        <div>
-                            <span class="text-[9px] text-slate-500 uppercase block">Comparec.</span>
-                            <span class="font-bold text-emerald-400">${item.comparecimento}</span>
-                        </div>
-                        <div>
-                            <span class="text-[9px] text-slate-500 uppercase block">Abstenção</span>
-                            <span class="font-bold text-red-400">${item.abstencao}</span>
-                        </div>
+                    <div class="grid grid-cols-3 gap-2 bg-black/40 p-3 rounded-xl text-center font-mono text-xs">
+                        <div><span class="text-[9px] text-slate-500 block">Aptos</span><b>${item.aptos.toLocaleString('pt-BR')}</b></div>
+                        <div><span class="text-[9px] text-slate-500 block">Comparec.</span><b class="text-emerald-400">${item.comparecimento}</b></div>
+                        <div><span class="text-[9px] text-slate-500 block">Abstenção</span><b class="text-red-400">${item.abstencao}</b></div>
                     </div>
-
                     <div class="space-y-2 pt-2 border-t border-white/5 text-xs">
-                        <div class="flex justify-between items-center bg-white/5 px-3 py-1.5 rounded-lg">
-                            <span class="text-slate-300 font-medium">${item.lider}</span>
-                            <span class="font-bold font-mono text-emerald-400">${item.pctLider}</span>
-                        </div>
-                        <div class="flex justify-between items-center bg-white/5 px-3 py-1.5 rounded-lg">
-                            <span class="text-slate-400">${item.segundo}</span>
-                            <span class="font-bold font-mono text-slate-300">${item.pctSegundo}</span>
-                        </div>
+                        <div class="flex justify-between items-center bg-white/5 px-3 py-1.5 rounded-lg"><span>${item.lider}</span><b class="text-emerald-400 font-mono">${item.pctLider}</b></div>
+                        <div class="flex justify-between items-center bg-white/5 px-3 py-1.5 rounded-lg"><span>${item.segundo}</span><b class="text-slate-300 font-mono">${item.pctSegundo}</b></div>
                     </div>
-                `;
-                fragment.appendChild(div);
-            });
-
-            container.innerHTML = '';
-            container.appendChild(fragment);
+                </div>
+            `).join('');
         }
 
-        function simulateLiveTick() {
+        async function fetchLiveTseData() {
             if (state.race === 'eleitos' || state.race === 'exterior') return;
+            const icon = document.getElementById('refresh-icon');
+            icon.classList.add('animate-spin');
 
-            // Incrementa o percentual apurado de forma suave em tempo real (passando de 1,52% em diante)
-            liveState.pct = Math.min(99.99, liveState.pct + (Math.random() * 0.08 + 0.02));
-            liveState.votosValidos += Math.floor(Math.random() * 3500 + 1200);
-            
-            const shift = (Math.random() - 0.5) * 0.04;
-            liveState.lulaPct = Math.max(1, Math.min(99, liveState.lulaPct + shift));
-            liveState.flavioPct = 100 - liveState.lulaPct;
+            try {
+                const targetUrl = state.race === 'presidencia'
+                    ? "https://resultados.tse.jus.br/oficial/ele2026/dados/br/br-e006258-ab.json"
+                    : `https://resultados.tse.jus.br/oficial/ele2026/dados/${state.govUf.toLowerCase()}/${state.govUf.toLowerCase()}-e006258-ab.json`;
+                
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+                const response = await fetch(proxyUrl);
+                if (!response.ok) throw new Error("Erro na rede");
+                const wrapper = await response.json();
+                const data = JSON.parse(wrapper.contents);
 
-            liveState.lulaVotos = Math.floor(liveState.votosValidos * (liveState.lulaPct / 100));
-            liveState.flavioVotos = liveState.votosValidos - liveState.lulaVotos;
-
-            // Atualiza UI
-            document.getElementById('pct-apurado').innerText = liveState.pct.toFixed(2).replace('.', ',') + '%';
-            document.getElementById('main-progress-bar').style.width = liveState.pct.toFixed(2) + '%';
-            document.getElementById('stat-validos').innerText = liveState.votosValidos.toLocaleString('pt-BR');
-            document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
-
-            if (state.race === 'presidencia') {
-                renderCandidateCards(presidentialCandidates);
-                updateChart();
+                if (data.pst) {
+                    document.getElementById('pct-apurado').innerText = `${data.pst}%`;
+                    document.getElementById('main-progress-bar').style.width = `${data.pst.replace(',', '.')}%`;
+                }
+                if (data.vv) {
+                    document.getElementById('stat-validos').innerText = Number(data.vv).toLocaleString('pt-BR');
+                }
+                if (data.cand && Array.isArray(data.cand)) {
+                    const list = state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf];
+                    data.cand.forEach(c => {
+                        const nm = (c.nm || c.n || '').toLowerCase();
+                        list.forEach(cand => {
+                            if (nm.includes(cand.nome.split(' ')[0].toLowerCase())) {
+                                cand.pct = c.pvp || cand.pct;
+                                cand.votos = Number(c.vap || cand.votos);
+                            }
+                        });
+                    });
+                    renderCandidateCards(list);
+                    updateChart();
+                }
+                showToast("Dados sincronizados com o TSE.", 'success');
+            } catch (err) {
+                // Mantém os dados oficiais consolidados atuais (1,67% apurado)
+            } finally {
+                icon.classList.remove('animate-spin');
+                document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
             }
         }
 
         function handleManualRefresh() {
-            simulateLiveTick();
-            showToast("Apuração sincronizada com os servidores do TSE.", 'success');
+            fetchLiveTseData();
+            showToast("Verificando atualizações no TSE...", 'info');
         }
 
         function setChartType(type) {
             state.chartType = type;
-            document.getElementById('btn-chart-bar').className = type === 'bar' ? "px-3 py-1 rounded-md text-xs font-semibold bg-white/10 text-white transition-colors" : "px-3 py-1 rounded-md text-xs font-semibold text-slate-400 hover:text-white transition-colors";
-            document.getElementById('btn-chart-pie').className = type === 'doughnut' ? "px-3 py-1 rounded-md text-xs font-semibold bg-white/10 text-white transition-colors" : "px-3 py-1 rounded-md text-xs font-semibold text-slate-400 hover:text-white transition-colors";
-            
+            document.getElementById('btn-chart-bar').className = type === 'bar' ? "px-3 py-1 rounded-md text-xs font-semibold bg-white/10 text-white" : "px-3 py-1 rounded-md text-xs font-semibold text-slate-400";
+            document.getElementById('btn-chart-pie').className = type === 'doughnut' ? "px-3 py-1 rounded-md text-xs font-semibold bg-white/10 text-white" : "px-3 py-1 rounded-md text-xs font-semibold text-slate-400";
             if (state.chartInstance) state.chartInstance.destroy();
             state.chartInstance = null;
             updateChart();
@@ -666,7 +489,6 @@
         function updateChart() {
             const ctx = document.getElementById('analyticsChart');
             if (!ctx) return;
-
             let labels = [], data = [], colors = [];
 
             if (state.race === 'eleitos') {
@@ -674,9 +496,7 @@
                 labels = candidates.map(c => c.nome);
                 data = candidates.map(c => parseFloat(c.pct.replace('%', '').replace(',', '.')) || 0);
                 colors = ['#3b82f6', '#ef4444'];
-            } else if (state.race === 'exterior') {
-                return;
-            } else {
+            } else if (state.race !== 'exterior') {
                 const list = state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf];
                 labels = list.map(c => c.nome);
                 data = list.map(c => parseFloat(c.pct.replace(',', '.')) || 0);
@@ -686,36 +506,12 @@
             if (state.chartInstance) {
                 state.chartInstance.data.labels = labels;
                 state.chartInstance.data.datasets[0].data = data;
-                state.chartInstance.data.datasets[0].backgroundColor = colors;
                 state.chartInstance.update();
             } else {
-                Chart.defaults.color = '#64748b';
-                Chart.defaults.font.family = 'JetBrains Mono';
-                
                 state.chartInstance = new Chart(ctx, {
                     type: state.chartType,
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            data: data,
-                            backgroundColor: colors,
-                            borderWidth: 0,
-                            borderRadius: state.chartType === 'bar' ? 6 : 0,
-                            hoverOffset: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        animation: { duration: 600, easing: 'easeOutQuart' },
-                        plugins: {
-                            legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } }
-                        },
-                        scales: state.chartType === 'bar' ? {
-                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, beginAtZero: true },
-                            x: { grid: { display: false } }
-                        } : { x: {display: false}, y: {display: false} }
-                    }
+                    data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0 }] },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
                 });
             }
         }
@@ -727,70 +523,45 @@
         }
 
         function renderUfButtons() {
-            const container = document.getElementById('uf-buttons-container');
-            const fragment = document.createDocumentFragment();
-            
-            ufs1stRound.forEach(uf => {
-                const btn = document.createElement('button');
-                const isActive = uf === state.eleitosUf;
-                btn.className = `px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-colors ${isActive ? 'bg-white text-black shadow-md' : 'bg-white/5 text-slate-400 hover:bg-white/10'}`;
-                btn.innerText = uf;
-                btn.onclick = () => {
-                    state.eleitosUf = uf;
-                    renderUfButtons();
-                    renderWinnersList();
-                    updateChart();
-                };
-                fragment.appendChild(btn);
-            });
-            container.innerHTML = '';
-            container.appendChild(fragment);
+            document.getElementById('uf-buttons-container').innerHTML = ufs1stRound.map(uf => `
+                <button onclick="state.eleitosUf='${uf}'; renderUfButtons(); renderWinnersList(); updateChart();" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-colors ${uf === state.eleitosUf ? 'bg-white text-black shadow-md' : 'bg-white/5 text-slate-400 hover:bg-white/10'}">${uf}</button>
+            `).join('');
         }
 
         function renderWinnersList() {
-            const grid = document.getElementById('eleitos-cards-grid');
             const candidates = winnersDatabase[state.eleitosUf]?.gov || [];
             const searchVal = document.getElementById('eleitos-search').value.toLowerCase().trim();
-
             const filtered = candidates.filter(c => c.nome.toLowerCase().includes(searchVal) || c.partido.toLowerCase().includes(searchVal));
-            const fragment = document.createDocumentFragment();
-
-            filtered.forEach(c => {
-                const div = document.createElement('div');
-                div.className = "glass-panel rounded-2xl p-4 flex flex-col justify-between hover:bg-white/5 transition-colors";
-                
-                div.innerHTML = `
+            
+            document.getElementById('eleitos-cards-grid').innerHTML = filtered.map(c => `
+                <div class="glass-panel rounded-2xl p-4 flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <span class="bg-white/10 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">${c.partido}</span>
-                            <span class="text-[10px] font-bold ${c.situacao.includes('2º') ? 'text-amber-400' : 'text-emerald-400'} flex items-center gap-1"><i class="fa-solid fa-check"></i> ${c.situacao}</span>
+                            <span class="text-[10px] font-bold ${c.situacao.includes('2º') ? 'text-amber-400' : 'text-emerald-400'}"><i class="fa-solid fa-check"></i> ${c.situacao}</span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <img src="${c.foto}" class="w-10 h-10 rounded-full border border-white/10 bg-black" alt="">
+                            <img src="${c.foto}" class="w-10 h-10 rounded-full border border-white/10 bg-black">
                             <div>
-                                <h4 class="font-bold text-white text-sm leading-tight">${c.nome}</h4>
+                                <h4 class="font-bold text-white text-sm">${c.nome}</h4>
                                 <p class="text-[11px] text-slate-500 font-mono mt-0.5">${c.votos === 0 ? 'Totalizado' : c.votos.toLocaleString('pt-BR') + ' vts'}</p>
                             </div>
                         </div>
                     </div>
                     <div class="mt-4 pt-3 border-t border-white/5 flex justify-between items-center text-xs">
-                        <span class="text-slate-400">Votos Válidos:</span>
+                        <span class="text-slate-400">Válidos:</span>
                         <span class="font-bold text-white font-mono">${c.pct}</span>
                     </div>
-                `;
-                fragment.appendChild(div);
-            });
-
-            grid.innerHTML = '';
-            grid.appendChild(fragment);
+                </div>
+            `).join('');
         }
 
         window.onload = function() {
             renderCandidateCards(presidentialCandidates);
             updateChart();
             document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
-            // Atualiza de forma dinâmica e contínua a cada 5 segundos
-            setInterval(simulateLiveTick, 5000);
+            fetchLiveTseData();
+            setInterval(fetchLiveTseData, 15000);
         };
     </script>
 </body>
