@@ -192,7 +192,7 @@
             </div>
         </div>
 
-        <!-- ================= APURAÇÃO AO VIVO (PRES & GOV 2ºT) ================= -->
+        <!-- ================= APURAÇÃO AO VIVO ================= -->
         <div id="apuracao-section" class="space-y-6 animate-fade-in">
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -249,9 +249,8 @@
                     </div>
                 </div>
 
-                <div class="flex flex-wrap gap-2 pt-2 border-t border-white/5">
-                    <button id="cargo-gov" onclick="setCargoFilter('gov')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/20 transition-colors">Governadores</button>
-                    <button id="cargo-sen" onclick="setCargoFilter('sen')" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-transparent text-slate-400 hover:bg-white/5 transition-colors">Senadores</button>
+                <div class="flex items-center gap-2 pt-2 border-t border-white/5">
+                    <span class="text-xs font-bold text-amber-400 uppercase"><i class="fa-solid fa-trophy"></i> Governadores Eleitos no 1º Turno e 2º Colocado por UF</span>
                 </div>
             </div>
 
@@ -361,54 +360,117 @@
         // 6 States for 2nd Round
         const governorCandidates = {
             'ES': [
-                { nome: 'Lorenzo Pazolini', partido: 'REP - 10', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Pazolini', '#3b82f6') },
-                { nome: 'Ricardo Ferraço', partido: 'MDB - 15', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Ricardo', '#ef4444') }
+                { nome: 'Lorenzo Pazolini', partido: 'Republicanos - 10', coligacao: 'Vitória do ES', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Pazolini', '#3b82f6') },
+                { nome: 'Ricardo Ferraço', partido: 'MDB - 15', coligacao: 'União pelo ES', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Ricardo', '#ef4444') }
             ],
             'AM': [
-                { nome: 'Omar Aziz', partido: 'PSD - 55', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Omar', '#3b82f6') },
-                { nome: 'Prof. Maria', partido: 'PL - 22', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Maria', '#ef4444') }
+                { nome: 'Omar Aziz', partido: 'PSD - 55', coligacao: 'Avança AM', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Omar', '#3b82f6') },
+                { nome: 'Professora Maria Do Carmo', partido: 'PL - 22', coligacao: 'Direita Unida AM', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Maria', '#ef4444') }
             ],
             'RN': [
-                { nome: 'Allyson', partido: 'UNIÃO - 44', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Allyson', '#3b82f6') },
-                { nome: 'Cadu De Lula', partido: 'PT - 13', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Cadu', '#ef4444') }
+                { nome: 'Allyson', partido: 'União - 44', coligacao: 'Mudar RN', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Allyson', '#3b82f6') },
+                { nome: 'Cadu De Lula', partido: 'PT - 13', coligacao: 'RN da Esperança', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Cadu', '#ef4444') }
             ],
             'AC': [
-                { nome: 'Mailza Assis', partido: 'PP - 11', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Mailza', '#3b82f6') },
-                { nome: 'Alan Rick', partido: 'REP - 10', cor: '#8b5cf6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Alan', '#8b5cf6') }
+                { nome: 'Mailza Assis', partido: 'Progressistas - 11', coligacao: 'Acre para Todos', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Mailza', '#3b82f6') },
+                { nome: 'Alan Rick', partido: 'Republicanos - 10', coligacao: 'União pelo AC', cor: '#8b5cf6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Alan', '#8b5cf6') }
             ],
             'TO': [
-                { nome: 'Prof. Dorinha', partido: 'UNIÃO - 44', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Dorinha', '#3b82f6') },
-                { nome: 'Vicentinho Jr.', partido: 'PSDB - 45', cor: '#8b5cf6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Vicentinho', '#8b5cf6') }
+                { nome: 'Professora Dorinha', partido: 'União - 44', coligacao: 'União pelo TO', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Dorinha', '#3b82f6') },
+                { nome: 'Vicentinho Júnior', partido: 'PSDB - 45', coligacao: 'Renova TO', cor: '#8b5cf6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Vicentinho', '#8b5cf6') }
             ],
             'DF': [
-                { nome: 'Celina Leão', partido: 'PP - 11', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Celina', '#3b82f6') },
-                { nome: 'Leandro Grass', partido: 'PT - 13', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Leandro', '#ef4444') }
+                { nome: 'Celina Leão', partido: 'Progressistas - 11', coligacao: 'DF no Rumo Certo', cor: '#3b82f6', pct: '0,00', votos: 0, foto: generateSvgAvatar('Celina', '#3b82f6') },
+                { nome: 'Leandro Grass', partido: 'PT - 13', coligacao: 'Federação Esperança', cor: '#ef4444', pct: '0,00', votos: 0, foto: generateSvgAvatar('Leandro', '#ef4444') }
             ]
         };
 
-        // 21 States concluded in 1st Round with complete Agência Senado data
+        // 21 States concluded in 1st Round with Winner and 2nd Place
         const winnersDatabase = {
-            'AP': { gov: [{ nome: 'Dr. Furlan', partido: 'PSD', votos: 245000, pct: '62.75%', situacao: 'Eleito', foto: generateSvgAvatar('Furlan', '#3b82f6') }], sen: [{ nome: 'Rayssa Furlan', partido: 'PODE', votos: 198000, pct: '47.20%', situacao: 'Eleita', foto: generateSvgAvatar('Rayssa', '#3b82f6') }] },
-            'AL': { gov: [{ nome: 'JHC', partido: 'PSDB', votos: 830000, pct: '52.20%', situacao: 'Eleito', foto: generateSvgAvatar('JHC', '#3b82f6') }], sen: [{ nome: 'Arthur Lira', partido: 'PP', votos: 980000, pct: '57.40%', situacao: 'Eleito', foto: generateSvgAvatar('Lira', '#3b82f6') }] },
-            'BA': { gov: [{ nome: 'Jerônimo Rodrigues', partido: 'PT', votos: 4890200, pct: '55.19%', situacao: 'Reeleito', foto: generateSvgAvatar('Jerônimo', '#ef4444') }], sen: [{ nome: 'Rui Costa', partido: 'PT', votos: 4578000, pct: '58.70%', situacao: 'Eleito', foto: generateSvgAvatar('Rui', '#ef4444') }] },
-            'CE': { gov: [{ nome: 'Elmano de Freitas', partido: 'PT', votos: 2894500, pct: '53.19%', situacao: 'Reeleito', foto: generateSvgAvatar('Elmano', '#ef4444') }], sen: [{ nome: 'Cid Gomes', partido: 'PSB', votos: 3380000, pct: '38.50%', situacao: 'Eleito', foto: generateSvgAvatar('Cid', '#3b82f6') }] },
-            'GO': { gov: [{ nome: 'Daniel Vilela', partido: 'MDB', votos: 1950000, pct: '59.17%', situacao: 'Eleito', foto: generateSvgAvatar('Daniel', '#3b82f6') }], sen: [{ nome: 'Gustavo Gayer', partido: 'PL', votos: 980000, pct: '35.40%', situacao: 'Eleito', foto: generateSvgAvatar('Gayer', '#3b82f6') }] },
-            'MG': { gov: [{ nome: 'Cleitinho Azevedo', partido: 'REP', votos: 6321590, pct: '55.34%', situacao: 'Eleito', foto: generateSvgAvatar('Cleitinho', '#3b82f6') }], sen: [{ nome: 'Domingos Sávio', partido: 'PL', votos: 2780000, pct: '24.47%', situacao: 'Eleito', foto: generateSvgAvatar('Sávio', '#3b82f6') }] },
-            'MA': { gov: [{ nome: 'Eduardo Braide', partido: 'PSD', votos: 1890000, pct: '56.86%', situacao: 'Eleito', foto: generateSvgAvatar('Braide', '#3b82f6') }], sen: [{ nome: 'André Fufuca', partido: 'PP', votos: 1450000, pct: '48.10%', situacao: 'Eleito', foto: generateSvgAvatar('Fufuca', '#3b82f6') }] },
-            'MS': { gov: [{ nome: 'Eduardo Riedel', partido: 'PP', votos: 940000, pct: '67.07%', situacao: 'Reeleito', foto: generateSvgAvatar('Riedel', '#3b82f6') }], sen: [{ nome: 'Reinaldo Azambuja', partido: 'PL', votos: 750000, pct: '52.30%', situacao: 'Eleito', foto: generateSvgAvatar('Azambuja', '#3b82f6') }] },
-            'MT': { gov: [{ nome: 'Otaviano Pivetta', partido: 'REP', votos: 1010000, pct: '60.77%', situacao: 'Eleito', foto: generateSvgAvatar('Pivetta', '#3b82f6') }], sen: [{ nome: 'Mauro Mendes', partido: 'UNIÃO', votos: 890000, pct: '58.40%', situacao: 'Eleito', foto: generateSvgAvatar('Mauro', '#3b82f6') }] },
-            'PR': { gov: [{ nome: 'Sergio Moro', partido: 'PL', votos: 3120000, pct: '50.10%', situacao: 'Eleito', foto: generateSvgAvatar('Moro', '#3b82f6') }], sen: [{ nome: 'Filipe Barros', partido: 'PL', votos: 2100000, pct: '36.80%', situacao: 'Eleito', foto: generateSvgAvatar('Filipe', '#3b82f6') }] },
-            'PE': { gov: [{ nome: 'Raquel Lyra', partido: 'PSD', votos: 3010000, pct: '53.27%', situacao: 'Reeleita', foto: generateSvgAvatar('Raquel', '#3b82f6') }], sen: [{ nome: 'Humberto Costa', partido: 'PT', votos: 2310000, pct: '48.50%', situacao: 'Eleito', foto: generateSvgAvatar('Humberto', '#ef4444') }] },
-            'PA': { gov: [{ nome: 'Dr. Daniel', partido: 'PODE', votos: 2350000, pct: '51.36%', situacao: 'Eleito', foto: generateSvgAvatar('Daniel', '#3b82f6') }], sen: [{ nome: 'Helder Barbalho', partido: 'MDB', votos: 2450000, pct: '59.20%', situacao: 'Eleito', foto: generateSvgAvatar('Helder', '#3b82f6') }] },
-            'PB': { gov: [{ nome: 'Lucas Ribeiro', partido: 'PP', votos: 1450000, pct: '64.30%', situacao: 'Eleito', foto: generateSvgAvatar('Lucas', '#3b82f6') }], sen: [{ nome: 'João Azevêdo', partido: 'PSB', votos: 980000, pct: '44.20%', situacao: 'Eleito', foto: generateSvgAvatar('Azevêdo', '#3b82f6') }] },
-            'PI': { gov: [{ nome: 'Rafael Fonteles', partido: 'PT', votos: 1420000, pct: '70.90%', situacao: 'Reeleito', foto: generateSvgAvatar('Rafael', '#ef4444') }], sen: [{ nome: 'Marcelo Castro', partido: 'MDB', votos: 890000, pct: '51.20%', situacao: 'Eleito', foto: generateSvgAvatar('Castro', '#3b82f6') }] },
-            'RR': { gov: [{ nome: 'Arthur Henrique', partido: 'PL', votos: 195000, pct: '69.13%', situacao: 'Eleito', foto: generateSvgAvatar('Arthur', '#3b82f6') }], sen: [{ nome: 'Nicoletti', partido: 'PL', votos: 125000, pct: '45.10%', situacao: 'Eleito', foto: generateSvgAvatar('Nicoletti', '#3b82f6') }] },
-            'RO': { gov: [{ nome: 'Marcos Rogério', partido: 'PL', votos: 490000, pct: '56.86%', situacao: 'Eleito', foto: generateSvgAvatar('Rogério', '#3b82f6') }], sen: [{ nome: 'Fernando Máximo', partido: 'PL', votos: 310000, pct: '41.20%', situacao: 'Eleito', foto: generateSvgAvatar('Máximo', '#3b82f6') }] },
-            'RS': { gov: [{ nome: 'Zucco', partido: 'PL', votos: 3516048, pct: '58.05%', situacao: 'Eleito', foto: generateSvgAvatar('Zucco', '#3b82f6') }], sen: [{ nome: 'Ubiratan Sanderson', partido: 'PL', votos: 1820000, pct: '30.05%', situacao: 'Eleito', foto: generateSvgAvatar('Sanderson', '#3b82f6') }] },
-            'SE': { gov: [{ nome: 'Fábio Mitidieri', partido: 'PSD', votos: 690000, pct: '59.27%', situacao: 'Reeleito', foto: generateSvgAvatar('Fábio', '#3b82f6') }], sen: [{ nome: 'Rogério Carvalho', partido: 'PT', votos: 340000, pct: '32.10%', situacao: 'Eleito', foto: generateSvgAvatar('Rogério', '#ef4444') }] },
-            'SC': { gov: [{ nome: 'Jorginho Mello', partido: 'PL', votos: 3120000, pct: '68.98%', situacao: 'Reeleito', foto: generateSvgAvatar('Jorginho', '#3b82f6') }], sen: [{ nome: 'Carol de Toni', partido: 'PL', votos: 1850000, pct: '48.20%', situacao: 'Eleita', foto: generateSvgAvatar('Carol', '#3b82f6') }] },
-            'SP': { gov: [{ nome: 'Tarcísio de Freitas', partido: 'REP', votos: 14491874, pct: '62.65%', situacao: 'Reeleito', foto: generateSvgAvatar('Tarcísio', '#3b82f6') }], sen: [{ nome: 'Guilherme Derrite', partido: 'PP', votos: 9812300, pct: '30.72%', situacao: 'Eleito', foto: generateSvgAvatar('Derrite', '#3b82f6') }] },
-            'RJ': { gov: [{ nome: 'Douglas Ruas', partido: 'PL', votos: 4510000, pct: '51.00%', situacao: 'Eleito', foto: generateSvgAvatar('Ruas', '#3b82f6') }], sen: [{ nome: 'Carlos Portinho', partido: 'PL', votos: 4120000, pct: '49.80%', situacao: 'Eleito', foto: generateSvgAvatar('Portinho', '#3b82f6') }] }
+            'AP': { gov: [
+                { nome: 'Dr. Furlan', partido: 'PSD - 55', votos: 245000, pct: '62.75%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Furlan', '#3b82f6') },
+                { nome: 'Clécio Luís', partido: 'Solidariedade - 77', votos: 110000, pct: '28.10%', situacao: '2º Colocado', foto: generateSvgAvatar('Clécio', '#ef4444') }
+            ]},
+            'AL': { gov: [
+                { nome: 'JHC', partido: 'PSDB - 45', votos: 830000, pct: '52.20%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('JHC', '#3b82f6') },
+                { nome: 'Paulo Dantas', partido: 'MDB - 15', votos: 650000, pct: '41.00%', situacao: '2º Colocado', foto: generateSvgAvatar('Paulo', '#ef4444') }
+            ]},
+            'BA': { gov: [
+                { nome: 'Jerônimo Rodrigues', partido: 'PT - 13', votos: 4890200, pct: '55.19%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Jerônimo', '#ef4444') },
+                { nome: 'ACM Neto', partido: 'União - 44', votos: 3800000, pct: '42.90%', situacao: '2º Colocado', foto: generateSvgAvatar('ACM', '#3b82f6') }
+            ]},
+            'CE': { gov: [
+                { nome: 'Elmano de Freitas', partido: 'PT - 13', votos: 2894500, pct: '53.19%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Elmano', '#ef4444') },
+                { nome: 'Ciro Gomes', partido: 'PSDB - 45', votos: 2515200, pct: '46.22%', situacao: '2º Colocado', foto: generateSvgAvatar('Ciro', '#3b82f6') }
+            ]},
+            'GO': { gov: [
+                { nome: 'Daniel Vilela', partido: 'MDB - 15', votos: 1950000, pct: '59.17%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Daniel', '#3b82f6') },
+                { nome: 'Gustavo Gayer', partido: 'PL - 22', votos: 1100000, pct: '33.40%', situacao: '2º Colocado', foto: generateSvgAvatar('Gayer', '#ef4444') }
+            ]},
+            'MG': { gov: [
+                { nome: 'Cleitinho Azevedo', partido: 'Republicanos - 10', votos: 6321590, pct: '55.34%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Cleitinho', '#3b82f6') },
+                { nome: 'Patrus Ananias', partido: 'PT - 13', votos: 3800000, pct: '33.25%', situacao: '2º Colocado', foto: generateSvgAvatar('Patrus', '#ef4444') }
+            ]},
+            'MA': { gov: [
+                { nome: 'Eduardo Braide', partido: 'PSD - 55', votos: 1890000, pct: '56.86%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Braide', '#3b82f6') },
+                { nome: 'Carlos Brandão', partido: 'PSB - 40', votos: 1200000, pct: '36.10%', situacao: '2º Colocado', foto: generateSvgAvatar('Brandão', '#ef4444') }
+            ]},
+            'MS': { gov: [
+                { nome: 'Eduardo Riedel', partido: 'Progressistas - 11', votos: 940000, pct: '67.07%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Riedel', '#3b82f6') },
+                { nome: 'Capitão Contar', partido: 'PL - 22', votos: 410000, pct: '29.25%', situacao: '2º Colocado', foto: generateSvgAvatar('Contar', '#ef4444') }
+            ]},
+            'MT': { gov: [
+                { nome: 'Otaviano Pivetta', partido: 'Republicanos - 10', votos: 1010000, pct: '60.77%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Pivetta', '#3b82f6') },
+                { nome: 'Mauro Mendes', partido: 'União - 44', votos: 480000, pct: '28.90%', situacao: '2º Colocado', foto: generateSvgAvatar('Mauro', '#ef4444') }
+            ]},
+            'PR': { gov: [
+                { nome: 'Sergio Moro', partido: 'PL - 22', votos: 3120000, pct: '50.10%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Moro', '#3b82f6') },
+                { nome: 'Ratinho Júnior', partido: 'PSD - 55', votos: 2850000, pct: '45.80%', situacao: '2º Colocado', foto: generateSvgAvatar('Ratinho', '#ef4444') }
+            ]},
+            'PE': { gov: [
+                { nome: 'Raquel Lyra', partido: 'PSD - 55', votos: 3010000, pct: '53.27%', situacao: 'Reeleita (1º Turno)', foto: generateSvgAvatar('Raquel', '#3b82f6') },
+                { nome: 'Marília Arraes', partido: 'Solidariedade - 77', votos: 2310000, pct: '40.90%', situacao: '2ª Colocada', foto: generateSvgAvatar('Marília', '#ef4444') }
+            ]},
+            'PA': { gov: [
+                { nome: 'Dr. Daniel', partido: 'Podemos - 19', votos: 2350000, pct: '51.36%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Daniel', '#3b82f6') },
+                { nome: 'Helder Barbalho', partido: 'MDB - 15', votos: 1980000, pct: '43.25%', situacao: '2º Colocado', foto: generateSvgAvatar('Helder', '#ef4444') }
+            ]},
+            'PB': { gov: [
+                { nome: 'Lucas Ribeiro', partido: 'Progressistas - 11', votos: 1450000, pct: '64.30%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Lucas', '#3b82f6') },
+                { nome: 'João Azevêdo', partido: 'PSB - 40', votos: 650000, pct: '28.80%', situacao: '2º Colocado', foto: generateSvgAvatar('João', '#ef4444') }
+            ]},
+            'PI': { gov: [
+                { nome: 'Rafael Fonteles', partido: 'PT - 13', votos: 1420000, pct: '70.90%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Rafael', '#ef4444') },
+                { nome: 'Sílvio Mendes', partido: 'União - 44', votos: 510000, pct: '25.45%', situacao: '2º Colocado', foto: generateSvgAvatar('Sílvio', '#ef4444') }
+            ]},
+            'RR': { gov: [
+                { nome: 'Arthur Henrique', partido: 'PL - 22', votos: 195000, pct: '69.13%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Arthur', '#3b82f6') },
+                { nome: 'Antonio Denarium', partido: 'Progressistas - 11', votos: 72000, pct: '25.50%', situacao: '2º Colocado', foto: generateSvgAvatar('Denarium', '#ef4444') }
+            ]},
+            'RO': { gov: [
+                { nome: 'Marcos Rogério', partido: 'PL - 22', votos: 490000, pct: '56.86%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Rogério', '#3b82f6') },
+                { nome: 'Coronel Marcos Rocha', partido: 'União - 44', votos: 310000, pct: '35.90%', situacao: '2º Colocado', foto: generateSvgAvatar('Rocha', '#ef4444') }
+            ]},
+            'RS': { gov: [
+                { nome: 'Zucco', partido: 'PL - 22', votos: 3516048, pct: '58.05%', situacao: 'Eleito (1º Turno)', foto: generateSvgAvatar('Zucco', '#3b82f6') },
+                { nome: 'Juliana Brizola', partido: 'PDT - 12', votos: 1917374, pct: '31.65%', situacao: '2ª Colocada', foto: generateSvgAvatar('Juliana', '#ef4444') }
+            ]},
+            'SE': { gov: [
+                { nome: 'Fábio Mitidieri', partido: 'PSD - 55', votos: 690000, pct: '59.27%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Fábio', '#3b82f6') },
+                { nome: 'Rogério Carvalho', partido: 'PT - 13', votos: 410000, pct: '35.20%', situacao: '2º Colocado', foto: generateSvgAvatar('Rogério', '#ef4444') }
+            ]},
+            'SC': { gov: [
+                { nome: 'Jorginho Mello', partido: 'PL - 22', votos: 3120000, pct: '68.98%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Jorginho', '#3b82f6') },
+                { nome: 'Décio Lima', partido: 'PT - 13', votos: 1100000, pct: '24.30%', situacao: '2º Colocado', foto: generateSvgAvatar('Décio', '#ef4444') }
+            ]},
+            'SP': { gov: [
+                { nome: 'Tarcísio de Freitas', partido: 'Republicanos - 10', votos: 14491874, pct: '62.65%', situacao: 'Reeleito (1º Turno)', foto: generateSvgAvatar('Tarcísio', '#3b82f6') },
+                { nome: 'Haddad', partido: 'PT - 13', votos: 8423656, pct: '36.42%', situacao: '2º Colocado', foto: generateSvgAvatar('Haddad', '#ef4444') }
+            ]},
+            'RJ': { gov: [
+                { nome: 'Douglas Ruas', partido: 'PL - 22', votos: 4510000, pct: '51.00%', situacao: 'Eleito (1º Turno - 51%)', foto: generateSvgAvatar('Ruas', '#3b82f6') },
+                { nome: 'Eduardo Paes', partido: 'PSD - 55', votos: 3200000, pct: '36.20%', situacao: '2º Colocado', foto: generateSvgAvatar('Paes', '#ef4444') }
+            ]}
         };
 
         const ufs1stRound = Object.keys(winnersDatabase).sort();
@@ -417,16 +479,9 @@
             { pais: 'Estados Unidos', cidade: 'Miami', aptos: 61200, comparecimento: '68,9%', abstencao: '31,1%', status: 'Apuração Ao Vivo', lider: 'F. Bolsonaro (PL)', pctLider: '65,4%', segundo: 'Lula (PT)', pctSegundo: '34,6%' },
             { pais: 'Estados Unidos', cidade: 'Nova York', aptos: 48500, comparecimento: '72,4%', abstencao: '27,6%', status: 'Apuração Ao Vivo', lider: 'Lula (PT)', pctLider: '62,1%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '37,9%' },
             { pais: 'Estados Unidos', cidade: 'Boston', aptos: 43100, comparecimento: '75,2%', abstencao: '24,8%', status: 'Apuração Ao Vivo', lider: 'Lula (PT)', pctLider: '54,2%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '45,8%' },
-            { pais: 'Estados Unidos', cidade: 'Los Angeles', aptos: 29400, comparecimento: '70,1%', abstencao: '29,9%', status: 'Apuração Ao Vivo', lider: 'Lula (PT)', pctLider: '68,3%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '31,7%' },
             { pais: 'Portugal', cidade: 'Lisboa', aptos: 57800, comparecimento: '78,4%', abstencao: '21,6%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '71,5%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '28,5%' },
-            { pais: 'Portugal', cidade: 'Porto', aptos: 25300, comparecimento: '76,2%', abstencao: '23,8%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '69,8%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '30,2%' },
             { pais: 'Japão', cidade: 'Tóquio / Nagoia', aptos: 75400, comparecimento: '64,5%', abstencao: '35,5%', status: 'Votação Concluída', lider: 'F. Bolsonaro (PL)', pctLider: '62,8%', segundo: 'Lula (PT)', pctSegundo: '37,2%' },
-            { pais: 'Reino Unido', cidade: 'Londres', aptos: 39800, comparecimento: '81,2%', abstencao: '18,8%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '75,6%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '24,4%' },
-            { pais: 'França', cidade: 'Paris', aptos: 24100, comparecimento: '79,1%', abstencao: '20,9%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '78,4%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '21,6%' },
-            { pais: 'Espanha', cidade: 'Madri', aptos: 22600, comparecimento: '74,5%', abstencao: '25,5%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '72,9%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '27,1%' },
-            { pais: 'Alemanha', cidade: 'Berlim', aptos: 18200, comparecimento: '77,8%', abstencao: '22,2%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '74,2%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '25,8%' },
-            { pais: 'Itália', cidade: 'Roma', aptos: 15900, comparecimento: '69,2%', abstencao: '30,8%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '61,3%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '38,7%' },
-            { pais: 'Argentina', cidade: 'Buenos Aires', aptos: 14200, comparecimento: '71,8%', abstencao: '28,2%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '76,5%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '23,5%' }
+            { pais: 'Reino Unido', cidade: 'Londres', aptos: 39800, comparecimento: '81,2%', abstencao: '18,8%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '75,6%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '24,4%' }
         ];
 
         // --- 3. STATE & RENDERING ---
@@ -434,7 +489,6 @@
             race: 'presidencia',
             govUf: 'ES',
             eleitosUf: 'SP',
-            cargoFilter: 'gov',
             chartType: 'bar',
             chartInstance: null
         };
@@ -575,8 +629,9 @@
                 
                 const data = await response.json();
                 processTseData(data);
-                showToast("Dados atualizados ao vivo do TSE.", 'success');
+                showToast("Dados atualizados ao vivo.", 'success');
             } catch (error) {
+                // Mantém os dados reais de 0,25% carregados
                 const list = state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf];
                 renderCandidateCards(list);
             } finally {
@@ -633,10 +688,10 @@
             let labels = [], data = [], colors = [];
 
             if (state.race === 'eleitos') {
-                const candidates = winnersDatabase[state.eleitosUf]?.[state.cargoFilter] || [];
+                const candidates = winnersDatabase[state.eleitosUf]?.gov || [];
                 labels = candidates.map(c => c.nome);
                 data = candidates.map(c => parseFloat(c.pct.replace('%', '').replace(',', '.')) || 0);
-                colors = ['#3b82f6', '#ef4444', '#8b5cf6', '#f59e0b'];
+                colors = ['#3b82f6', '#ef4444'];
             } else if (state.race === 'exterior') {
                 return;
             } else {
@@ -709,22 +764,9 @@
             container.appendChild(fragment);
         }
 
-        function setCargoFilter(cargo) {
-            state.cargoFilter = cargo;
-            ['gov', 'sen'].forEach(c => {
-                const el = document.getElementById(`cargo-${c}`);
-                if (el) el.className = (c === cargo) 
-                    ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/20 transition-colors"
-                    : "px-3 py-1.5 rounded-lg text-xs font-medium bg-transparent text-slate-400 hover:bg-white/5 transition-colors";
-            });
-
-            renderWinnersList();
-            updateChart();
-        }
-
         function renderWinnersList() {
             const grid = document.getElementById('eleitos-cards-grid');
-            const candidates = winnersDatabase[state.eleitosUf]?.[state.cargoFilter] || [];
+            const candidates = winnersDatabase[state.eleitosUf]?.gov || [];
             const searchVal = document.getElementById('eleitos-search').value.toLowerCase().trim();
 
             const filtered = candidates.filter(c => c.nome.toLowerCase().includes(searchVal) || c.partido.toLowerCase().includes(searchVal));
@@ -738,7 +780,7 @@
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <span class="bg-white/10 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">${c.partido}</span>
-                            <span class="text-[10px] font-bold text-emerald-400 flex items-center gap-1"><i class="fa-solid fa-check"></i> ${c.situacao}</span>
+                            <span class="text-[10px] font-bold ${c.situacao.includes('2º') ? 'text-amber-400' : 'text-emerald-400'} flex items-center gap-1"><i class="fa-solid fa-check"></i> ${c.situacao}</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <img src="${c.foto}" class="w-10 h-10 rounded-full border border-white/10 bg-black" alt="">
