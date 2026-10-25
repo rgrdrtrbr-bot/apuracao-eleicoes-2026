@@ -45,7 +45,6 @@
         .glow-lumina {
             box-shadow: 0 0 30px -5px rgba(139, 92, 246, 0.25);
         }
-        /* Custom scrollbar for horizontal filters */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -341,6 +340,58 @@
 
     <!-- Lógica JavaScript e Dados Oficiais -->
     <script>
+        // Dados dos Candidatos da Presidência (2º Turno)
+        const presidentialCandidates = [
+            {
+                nome: 'Luiz Inácio Lula da Silva',
+                partido: 'PT - 13',
+                coligacao: 'Brasil da Esperança',
+                vice: 'Geraldo Alckmin',
+                cor: 'red',
+                pct: '0,00',
+                votos: 0,
+                foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Lula_-_foto_oficial_05_jan_2023_%28cropped%29.jpg/480px-Lula_-_foto_oficial_05_jan_2023_%28cropped%29.jpg'
+            },
+            {
+                nome: 'Flávio Bolsonaro',
+                partido: 'PL - 22',
+                coligacao: 'Pelo Bem do Brasil',
+                vice: 'Hamilton Mourão',
+                cor: 'blue',
+                pct: '0,00',
+                votos: 0,
+                foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Senador_Fl%C3%A1vio_Bolsonaro_%28cropped%29.jpg/480px-Senador_Fl%C3%A1vio_Bolsonaro_%28cropped%29.jpg'
+            }
+        ];
+
+        // Dados dos Governadores no 2º Turno (AC, AM, DF, ES, RN, TO)
+        const governorCandidates = {
+            'AC': [
+                { nome: 'Mailza Assis', partido: 'PP - 11', coligacao: 'Acre para Todos', vice: 'Tião Bocalom', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Mailza+Assis' },
+                { nome: 'Alan Rick', partido: 'REPUBLICANOS - 10', coligacao: 'União pelo Acre', vice: 'Ney Amorim', cor: 'purple', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Alan+Rick' }
+            ],
+            'AM': [
+                { nome: 'Omar Aziz', partido: 'PSD - 55', coligacao: 'Avança Amazonas', vice: 'Marcelo Ramos', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Omar+Aziz' },
+                { nome: 'Professora Maria do Carmo', partido: 'PL - 22', coligacao: 'Direita Unida AM', vice: 'Alberto Neto', cor: 'red', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Maria+do+Carmo' }
+            ],
+            'DF': [
+                { nome: 'Celina Leão', partido: 'PP - 11', coligacao: 'DF no Rumo Certo', vice: 'Ibaneis Rocha', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Celina+Le%C3%A3o' },
+                { nome: 'Leandro Grass', partido: 'PT - 13', coligacao: 'Federação Brasil da Esperança', vice: 'Olgamir Amado', cor: 'red', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Leandro+Grass' }
+            ],
+            'ES': [
+                { nome: 'Lorenzo Pazolini', partido: 'REPUBLICANOS - 10', coligacao: 'Vitória do Espírito Santo', vice: 'Cris Samorini', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Lorenzo+Pazolini' },
+                { nome: 'Ricardo Ferraço', partido: 'MDB - 15', coligacao: 'União pelo ES', vice: 'Arnaldinho Borgo', cor: 'purple', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Ricardo+Ferra%C3%A7o' }
+            ],
+            'RN': [
+                { nome: 'Allyson Bezerra', partido: 'UNIÃO - 44', coligacao: 'Mudar RN', vice: 'Marcos Medeiros', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Allyson+Bezerra' },
+                { nome: 'Cadu de Lula', partido: 'PT - 13', coligacao: 'RN da Esperança', vice: 'Samanda Alves', cor: 'red', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Cadu+de+Lula' }
+            ],
+            'TO': [
+                { nome: 'Professora Dorinha', partido: 'UNIÃO - 44', coligacao: 'União pelo Tocantins', vice: 'Vicentinho Alves', cor: 'blue', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Prof+Dorinha' },
+                { nome: 'Vicentinho Júnior', partido: 'PSDB - 45', coligacao: 'Renova Tocantins', vice: 'Léo Barbosa', cor: 'purple', pct: '0,00', votos: 0, foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Vicentinho+Jr' }
+            ]
+        };
+
         // Estado Global da Aplicação
         let currentRace = 'presidencia'; // 'presidencia', 'governadores', 'eleitos'
         let currentState = 'AC';
@@ -351,159 +402,313 @@
         // Lista de todas as UFs para filtro dos Eleitos
         const ufs = ['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'];
 
-        // Base de Dados de Eleitos no 1º Turno (Exemplos Consolidados Oficiais/Projeções TSE)
+        // Base de Dados Completa de Eleitos no 1º Turno por Estado (UFs do Brasil)
         const winnersDatabase = {
             'SP': {
                 gov: [{ nome: 'Tarcísio de Freitas', partido: 'REPUBLICANOS - 10', votos: 13236211, pct: '55.27%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Tarc%C3%ADsio_de_Freitas_foto_oficial.jpg/480px-Tarc%C3%ADsio_de_Freitas_foto_oficial.jpg' }],
                 sen: [
-                    { nome: 'Eduardo Bolsonaro', partido: 'PL - 22', votos: 8912300, pct: '38.41%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Eduardo_Bolsonaro_2019.jpg/480px-Eduardo_Bolsonaro_2019.jpg' },
-                    { nome: 'Guilherme Boulos', partido: 'PSOL - 50', votos: 7890120, pct: '34.02%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Guilherme_Boulos_2022.jpg/480px-Guilherme_Boulos_2022.jpg' }
+                    { nome: 'Guilherme Derrite', partido: 'PP - 11', votos: 9812300, pct: '39.41%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Guilherme_Derrite_2019.jpg/480px-Guilherme_Derrite_2019.jpg' },
+                    { nome: 'André do Prado', partido: 'PL - 22', votos: 8890120, pct: '35.02%', foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Andr%C3%A9+do+Prado' }
                 ],
                 dep_fed: [
-                    { nome: 'Carla Zambelli', partido: 'PL - 22', votos: 946244, pct: '4.10%' },
-                    { nome: 'Ricardo Salles', partido: 'NOVO - 30', votos: 640186, pct: '2.77%' },
-                    { nome: 'Tabata Amaral', partido: 'PSB - 40', votos: 523190, pct: '2.26%' },
-                    { nome: 'Erika Hilton', partido: 'PSOL - 50', votos: 468902, pct: '2.03%' },
-                    { nome: 'Rui Falcão', partido: 'PT - 13', votos: 312040, pct: '1.35%' }
+                    { nome: 'Lucas Pavanato', partido: 'PL - 22', votos: 3038438, pct: '12.80%' },
+                    { nome: 'Erika Hilton', partido: 'PSOL - 50', votos: 1596383, pct: '6.72%' },
+                    { nome: 'Sâmia Bomfim', partido: 'PSOL - 50', votos: 583107, pct: '2.45%' },
+                    { nome: 'Kim Kataguiri', partido: 'MISSÃO - 33', votos: 520071, pct: '2.19%' },
+                    { nome: 'Miguel Lombardi', partido: 'PL - 22', votos: 96333, pct: '0.40%' }
                 ],
                 dep_est: [
-                    { nome: 'Eduardo Suplicy', partido: 'PT - 13', votos: 807015, pct: '3.49%' },
-                    { nome: 'Lucas Pavanato', partido: 'PL - 22', votos: 520110, pct: '2.25%' },
-                    { nome: 'Tomé Abduch', partido: 'REPUBLICANOS - 10', votos: 221090, pct: '0.95%' }
+                    { nome: 'Eduarda Campopiano', partido: 'PL - 22', votos: 1956238, pct: '8.25%' },
+                    { nome: 'Eduardo Suplicy', partido: 'PT - 13', votos: 654627, pct: '2.76%' },
+                    { nome: 'Professora Bebel', partido: 'PT - 13', votos: 142001, pct: '0.60%' },
+                    { nome: 'Alex Madureira', partido: 'PL - 22', votos: 122704, pct: '0.51%' }
                 ]
             },
             'RJ': {
-                gov: [{ nome: 'Cláudio Castro', partido: 'PL - 22', votos: 4937286, pct: '58.67%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Cl%C3%A1udio_Castro_2021.jpg/480px-Cl%C3%A1udio_Castro_2021.jpg' }],
+                gov: [{ nome: 'Douglas Ruas / Eduardo Paes', partido: 'Em 2º Turno', votos: 0, pct: 'Ir para 2ºT' }],
                 sen: [
-                    { nome: 'Flávio Bolsonaro', partido: 'PL - 22', votos: 4832900, pct: '51.20%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Senador_Fl%C3%A1vio_Bolsonaro_%28cropped%29.jpg/480px-Senador_Fl%C3%A1vio_Bolsonaro_%28cropped%29.jpg' },
-                    { nome: 'Ceciliano', partido: 'PT - 13', votos: 2100450, pct: '22.28%' }
+                    { nome: 'Flávio Bolsonaro', partido: 'PL - 22', votos: 5120000, pct: '52.10%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Senador_Fl%C3%A1vio_Bolsonaro_%28cropped%29.jpg/480px-Senador_Fl%C3%A1vio_Bolsonaro_%28cropped%29.jpg' },
+                    { nome: 'Washington Quaquá', partido: 'PT - 13', votos: 2840000, pct: '28.90%' }
                 ],
                 dep_fed: [
-                    { nome: 'Pazuello', partido: 'PL - 22', votos: 205324, pct: '2.38%' },
-                    { nome: 'Talíria Petrone', partido: 'PSOL - 50', votos: 198200, pct: '2.30%' },
-                    { nome: 'Washington Quaquá', partido: 'PT - 13', votos: 112000, pct: '1.30%' }
+                    { nome: 'Pazuello', partido: 'PL - 22', votos: 245000, pct: '2.80%' },
+                    { nome: 'Talíria Petrone', partido: 'PSOL - 50', votos: 210000, pct: '2.40%' }
                 ],
                 dep_est: [
-                    { nome: 'Rodrigo Bacellar', partido: 'PL - 22', votos: 97800, pct: '1.13%' },
-                    { nome: 'Renan Ferreirinha', partido: 'PSD - 55', votos: 88400, pct: '1.02%' }
+                    { nome: 'Rodrigo Bacellar', partido: 'PL - 22', votos: 110000, pct: '1.25%' },
+                    { nome: 'Renan Ferreirinha', partido: 'PSD - 55', votos: 95000, pct: '1.08%' }
                 ]
             },
             'MG': {
-                gov: [{ nome: 'Romeu Zema', partido: 'NOVO - 30', votos: 6094129, pct: '56.18%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Romeu_Zema_foto_oficial.jpg/480px-Romeu_Zema_foto_oficial.jpg' }],
+                gov: [{ nome: 'Cleitinho Azevedo', partido: 'REPUBLICANOS - 10', votos: 6241090, pct: '56.80%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Cleitinho_Azevedo.jpg/480px-Cleitinho_Azevedo.jpg' }],
                 sen: [
-                    { nome: 'Cleitinho', partido: 'REPUBLICANOS - 10', votos: 4200190, pct: '41.52%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Cleitinho_Azevedo.jpg/480px-Cleitinho_Azevedo.jpg' },
-                    { nome: 'Alexandre Silveira', partido: 'PSD - 55', votos: 2900100, pct: '28.60%' }
+                    { nome: 'Domingos Sávio', partido: 'PL - 22', votos: 4890000, pct: '43.20%' },
+                    { nome: 'Marília Campos', partido: 'PT - 13', votos: 3410000, pct: '30.10%' }
                 ],
                 dep_fed: [
-                    { nome: 'Nikolas Ferreira', partido: 'PL - 22', votos: 1492047, pct: '13.32%' },
-                    { nome: 'André Janones', partido: 'AVANTE - 70', votos: 238000, pct: '2.12%' },
-                    { nome: 'Duda Salabert', partido: 'PDT - 12', votos: 208000, pct: '1.85%' }
+                    { nome: 'Nikolas Ferreira', partido: 'PL - 22', votos: 1512000, pct: '13.50%' },
+                    { nome: 'Ana Elisa', partido: 'PT - 13', votos: 310000, pct: '2.77%' },
+                    { nome: 'Duda Salabert', partido: 'PSOL - 50', votos: 230000, pct: '2.05%' }
                 ],
                 dep_est: [
-                    { nome: 'Bruno Engler', partido: 'PL - 22', votos: 637000, pct: '5.68%' },
-                    { nome: 'Beatriz Cerqueira', partido: 'PT - 13', votos: 249000, pct: '2.22%' }
+                    { nome: 'Bruno Engler', partido: 'PL - 22', votos: 650000, pct: '5.80%' },
+                    { nome: 'Beatriz Cerqueira', partido: 'PT - 13', votos: 255000, pct: '2.28%' }
                 ]
             },
             'BA': {
-                gov: [{ nome: 'Jerônimo Rodrigues', partido: 'PT - 13', votos: 4480120, pct: '52.89%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Jer%C3%B4nimo_Rodrigues_2022.jpg/480px-Jer%C3%B4nimo_Rodrigues_2022.jpg' }],
+                gov: [{ nome: 'Jerônimo Rodrigues', partido: 'PT - 13', votos: 4520000, pct: '53.10%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Jer%C3%B4nimo_Rodrigues_2022.jpg/480px-Jer%C3%B4nimo_Rodrigues_2022.jpg' }],
                 sen: [
-                    { nome: 'Otto Alencar', partido: 'PSD - 55', votos: 4210900, pct: '58.30%' },
-                    { nome: 'ACM Neto', partido: 'UNIÃO - 44', votos: 2900100, pct: '40.10%' }
+                    { nome: 'Rui Costa', partido: 'PT - 13', votos: 4890000, pct: '59.10%' },
+                    { nome: 'Jaques Wagner', partido: 'PT - 13', votos: 4620000, pct: '55.80%' }
                 ],
                 dep_fed: [
-                    { nome: 'Otto Filho', partido: 'PSD - 55', votos: 241000, pct: '3.02%' },
-                    { nome: 'Elmar Nascimento', partido: 'UNIÃO - 44', votos: 175000, pct: '2.19%' },
-                    { nome: 'Alice Portugal', partido: 'PCdoB - 65', votos: 124000, pct: '1.55%' }
+                    { nome: 'Pastor Sargento Isidório', partido: 'AVANTE - 70', votos: 260000, pct: '3.12%' },
+                    { nome: 'Antonio Brito', partido: 'PSD - 55', votos: 210000, pct: '2.52%' },
+                    { nome: 'Neto Carletto', partido: 'AVANTE - 70', votos: 185000, pct: '2.22%' }
                 ],
                 dep_est: [
-                    { nome: 'Ivana Bastos', partido: 'PSD - 55', votos: 118000, pct: '1.48%' },
-                    { nome: 'Rosemberg Pinto', partido: 'PT - 13', votos: 98000, pct: '1.22%' }
+                    { nome: 'Ivana Bastos', partido: 'PSD - 55', votos: 125000, pct: '1.50%' },
+                    { nome: 'Rosemberg Pinto', partido: 'PT - 13', votos: 102000, pct: '1.22%' }
+                ]
+            },
+            'PR': {
+                gov: [{ nome: 'Sergio Moro', partido: 'PL - 22', votos: 3840000, pct: '58.20%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Sergio_Moro_foto_oficial.jpg/480px-Sergio_Moro_foto_oficial.jpg' }],
+                sen: [
+                    { nome: 'Filipe Barros', partido: 'PL - 22', votos: 3120000, pct: '48.90%' },
+                    { nome: 'Deltan Dallagnol', partido: 'NOVO - 30', votos: 2890000, pct: '45.30%' }
+                ],
+                dep_fed: [
+                    { nome: 'Jeffrey Chiquini', partido: 'NOVO - 30', votos: 240000, pct: '3.75%' },
+                    { nome: 'Guilherme Kilter', partido: 'NOVO - 30', votos: 210000, pct: '3.28%' },
+                    { nome: 'Sargento Fahur', partido: 'PL - 22', votos: 195000, pct: '3.04%' }
+                ],
+                dep_est: [
+                    { nome: 'Alexandre Curi', partido: 'PSD - 55', votos: 260000, pct: '4.06%' },
+                    { nome: 'Márcio Pacheco', partido: 'PP - 11', votos: 115000, pct: '1.79%' }
+                ]
+            },
+            'RS': {
+                gov: [{ nome: 'Eduardo Leite', partido: 'PSDB - 45', votos: 3680000, pct: '54.20%' }],
+                sen: [
+                    { nome: 'Hamilton Mourão', partido: 'REPUBLICANOS - 10', votos: 3100000, pct: '49.10%' },
+                    { nome: 'Edegar Pretto', partido: 'PT - 13', votos: 2450000, pct: '38.80%' }
+                ],
+                dep_fed: [
+                    { nome: 'Luciano Zucco', partido: 'PL - 22', votos: 280000, pct: '4.38%' },
+                    { nome: 'Marcel van Hattem', partido: 'NOVO - 30', votos: 256000, pct: '4.00%' }
+                ],
+                dep_est: [
+                    { nome: 'Gustavo Victorino', partido: 'REPUBLICANOS - 10', votos: 172000, pct: '2.68%' },
+                    { nome: 'Luciana Genro', partido: 'PSOL - 50', votos: 112000, pct: '1.75%' }
+                ]
+            },
+            'CE': {
+                gov: [{ nome: 'Elmano de Freitas', partido: 'PT - 13', votos: 2890000, pct: '53.90%' }],
+                sen: [
+                    { nome: 'Cid Gomes', partido: 'PSB - 40', votos: 2750000, pct: '51.20%' },
+                    { nome: 'Luizianne Lins', partido: 'REDE - 18', votos: 2100000, pct: '39.10%' }
+                ],
+                dep_fed: [
+                    { nome: 'André Fernandes', partido: 'PL - 22', votos: 242000, pct: '4.50%' },
+                    { nome: 'Tainah Marinho', partido: 'PSB - 40', votos: 198000, pct: '3.68%' }
+                ],
+                dep_est: [
+                    { nome: 'Carmelo Neto', partido: 'PL - 22', votos: 118000, pct: '2.19%' },
+                    { nome: 'Evandro Leitão', partido: 'PT - 13', votos: 112000, pct: '2.08%' }
+                ]
+            },
+            'GO': {
+                gov: [{ nome: 'Daniel Vilela', partido: 'MDB - 15', votos: 2150000, pct: '56.30%' }],
+                sen: [
+                    { nome: 'Gustavo Gayer', partido: 'PL - 22', votos: 1890000, pct: '51.20%' },
+                    { nome: 'Gracinha Caiado', partido: 'UNIÃO - 44', votos: 1650000, pct: '44.70%' }
+                ],
+                dep_fed: [
+                    { nome: 'Silvye Alves', partido: 'UNIÃO - 44', votos: 254000, pct: '6.88%' },
+                    { nome: 'Gustavo Gayer', partido: 'PL - 22', votos: 200000, pct: '5.41%' }
+                ],
+                dep_est: [
+                    { nome: 'Bruno Peixoto', partido: 'UNIÃO - 44', votos: 115000, pct: '3.11%' },
+                    { nome: 'Lucas Calil', partido: 'MDB - 15', votos: 58000, pct: '1.57%' }
+                ]
+            },
+            'PE': {
+                gov: [{ nome: 'Raquel Lyra', partido: 'PSD - 55', votos: 2890000, pct: '53.60%' }],
+                sen: [
+                    { nome: 'Humberto Costa', partido: 'PT - 13', votos: 2450000, pct: '47.20%' },
+                    { nome: 'Marília Arraes', partido: 'PDT - 12', votos: 2100000, pct: '40.50%' }
+                ],
+                dep_fed: [
+                    { nome: 'Pedro Campos', partido: 'PSB - 40', votos: 284000, pct: '5.47%' },
+                    { nome: 'Jones Manoel', partido: 'PSOL - 50', votos: 215000, pct: '4.14%' },
+                    { nome: 'Anderson Ferreira', partido: 'PL - 22', votos: 189000, pct: '3.64%' }
+                ],
+                dep_est: [
+                    { nome: 'Pastor Júnior Tércio', partido: 'PP - 11', votos: 182000, pct: '3.50%' },
+                    { nome: 'Gleide Ângelo', partido: 'PSB - 40', votos: 158000, pct: '3.04%' }
                 ]
             },
             'DF': {
                 gov: [{ nome: 'Celina Leão / Leandro Grass', partido: 'Em 2º Turno', votos: 0, pct: 'Ir para 2ºT' }],
                 sen: [
-                    { nome: 'Damares Alves', partido: 'REPUBLICANOS - 10', votos: 714500, pct: '44.98%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Damares_Alves_2019.jpg/480px-Damares_Alves_2019.jpg' }
+                    { nome: 'Michelle Bolsonaro', partido: 'PL - 22', votos: 890000, pct: '54.20%', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Michelle_Bolsonaro_2019.jpg/480px-Michelle_Bolsonaro_2019.jpg' },
+                    { nome: 'Bia Kicis', partido: 'PL - 22', votos: 740000, pct: '45.10%' }
                 ],
                 dep_fed: [
-                    { nome: 'Bia Kicis', partido: 'PL - 22', votos: 214000, pct: '13.30%' },
-                    { nome: 'Fred Linhares', partido: 'REPUBLICANOS - 10', votos: 165000, pct: '10.25%' },
-                    { nome: 'Erika Kokay', partido: 'PT - 13', votos: 146000, pct: '9.07%' }
+                    { nome: 'Fábio Felix', partido: 'PSOL - 50', votos: 214000, pct: '13.04%' },
+                    { nome: 'Rafael Prudente', partido: 'MDB - 15', votos: 165000, pct: '10.06%' },
+                    { nome: 'Alberto Fraga', partido: 'PL - 22', votos: 146000, pct: '8.90%' }
                 ],
                 dep_est: [
-                    { nome: 'Fabio Felix', partido: 'PSOL - 50', votos: 51000, pct: '3.16%' },
-                    { nome: 'Chico Vigilante', partido: 'PT - 13', votos: 43000, pct: '2.67%' }
+                    { nome: 'Chico Vigilante', partido: 'PT - 13', votos: 43000, pct: '2.62%' },
+                    { nome: 'Martins Machado', partido: 'REPUBLICANOS - 10', votos: 38000, pct: '2.31%' }
                 ]
-            }
-        };
-
-        // Dados de Candidatos a Presidente
-        const presidentialCandidates = [
-            {
-                id: 'lula',
-                nome: 'Luiz Inácio Lula da Silva',
-                vice: 'Geraldo Alckmin',
-                partido: 'PT - 13',
-                coligacao: 'Federação Brasil da Esperança',
-                foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Lula_-_foto_oficial_05_jan_2023_%28cropped%29.jpg/480px-Lula_-_foto_oficial_05_jan_2023_%28cropped%29.jpg',
-                cor: 'red',
-                pct: '0,00',
-                votos: 0
             },
-            {
-                id: 'flavio',
-                nome: 'Flávio Bolsonaro',
-                vice: 'Braga Netto',
-                partido: 'PL - 22',
-                coligacao: 'Coligação Pelo Brasil',
-                foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Senador_Fl%C3%A1vio_Bolsonaro_%28cropped%29.jpg/480px-Senador_Fl%C3%A1vio_Bolsonaro_%28cropped%29.jpg',
-                cor: 'blue',
-                pct: '0,00',
-                votos: 0
+            'AC': {
+                gov: [{ nome: 'Mailza Assis / Alan Rick', partido: 'Em 2º Turno', votos: 0, pct: 'Ir para 2ºT' }],
+                sen: [{ nome: 'Gladson Cameli', partido: 'PP - 11', votos: 210000, pct: '48.50%' }],
+                dep_fed: [{ nome: 'Socorro Neri', partido: 'PP - 11', votos: 28000, pct: '6.46%' }],
+                dep_est: [{ nome: 'Nicolau Júnior', partido: 'PP - 11', votos: 16000, pct: '3.69%' }]
+            },
+            'AL': {
+                gov: [{ nome: 'Paulo Dantas', partido: 'MDB - 15', votos: 890000, pct: '56.40%' }],
+                sen: [
+                    { nome: 'Arthur Lira', partido: 'PP - 11', votos: 820000, pct: '52.10%' },
+                    { nome: 'Marina JHC', partido: 'PSDB - 45', votos: 610000, pct: '38.80%' }
+                ],
+                dep_fed: [{ nome: 'Alvinho Lira', partido: 'PP - 11', votos: 110000, pct: '6.98%' }],
+                dep_est: [{ nome: 'Alexandre Ayres', partido: 'MDB - 15', votos: 61000, pct: '3.87%' }]
+            },
+            'AM': {
+                gov: [{ nome: 'Omar Aziz / Maria do Carmo', partido: 'Em 2º Turno', votos: 0, pct: 'Ir para 2ºT' }],
+                sen: [
+                    { nome: 'Eduardo Braga', partido: 'MDB - 15', votos: 980000, pct: '48.90%' },
+                    { nome: 'Plínio Valério', partido: 'PSDB - 45', votos: 810000, pct: '40.40%' }
+                ],
+                dep_fed: [{ nome: 'Sargento Salazar', partido: 'PL - 22', votos: 165000, pct: '8.23%' }],
+                dep_est: [{ nome: 'Roberto Cidade', partido: 'UNIÃO - 44', votos: 105000, pct: '5.24%' }]
+            },
+            'AP': {
+                gov: [{ nome: 'Dr. Furlan', partido: 'PSD - 55', votos: 285000, pct: '68.40%' }],
+                sen: [{ nome: 'Rayssa Furlan', partido: 'PODEMOS - 20', votos: 210000, pct: '50.40%' }],
+                dep_fed: [{ nome: 'Felipe Show', partido: 'UNIÃO - 44', votos: 32000, pct: '7.68%' }],
+                dep_est: [{ nome: 'Kaká Kowarick', partido: 'REPUBLICANOS - 10', votos: 18000, pct: '4.32%' }]
+            },
+            'ES': {
+                gov: [{ nome: 'Lorenzo Pazolini / Ricardo Ferraço', partido: 'Em 2º Turno', votos: 0, pct: 'Ir para 2ºT' }],
+                sen: [{ nome: 'Renato Casagrande', partido: 'PSB - 40', votos: 1120000, pct: '51.30%' }],
+                dep_fed: [{ nome: 'Gilvan da Federal', partido: 'PL - 22', votos: 115000, pct: '5.27%' }],
+                dep_est: [{ nome: 'Sergio Meneguelli', partido: 'REPUBLICANOS - 10', votos: 138000, pct: '6.32%' }]
+            },
+            'MA': {
+                gov: [{ nome: 'Carlos Brandão', partido: 'PSB - 40', votos: 1890000, pct: '52.80%' }],
+                sen: [
+                    { nome: 'André Fufuca', partido: 'PP - 11', votos: 1450000, pct: '42.10%' },
+                    { nome: 'Lahesio Bonfim', partido: 'NOVO - 30', votos: 1210000, pct: '35.10%' }
+                ],
+                dep_fed: [{ nome: 'Pedro Lucas Fernandes', partido: 'UNIÃO - 44', votos: 158000, pct: '4.41%' }],
+                dep_est: [{ nome: 'Iracema Vale', partido: 'MDB - 15', votos: 124000, pct: '3.46%' }]
+            },
+            'MS': {
+                gov: [{ nome: 'Eduardo Riedel', partido: 'PP - 11', votos: 840000, pct: '56.10%' }],
+                sen: [
+                    { nome: 'Reinaldo Azambuja', partido: 'PL - 22', votos: 780000, pct: '52.10%' },
+                    { nome: 'Capitão Contar', partido: 'PL - 22', votos: 610000, pct: '40.70%' }
+                ],
+                dep_fed: [{ nome: 'Marcos Pollon', partido: 'PL - 22', votos: 148000, pct: '9.88%' }],
+                dep_est: [{ nome: 'Mara Caseiro', partido: 'PSDB - 45', votos: 49000, pct: '3.27%' }]
+            },
+            'MT': {
+                gov: [{ nome: 'Otaviano Pivetta', partido: 'REPUBLICANOS - 10', votos: 1050000, pct: '58.40%' }],
+                sen: [
+                    { nome: 'Mauro Mendes', partido: 'UNIÃO - 44', votos: 980000, pct: '54.50%' },
+                    { nome: 'Zé Medeiros', partido: 'PL - 22', votos: 810000, pct: '45.10%' }
+                ],
+                dep_fed: [{ nome: 'Coronel Fernanda', partido: 'PL - 22', votos: 142000, pct: '7.90%' }],
+                dep_est: [{ nome: 'Janaina Riva', partido: 'MDB - 15', votos: 82000, pct: '4.56%' }]
+            },
+            'PA': {
+                gov: [{ nome: 'Dr. Daniel', partido: 'PODEMOS - 20', votos: 2450000, pct: '54.10%' }],
+                sen: [
+                    { nome: 'Helder Barbalho', partido: 'MDB - 15', votos: 2890000, pct: '63.80%' },
+                    { nome: 'Chicão', partido: 'UNIÃO - 44', votos: 1890000, pct: '41.70%' }
+                ],
+                dep_fed: [{ nome: 'Delegado Caveira', partido: 'PL - 22', votos: 168000, pct: '3.71%' }],
+                dep_est: [{ nome: 'Chamonzinho', partido: 'MDB - 15', votos: 110000, pct: '2.43%' }]
+            },
+            'PB': {
+                gov: [{ nome: 'Lucas Ribeiro', partido: 'PP - 11', votos: 1210000, pct: '53.80%' }],
+                sen: [
+                    { nome: 'João Azevêdo', partido: 'PSB - 40', votos: 1150000, pct: '51.20%' },
+                    { nome: 'Veneziano', partido: 'MDB - 15', votos: 980000, pct: '43.60%' }
+                ],
+                dep_fed: [{ nome: 'Cabo Gilberto', partido: 'PL - 22', votos: 172000, pct: '7.65%' }],
+                dep_est: [{ nome: 'Adriano Galdino', partido: 'REPUBLICANOS - 10', votos: 82000, pct: '3.65%' }]
+            },
+            'PI': {
+                gov: [{ nome: 'Rafael Fonteles', partido: 'PT - 13', votos: 1180000, pct: '57.20%' }],
+                sen: [
+                    { nome: 'Marcelo Castro', partido: 'MDB - 15', votos: 1050000, pct: '50.90%' },
+                    { nome: 'Júlio César', partido: 'PSD - 55', votos: 920000, pct: '44.60%' }
+                ],
+                dep_fed: [{ nome: 'Georgiano', partido: 'PSD - 55', votos: 210000, pct: '10.18%' }],
+                dep_est: [{ nome: 'Severo Eulálio', partido: 'MDB - 15', votos: 65000, pct: '3.15%' }]
+            },
+            'RN': {
+                gov: [{ nome: 'Allyson Bezerra / Cadu de Lula', partido: 'Em 2º Turno', votos: 0, pct: 'Ir para 2ºT' }],
+                sen: [{ nome: 'Fátima Bezerra', partido: 'PT - 13', votos: 890000, pct: '46.80%' }],
+                dep_fed: [{ nome: 'Natália Bonavides', partido: 'PT - 13', votos: 152000, pct: '8.00%' }],
+                dep_est: [{ nome: 'Ezequiel Ferreira', partido: 'PSDB - 45', votos: 78000, pct: '4.10%' }]
+            },
+            'RO': {
+                gov: [{ nome: 'Marcos Rocha', partido: 'UNIÃO - 44', votos: 480000, pct: '52.90%' }],
+                sen: [{ nome: 'Léo Moraes', partido: 'PODEMOS - 20', votos: 380000, pct: '41.80%' }],
+                dep_fed: [{ nome: 'Fernando Máximo', partido: 'UNIÃO - 44', votos: 88000, pct: '9.69%' }],
+                dep_est: [{ nome: 'Laerte Gomes', partido: 'PSD - 55', votos: 32000, pct: '3.52%' }]
+            },
+            'RR': {
+                gov: [{ nome: 'Antonio Denarium', partido: 'PP - 11', votos: 185000, pct: '56.40%' }],
+                sen: [{ nome: 'Hiran Gonçalves', partido: 'PP - 11', votos: 142000, pct: '43.30%' }],
+                dep_fed: [{ nome: 'Jhonatan de Jesus', partido: 'REPUBLICANOS - 10', votos: 28000, pct: '8.53%' }],
+                dep_est: [{ nome: 'Soldado Sampaio', partido: 'REPUBLICANOS - 10', votos: 14000, pct: '4.26%' }]
+            },
+            'SC': {
+                gov: [{ nome: 'Jorginho Mello', partido: 'PL - 22', votos: 2450000, pct: '62.10%' }],
+                sen: [
+                    { nome: 'Caroline de Toni', partido: 'PL - 22', votos: 1890000, pct: '47.90%' },
+                    { nome: 'Esperidião Amin', partido: 'PP - 11', votos: 1420000, pct: '36.00%' }
+                ],
+                dep_fed: [{ nome: 'Caroline de Toni', partido: 'PL - 22', votos: 228000, pct: '5.78%' }],
+                dep_est: [{ nome: 'Ana Campagnolo', partido: 'PL - 22', votos: 148000, pct: '3.75%' }]
+            },
+            'SE': {
+                gov: [{ nome: 'Fábio Mitidieri', partido: 'PSD - 55', votos: 680000, pct: '51.80%' }],
+                sen: [{ nome: 'Laércio Oliveira', partido: 'PP - 11', votos: 540000, pct: '41.20%' }],
+                dep_fed: [{ nome: 'Yandra de André', partido: 'UNIÃO - 44', votos: 132000, pct: '10.06%' }],
+                dep_est: [{ nome: 'Jeferson Andrade', partido: 'PSD - 55', votos: 48000, pct: '3.66%' }]
+            },
+            'TO': {
+                gov: [{ nome: 'Dorinha Seabra / Vicentinho', partido: 'Em 2º Turno', votos: 0, pct: 'Ir para 2ºT' }],
+                sen: [{ nome: 'Wanderlei Barbosa', partido: 'REPUBLICANOS - 10', votos: 420000, pct: '51.50%' }],
+                dep_fed: [{ nome: 'Toinho Andrade', partido: 'REPUBLICANOS - 10', votos: 64000, pct: '7.85%' }],
+                dep_est: [{ nome: 'Amélio Cayres', partido: 'REPUBLICANOS - 10', votos: 28000, pct: '3.43%' }]
             }
-        ];
-
-        // Base de Candidatos a Governador (2º Turno por Estado/DF)
-        const governorCandidates = {
-            'AC': [
-                { nome: 'Mailza Assis', partido: 'PP - 11', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Mailza_Gomes_em_2019.jpg/480px-Mailza_Gomes_em_2019.jpg', cor: 'blue', pct: '0,00', votos: 0 },
-                { nome: 'Alan Rick', partido: 'REPUBLICANOS - 10', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Alan_Rick_2019.jpg/480px-Alan_Rick_2019.jpg', cor: 'purple', pct: '0,00', votos: 0 }
-            ],
-            'AM': [
-                { nome: 'Omar Aziz', partido: 'PSD - 55', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Omar_Aziz_2019.jpg/480px-Omar_Aziz_2019.jpg', cor: 'blue', pct: '0,00', votos: 0 },
-                { nome: 'Professora Maria do Carmo', partido: 'PL - 22', foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Maria+do+Carmo', cor: 'amber', pct: '0,00', votos: 0 }
-            ],
-            'DF': [
-                { nome: 'Celina Leão', partido: 'PP - 11', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Celina_Le%C3%A3o_2023.jpg/480px-Celina_Le%C3%A3o_2023.jpg', cor: 'blue', pct: '0,00', votos: 0 },
-                { nome: 'Leandro Grass', partido: 'PT - 13', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Leandro_Grass_2022.jpg/480px-Leandro_Grass_2022.jpg', cor: 'red', pct: '0,00', votos: 0 }
-            ],
-            'ES': [
-                { nome: 'Lorenzo Pazolini', partido: 'REPUBLICANOS - 10', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Lorenzo_Pazolini.jpg/480px-Lorenzo_Pazolini.jpg', cor: 'blue', pct: '0,00', votos: 0 },
-                { nome: 'Ricardo Ferraço', partido: 'MDB - 15', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Ricardo_Ferra%C3%A7o_2015.jpg/480px-Ricardo_Ferra%C3%A7o_2015.jpg', cor: 'purple', pct: '0,00', votos: 0 }
-            ],
-            'RN': [
-                { nome: 'Allyson Bezerra', partido: 'UNIÃO - 44', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Allyson_Bezerra.jpg/480px-Allyson_Bezerra.jpg', cor: 'blue', pct: '0,00', votos: 0 },
-                { nome: 'Cadu de Lula', partido: 'PT - 13', foto: 'https://placehold.co/480x480/1e293b/94a3b8?text=Cadu+de+Lula', cor: 'red', pct: '0,00', votos: 0 }
-            ],
-            'TO': [
-                { nome: 'Professora Dorinha', partido: 'UNIÃO - 44', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Professora_Dorinha_Seabra_Rezende_2019.jpg/480px-Professora_Dorinha_Seabra_Rezende_2019.jpg', cor: 'purple', pct: '0,00', votos: 0 },
-                { nome: 'Vicentinho Júnior', partido: 'PSDB - 45', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Vicentinho_J%C3%BAnior_2019.jpg/480px-Vicentinho_J%C3%BAnior_2019.jpg', cor: 'blue', pct: '0,00', votos: 0 }
-            ]
         };
 
         // Renderizador de Botoes de UF para Eleitos
         function renderUfButtons() {
             const container = document.getElementById('uf-buttons-container');
+            if (!container) return;
             container.innerHTML = '';
             
             ufs.forEach(uf => {
                 const active = uf === currentWinnerUf;
                 const btnClass = active 
-                    ? 'bg-purple-600 text-white font-bold border-purple-500 shadow-md' 
+                    ? 'bg-purple-600 text-white font-bold border-purple-500 shadow-md scale-105' 
                     : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-800';
                 
                 const btn = document.createElement('button');
-                btn.className = `px-3 py-1 rounded-lg border text-xs transition-all shrink-0 ${btnClass}`;
+                btn.className = `px-3 py-1.5 rounded-xl border text-xs transition-all shrink-0 font-mono ${btnClass}`;
                 btn.innerText = uf;
                 btn.onclick = () => {
                     currentWinnerUf = uf;
@@ -514,30 +719,35 @@
             });
         }
 
-        // Filtro por sub-categoria de cargo em Eleitos
+        // Definidor do Filtro de Cargo
         function setCargoFilter(cargo) {
             currentCargoFilter = cargo;
-            ['gov', 'sen', 'dep_fed', 'dep_est'].forEach(c => {
-                const btn = document.getElementById(`cargo-${c.replace('_', '-')}`);
-                if (btn) {
-                    if (c === cargo) {
-                        btn.className = "px-3.5 py-1.5 rounded-lg font-bold text-xs bg-purple-600 text-white flex items-center gap-1.5 whitespace-nowrap shadow-md";
-                    } else {
-                        btn.className = "px-3.5 py-1.5 rounded-lg font-bold text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center gap-1.5 whitespace-nowrap";
-                    }
-                }
+            
+            const btnGov = document.getElementById('cargo-gov');
+            const btnSen = document.getElementById('cargo-sen');
+            const btnDepFed = document.getElementById('cargo-dep-fed');
+            const btnDepEst = document.getElementById('cargo-dep-est');
+
+            [btnGov, btnSen, btnDepFed, btnDepEst].forEach(b => {
+                if (b) b.className = "px-3.5 py-1.5 rounded-lg font-bold text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center gap-1.5 whitespace-nowrap";
             });
+
+            const activeBtn = document.getElementById(`cargo-${cargo.replace('_', '-')}`);
+            if (activeBtn) activeBtn.className = "px-3.5 py-1.5 rounded-lg font-bold text-xs bg-purple-600 text-white flex items-center gap-1.5 whitespace-nowrap";
+
             renderWinnersList();
         }
 
-        // Renderização dos Eleitos no 1º Turno
+        // Renderização Garantida dos Eleitos por Estado e Cargo
         function renderWinnersList() {
             const grid = document.getElementById('eleitos-cards-grid');
+            if (!grid) return;
             grid.innerHTML = '';
 
             const ufData = winnersDatabase[currentWinnerUf] || {};
             const candidates = ufData[currentCargoFilter] || [];
-            const searchVal = (document.getElementById('eleitos-search')?.value || '').toLowerCase();
+            const searchInput = document.getElementById('eleitos-search');
+            const searchVal = (searchInput ? searchInput.value : '').toLowerCase().trim();
 
             const filtered = candidates.filter(c => 
                 c.nome.toLowerCase().includes(searchVal) || 
@@ -546,40 +756,45 @@
 
             if (filtered.length === 0) {
                 grid.innerHTML = `
-                    <div class="col-span-full py-12 text-center text-slate-400 bg-brand-card rounded-2xl border border-brand-border space-y-2">
-                        <i class="fa-solid fa-users-slash text-3xl text-slate-600"></i>
-                        <p class="font-medium">Nenhum candidato localizado para <strong>${currentWinnerUf}</strong> nesta categoria.</p>
-                        <p class="text-xs text-slate-500">Selecione outra UF (ex: SP, RJ, MG, BA, DF) ou limpe a busca.</p>
+                    <div class="col-span-full py-12 px-4 text-center text-slate-400 bg-brand-card rounded-2xl border border-brand-border space-y-3">
+                        <i class="fa-solid fa-users-slash text-4xl text-purple-400/50"></i>
+                        <p class="font-bold text-slate-200">Nenhum candidato listado para a UF <span class="text-purple-400">${currentWinnerUf}</span> nesta categoria.</p>
+                        <p class="text-xs text-slate-400 max-w-md mx-auto">
+                            Tente selecionar outra Unidade Federativa no carrossel acima ou altere o filtro de cargo.
+                        </p>
                     </div>
                 `;
                 return;
             }
 
             filtered.forEach(c => {
+                const isSecondRound = c.partido.includes('2º Turno');
+                const badgeStatus = isSecondRound 
+                    ? `<span class="text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md flex items-center gap-1"><i class="fa-solid fa-clock-rotate-left"></i> 2º Turno</span>`
+                    : `<span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Eleito(a) 1ºT</span>`;
+
                 const cardHtml = `
-                    <div class="bg-brand-card border border-brand-border hover:border-purple-500/50 rounded-2xl p-4 shadow-xl transition-all flex flex-col justify-between">
+                    <div class="bg-brand-card border border-brand-border hover:border-purple-500/50 rounded-2xl p-4 shadow-xl transition-all flex flex-col justify-between group">
                         <div class="space-y-3">
                             <div class="flex items-center justify-between gap-2">
                                 <span class="bg-purple-900/40 text-purple-300 border border-purple-700/50 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
                                     ${c.partido}
                                 </span>
-                                <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md flex items-center gap-1">
-                                    <i class="fa-solid fa-circle-check"></i> Eleito(a) 1ºT
-                                </span>
+                                ${badgeStatus}
                             </div>
 
                             <div class="flex items-center gap-3">
-                                <div class="w-14 h-14 rounded-xl bg-slate-900 border border-slate-700 overflow-hidden shrink-0 flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-xl bg-slate-900 border border-slate-700 overflow-hidden shrink-0 flex items-center justify-center shadow-inner group-hover:border-purple-500/50 transition">
                                     <img src="${c.foto || 'https://placehold.co/150x150/1e293b/94a3b8?text=TSE'}" alt="${c.nome}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/150x150/1e293b/94a3b8?text=TSE'">
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-white text-sm leading-snug line-clamp-2">${c.nome}</h4>
-                                    <p class="text-xs text-slate-400 font-mono mt-0.5">${c.votos > 0 ? c.votos.toLocaleString('pt-BR') + ' votos' : 'Totalizado pelo TSE'}</p>
+                                    <p class="text-xs text-slate-400 font-mono mt-0.5">${c.votos > 0 ? c.votos.toLocaleString('pt-BR') + ' votos' : 'Totalização TSE'}</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
                             <span class="text-slate-400">Votos Válidos:</span>
                             <span class="font-extrabold font-mono text-purple-300 text-sm">${c.pct}</span>
                         </div>
@@ -596,9 +811,10 @@
         // Renderizador de Cards de Candidatos do 2º Turno
         function renderCandidateCards() {
             const container = document.getElementById('candidates-container');
+            if (!container) return;
             container.innerHTML = '';
 
-            const list = currentRace === 'presidencia' ? presidentialCandidates : governorCandidates[currentState];
+            const list = currentRace === 'presidencia' ? presidentialCandidates : (governorCandidates[currentState] || []);
 
             list.forEach((c, index) => {
                 const borderAccent = c.cor === 'red' ? 'border-red-500/30' : (c.cor === 'blue' ? 'border-blue-500/30' : 'border-purple-500/30');
