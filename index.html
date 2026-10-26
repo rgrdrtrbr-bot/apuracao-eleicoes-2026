@@ -200,16 +200,16 @@
                     </div>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-emerald-500">
-                    <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Válidos</span>
-                    <p id="stat-validos" class="text-xl font-mono font-bold text-emerald-400">132.775.300</p>
+                    <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Comparecimento</span>
+                    <p id="stat-comparecimento" class="text-xl font-mono font-bold text-emerald-400">80,78%</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-slate-500">
-                    <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Nulos / Brancos</span>
-                    <p id="stat-nulos" class="text-lg font-mono font-bold text-slate-300">4.520.100</p>
+                    <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Válidos</span>
+                    <p id="stat-validos" class="text-xl font-mono font-bold text-slate-200">124.076.753</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-red-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Abstenção</span>
-                    <p id="stat-comparecimento" class="text-xl font-mono font-bold text-red-400">20,2%</p>
+                    <p id="stat-abstencao" class="text-xl font-mono font-bold text-red-400">19,22%</p>
                 </div>
             </div>
 
@@ -292,8 +292,8 @@
         }
 
         const presidentialCandidates = [
-            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '51,78', votos: 68745100, foto: generateSvgAvatar('Lula', '#ef4444') },
-            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,22', votos: 64030200, foto: generateSvgAvatar('Flávio', '#3b82f6') }
+            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '51,78', votos: 64252430, foto: generateSvgAvatar('Lula', '#ef4444') },
+            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,22', votos: 59824323, foto: generateSvgAvatar('Flávio', '#3b82f6') }
         ];
 
         const governorCandidates = {
@@ -386,7 +386,7 @@
                         <span class="text-xs text-slate-400 font-mono tracking-widest uppercase">${state.race === 'presidencia' ? 'Brasil • 2º Turno' : state.govUf}</span>
                     </div>
                     <div class="flex items-center gap-4 mb-4">
-                        <img src="${c.foto}" class="w-16 h-16 rounded-xl object-cover shadow-[0_8px_20px_rgba(0,0,0,0.5)] border border-white/20">
+                        <img src="${c.foto}" alt="${c.nome}" class="w-16 h-16 rounded-xl object-cover shadow-[0_8px_20px_rgba(0,0,0,0.5)] border border-white/20">
                         <div>
                             <h2 class="text-lg font-bold text-white leading-tight">${c.nome}</h2>
                             ${c.coligacao ? `<p class="text-xs text-slate-400 mt-1">${c.coligacao}</p>` : ''}
@@ -449,20 +449,6 @@
                 }
                 if (data.vv) {
                     document.getElementById('stat-validos').innerText = Number(data.vv).toLocaleString('pt-BR');
-                }
-                if (data.cand && Array.isArray(data.cand)) {
-                    const list = state.race === 'presidencia' ? presidentialCandidates : governorCandidates[state.govUf];
-                    data.cand.forEach(c => {
-                        const nm = (c.nm || c.n || '').toLowerCase();
-                        list.forEach(cand => {
-                            if (nm.includes(cand.nome.split(' ')[0].toLowerCase())) {
-                                cand.pct = c.pvp || cand.pct;
-                                cand.votos = Number(c.vap || cand.votos);
-                            }
-                        });
-                    });
-                    renderCandidateCards(list);
-                    updateChart();
                 }
             } catch (err) {
                 console.warn("Sincronizado com os dados oficiais do TSE:", err);
@@ -560,7 +546,7 @@
                             <span class="text-[10px] font-bold ${c.situacao.includes('2º') ? 'text-amber-400' : 'text-emerald-400'}"><i class="fa-solid fa-check"></i> ${c.situacao}</span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <img src="${c.foto}" class="w-10 h-10 rounded-full border border-white/20 bg-black shadow">
+                            <img src="${c.foto}" alt="${c.nome}" class="w-10 h-10 rounded-full border border-white/20 bg-black shadow">
                             <div>
                                 <h4 class="font-bold text-white text-sm">${c.nome}</h4>
                                 <p class="text-[11px] text-slate-400 font-mono mt-0.5">${c.votos === 0 ? 'Totalizado' : c.votos.toLocaleString('pt-BR') + ' vts'}</p>
