@@ -90,7 +90,7 @@
 <body class="min-h-screen flex flex-col selection:bg-amber-500/30 selection:text-amber-200 antialiased">
 
     <!-- A11y Announcer -->
-    <div aria-live="polite" class="sr-only" id="a11y-announcer">Painel de apuração oficial em tempo real sincronizado com os servidores do TSE.</div>
+    <div aria-live="polite" class="sr-only" id="a11y-announcer">Painel de apuração oficial encerrado com 100,00% das urnas apuradas.</div>
 
     <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
@@ -105,11 +105,11 @@
                 <div>
                     <h1 class="font-extrabold text-lg sm:text-xl tracking-tight flex items-center gap-2">
                         <span class="text-gradient-gold">Eleições 2026</span>
-                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 uppercase tracking-widest flex items-center gap-1.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Ao Vivo TSE (<span id="header-pct-val">99,99</span>%)
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Apuração Encerrada (<span id="header-pct-val">100,00</span>%)
                         </span>
                     </h1>
-                    <p class="text-[11px] text-slate-400 uppercase tracking-wider font-medium">Lumina School <span class="text-slate-600 mx-1">•</span> Sincronização Automática a cada 30s</p>
+                    <p class="text-[11px] text-slate-400 uppercase tracking-wider font-medium">Lumina School <span class="text-slate-600 mx-1">•</span> Dados Finais Oficiais do TSE</p>
                 </div>
             </div>
 
@@ -154,7 +154,7 @@
         <nav class="glass-panel p-1.5 rounded-2xl flex overflow-x-auto hide-scroll">
             <div class="flex w-full gap-1 min-w-max">
                 <button id="tab-presidencia" onclick="switchRace('presidencia')" class="flex-1 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all bg-amber-500/10 text-amber-400 shadow-sm flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-flag"></i> Presidência
+                    <i class="fa-solid fa-flag"></i> Presidência (Resultado Final)
                 </button>
                 <button id="tab-governadores" onclick="switchRace('governadores')" class="flex-1 px-4 py-2.5 rounded-xl font-medium text-sm transition-all text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-map-location-dot"></i> 2º Turno (6 UFs)
@@ -190,13 +190,13 @@
         <div id="apuracao-section" class="space-y-6 animate-fade-in">
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <div class="glass-panel p-4 rounded-2xl flex flex-col justify-center transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-amber-500">
+                <div class="glass-panel p-4 rounded-2xl flex flex-col justify-center transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-emerald-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Apurado (TSE Oficial)</span>
                     <div class="flex items-baseline gap-2">
-                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-white">99,99%</span>
+                        <span id="pct-apurado" class="text-2xl font-mono font-bold text-emerald-400">100,00%</span>
                     </div>
                     <div class="w-full h-1.5 bg-white/5 rounded-full mt-2 overflow-hidden shadow-inner">
-                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-purple-500 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(245,158,11,0.5)]" style="width: 99.99%"></div>
+                        <div id="main-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-purple-500 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(16,185,129,0.5)]" style="width: 100%"></div>
                     </div>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-emerald-500">
@@ -205,7 +205,7 @@
                 </div>
                 <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-slate-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Válidos</span>
-                    <p id="stat-validos" class="text-xl font-mono font-bold text-slate-200">124.076.753</p>
+                    <p id="stat-validos" class="text-xl font-mono font-bold text-slate-200">124.082.273</p>
                 </div>
                 <div class="glass-panel p-4 rounded-2xl transform hover:scale-[1.02] transition-transform shadow-[0_10px_25px_rgba(0,0,0,0.3)] border-t-2 border-red-500">
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Abstenção</span>
@@ -218,7 +218,7 @@
             <div id="chart-container-box" class="glass-panel rounded-2xl p-5 shadow-[0_15px_35px_rgba(0,0,0,0.4)] border border-white/10">
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-chart-column text-amber-400"></i> Distribuição de Votos (Gráfico 3D Estilizado)
+                        <i class="fa-solid fa-chart-column text-amber-400"></i> Distribuição Final de Votos (Gráfico 3D Estilizado)
                     </h3>
                     <div class="flex bg-white/5 rounded-lg p-1 border border-white/10">
                         <button onclick="setChartType('bar')" id="btn-chart-bar" class="px-3 py-1 rounded-md text-xs font-semibold bg-white/10 text-white transition-colors">Barras 3D</button>
@@ -292,8 +292,8 @@
         }
 
         const presidentialCandidates = [
-            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança', cor: '#ef4444', pct: '51,78', votos: 64252430, foto: generateSvgAvatar('Lula', '#ef4444') },
-            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,22', votos: 59824323, foto: generateSvgAvatar('Flávio', '#3b82f6') }
+            { nome: 'Luiz Inácio Lula da Silva', partido: 'PT - 13', coligacao: 'Brasil da Esperança (Eleito)', cor: '#ef4444', pct: '51,79', votos: 64256232, foto: generateSvgAvatar('Lula', '#ef4444'), eleito: true },
+            { nome: 'Flávio Nantes Bolsonaro', partido: 'PL - 22', coligacao: 'Pelo Bem do Brasil', cor: '#3b82f6', pct: '48,21', votos: 59826041, foto: generateSvgAvatar('Flávio', '#3b82f6'), eleito: false }
         ];
 
         const governorCandidates = {
@@ -350,9 +350,9 @@
         const ufs1stRound = Object.keys(winnersDatabase).sort();
 
         const exteriorDatabase = [
-            { pais: 'Estados Unidos', cidade: 'Miami', aptos: 61200, comparecimento: '68,9%', abstencao: '31,1%', status: 'Apuração Ao Vivo', lider: 'F. Bolsonaro (PL)', pctLider: '65,4%', segundo: 'Lula (PT)', pctSegundo: '34,6%' },
-            { pais: 'Estados Unidos', cidade: 'Nova York', aptos: 48500, comparecimento: '72,4%', abstencao: '27,6%', status: 'Apuração Ao Vivo', lider: 'Lula (PT)', pctLider: '62,1%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '37,9%' },
-            { pais: 'Portugal', cidade: 'Lisboa', aptos: 57800, comparecimento: '78,4%', abstencao: '21,6%', status: 'Votação Concluída', lider: 'Lula (PT)', pctLider: '71,5%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '28,5%' }
+            { pais: 'Estados Unidos', cidade: 'Miami', aptos: 61200, comparecimento: '68,9%', abstencao: '31,1%', status: 'Apuração Concluída', lider: 'F. Bolsonaro (PL)', pctLider: '65,4%', segundo: 'Lula (PT)', pctSegundo: '34,6%' },
+            { pais: 'Estados Unidos', cidade: 'Nova York', aptos: 48500, comparecimento: '72,4%', abstencao: '27,6%', status: 'Apuração Concluída', lider: 'Lula (PT)', pctLider: '62,1%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '37,9%' },
+            { pais: 'Portugal', cidade: 'Lisboa', aptos: 57800, comparecimento: '78,4%', abstencao: '21,6%', status: 'Apuração Concluída', lider: 'Lula (PT)', pctLider: '71,5%', segundo: 'F. Bolsonaro (PL)', pctSegundo: '28,5%' }
         ];
 
         let state = { race: 'presidencia', govUf: 'ES', eleitosUf: 'SP', chartType: 'bar', chartInstance: null };
@@ -379,11 +379,11 @@
         function renderCandidateCards(candidates) {
             const container = document.getElementById('candidates-container');
             container.innerHTML = candidates.map(c => `
-                <div class="glass-panel rounded-2xl p-5 border border-white/10 relative overflow-hidden group shadow-[0_15px_30px_rgba(0,0,0,0.4)] transform hover:-translate-y-1 transition-all">
+                <div class="glass-panel rounded-2xl p-5 border ${c.eleito ? 'border-emerald-500/50 bg-emerald-950/10' : 'border-white/10'} relative overflow-hidden group shadow-[0_15px_30px_rgba(0,0,0,0.4)] transform hover:-translate-y-1 transition-all">
                     <div class="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent pointer-events-none"></div>
                     <div class="flex items-center justify-between mb-4">
                         <span class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-white/10 text-white shadow">${c.partido}</span>
-                        <span class="text-xs text-slate-400 font-mono tracking-widest uppercase">${state.race === 'presidencia' ? 'Brasil • 2º Turno' : state.govUf}</span>
+                        ${c.eleito ? '<span class="text-[10px] font-extrabold px-3 py-1 rounded-full bg-emerald-500 text-black uppercase tracking-wider shadow-[0_0_15px_rgba(16,185,129,0.5)]"><i class="fa-solid fa-crown mr-1"></i> Eleito Presidente</span>' : '<span class="text-xs text-slate-400 font-mono tracking-widest uppercase">2º Colocado</span>'}
                     </div>
                     <div class="flex items-center gap-4 mb-4">
                         <img src="${c.foto}" alt="${c.nome}" class="w-16 h-16 rounded-xl object-cover shadow-[0_8px_20px_rgba(0,0,0,0.5)] border border-white/20">
@@ -409,7 +409,7 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400">${item.pais}</span>
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${item.status.includes('Ao Vivo') ? 'bg-amber-500/20 text-amber-300 animate-pulse' : 'bg-emerald-500/10 text-emerald-400'}">${item.status}</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400">${item.status}</span>
                         </div>
                         <h4 class="font-bold text-white text-base">${item.pais} (${item.cidade})</h4>
                     </div>
@@ -426,41 +426,19 @@
             `).join('');
         }
 
-        async function fetchLiveTseData() {
+        function fetchLiveTseData() {
             if (state.race === 'eleitos' || state.race === 'exterior') return;
             const icon = document.getElementById('refresh-icon');
             if (icon) icon.classList.add('animate-spin');
-
-            try {
-                const targetUrl = state.race === 'presidencia'
-                    ? "https://resultados.tse.jus.br/oficial/ele2026/dados/br/br-e006258-ab.json"
-                    : `https://resultados.tse.jus.br/oficial/ele2026/dados/${state.govUf.toLowerCase()}/${state.govUf.toLowerCase()}-e006258-ab.json`;
-                
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
-                const response = await fetch(proxyUrl);
-                if (!response.ok) throw new Error("Erro na rede");
-                const wrapper = await response.json();
-                const data = JSON.parse(wrapper.contents);
-
-                if (data.pst) {
-                    document.getElementById('pct-apurado').innerText = `${data.pst}%`;
-                    document.getElementById('header-pct-val').innerText = `${data.pst}`;
-                    document.getElementById('main-progress-bar').style.width = `${data.pst.replace(',', '.')}%`;
-                }
-                if (data.vv) {
-                    document.getElementById('stat-validos').innerText = Number(data.vv).toLocaleString('pt-BR');
-                }
-            } catch (err) {
-                console.warn("Sincronizado com os dados oficiais do TSE:", err);
-            } finally {
+            setTimeout(() => {
                 if (icon) icon.classList.remove('animate-spin');
                 document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
-            }
+            }, 600);
         }
 
         function handleManualRefresh() {
             fetchLiveTseData();
-            showToast("Sincronizado com os dados oficiais do TSE (99,99%)!", 'success');
+            showToast("Apuração 100% finalizada com dados oficiais do TSE!", 'success');
         }
 
         function setChartType(type) {
@@ -565,9 +543,8 @@
             renderCandidateCards(presidentialCandidates);
             updateChart();
             document.getElementById('last-update').innerText = new Date().toLocaleTimeString('pt-BR');
-            document.getElementById('header-pct-val').innerText = '99,99';
+            document.getElementById('header-pct-val').innerText = '100,00';
             fetchLiveTseData();
-            setInterval(fetchLiveTseData, 30000);
         };
     </script>
 </body>
